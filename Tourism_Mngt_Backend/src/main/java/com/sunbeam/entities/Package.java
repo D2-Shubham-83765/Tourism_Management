@@ -2,7 +2,6 @@ package com.sunbeam.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import lombok.Getter;
