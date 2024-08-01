@@ -9,6 +9,7 @@ import com.sunbeam.dto.CityDTO;
 import com.sunbeam.entities.City;
 
 public interface CityDao extends JpaRepository<City, Long>{
-	@Query("SELECT c from City c where c.package_id =:packageId")
+	@Query("SELECT new com.sunbeam.dto.CityDTO(c.name, c.cityDetails, c.cityImage, c.duration, c.price) " +
+	           "FROM City c WHERE c.packageEntity.id = :packageId")
 	List<CityDTO> findByPackageId(Long packageId);
 }

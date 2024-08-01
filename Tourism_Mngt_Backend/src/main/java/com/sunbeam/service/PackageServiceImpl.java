@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +17,7 @@ import com.sunbeam.dto.PackageResponseDTO;
 import com.sunbeam.entities.Package;
 
 import com.sunbeam.dto.ApiResponse;
+import com.sunbeam.dto.PackageDTO;
 
 @Service
 @Transactional
@@ -28,10 +29,15 @@ public class PackageServiceImpl implements PackageService {
 	    @Autowired
 	    private ImageHandlingServiceImpl imageHandlingService;
 	    
-	    public Package addPackage(Package pkg, MultipartFile image) {
+	    @Autowired
+	    private ModelMapper mapper;
+	    
+	    public Package addPackage(PackageDTO dto) {
 			try {
-				Package packageEntity = imageHandlingService.uploadImage(pkg, image);
-				return packageDao.save(packageEntity);
+				Package pkg = mapper.map(dto, Package.class);
+				
+				pkg = imageHandlingService.uploadImage(pkg,dto.getImageFile());
+				return packageDao.save(pkg);
 			} catch (IOException e) {
 				e.printStackTrace();
 			  }

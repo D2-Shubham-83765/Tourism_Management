@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sunbeam.custom_exception.ApiException;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.CityDTO;
+import com.sunbeam.dto.CityImageDTO;
 import com.sunbeam.dto.CityRequestDTO;
 import com.sunbeam.entities.City;
 import com.sunbeam.service.CityServiceImpl;
@@ -34,12 +36,22 @@ public class CityController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<?> addCityDetails(@RequestBody CityRequestDTO dto, @RequestBody MultipartFile cityImage){
+	public ResponseEntity<?> addCityDetails(@ModelAttribute CityRequestDTO dto){
 		 try {
-			City city = cityService.addCityDetails(dto, cityImage);
+			City city = cityService.addCityDetails(dto);
 			return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("City details added successfully"));
 		} catch (IOException e) {
 			throw new ApiException("Something went wrong!!");
+		}
+	}
+	
+	@PostMapping("/add/images")
+	public ResponseEntity<?> addCityImagesById(@ModelAttribute CityImageDTO dto){
+		try {
+			cityService.addCityImagesById(dto);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponse("Images for the city has been uploaded"));
+		} catch (IOException e) {
+			throw new ApiException("Something went wrong");
 		}
 	}
 }

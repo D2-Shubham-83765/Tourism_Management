@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,10 +40,12 @@ public class City extends BaseEntity{
 
     @Column(name = "duration", nullable = false)
     private String duration;
-
+    
+   
     @Column(name = "starting_date", nullable = false)
     private LocalDate startingDate;
 
+  
     @Column(name = "ending_date", nullable = false)
     private LocalDate endingDate;
     
@@ -82,5 +86,8 @@ public class City extends BaseEntity{
 		this.price = price;
 	}
     
-    
+	public void addImage(Image image) {
+        images.add(image);
+        image.setCityEntity(this); 
+	}   
 }

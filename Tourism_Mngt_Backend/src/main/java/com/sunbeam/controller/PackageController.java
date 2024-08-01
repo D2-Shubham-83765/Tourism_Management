@@ -9,16 +9,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.sunbeam.custom_exception.ApiException;
+import com.sunbeam.dto.PackageDTO;
 import com.sunbeam.dto.PackageResponseDTO;
-import com.sunbeam.entities.Package;
 import com.sunbeam.service.PackageServiceImpl;
 
 @RestController
@@ -28,11 +27,8 @@ public class PackageController {
 	private PackageServiceImpl packageServiceImpl;
 	
 	@PostMapping("/add")
-	public ResponseEntity<?> addPackage(@RequestParam("packageName") String packageName, 
-            @RequestParam("image") MultipartFile image, 
-            @RequestParam("startingPrice") double startingPrice){
-		Package packageEntity = new Package(packageName, startingPrice);
-		packageEntity = packageServiceImpl.addPackage(packageEntity, image);
+	public ResponseEntity<?> addPackage(@ModelAttribute PackageDTO dto){
+		packageServiceImpl.addPackage(dto);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body("Package added successfully");
 	}
 	
