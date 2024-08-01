@@ -40,7 +40,7 @@ public class PackageController {
 	public ResponseEntity<?> getAllPackages(){
 		try {
 		List<PackageResponseDTO> packageDetails = packageServiceImpl.getPackageDetails();
-			return ResponseEntity.status(HttpStatus.FOUND).body(packageDetails);
+			return ResponseEntity.status(HttpStatus.FOUND).contentType(MediaType.IMAGE_JPEG).body(packageDetails);
 		} catch (IOException e) {
 			throw new ApiException("Something went wrong!! Try again");
 		}

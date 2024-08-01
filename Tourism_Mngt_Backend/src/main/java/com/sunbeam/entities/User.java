@@ -26,22 +26,12 @@ public class User extends BaseEntity{
 	@Column(length = 30, nullable = false)
 	private String lastName;
 	
-
 	@Column(length = 30, unique = true)
 	private String email;
 	
 	@Pattern(regexp = "^(\\+91|91|0)?[6-9][0-9]{9}$")
 	@Column(length = 15, unique = true, nullable = false)
     private String phoneNumber;
-	
-	@Column(nullable = false)
-    private Integer age;
-    
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-    
-    @Column(nullable = false)
-    private String address;
     
     @Column(nullable = false)
     private String password;
@@ -65,9 +55,6 @@ public class User extends BaseEntity{
     	this.lastName = lastName;
     	this.email = email;
     	this.phoneNumber = phoneNumber;
-    	this.age = age;
-    	this.gender = gender;
-    	this.address = address;
     	this.password = password;
     }
 }

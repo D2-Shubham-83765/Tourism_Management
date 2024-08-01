@@ -35,10 +35,6 @@ public class UserDTO {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String confirmPassword;
     
-	private Gender gender;
-  
-    private String address;
-    
     @JsonProperty(access = Access.READ_ONLY)
     private Role role = Role.USER;
     
