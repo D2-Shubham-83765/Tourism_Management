@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunbeam.custom_exception.ApiException;
+import com.sunbeam.dto.CityDTO;
 import com.sunbeam.dto.PackageDTO;
 import com.sunbeam.dto.PackageResponseDTO;
+import com.sunbeam.service.CityServiceImpl;
 import com.sunbeam.service.PackageServiceImpl;
 
 @RestController
@@ -25,6 +27,8 @@ import com.sunbeam.service.PackageServiceImpl;
 public class PackageController {
 	@Autowired
 	private PackageServiceImpl packageServiceImpl;
+	@Autowired
+	private CityServiceImpl cityService;
 	
 	@PostMapping("/add")
 	public ResponseEntity<?> addPackage(@ModelAttribute PackageDTO dto){
@@ -45,5 +49,11 @@ public class PackageController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletePackage(@PathVariable Long id){
 		return ResponseEntity.status(HttpStatus.GONE).body(packageServiceImpl.deletePackage(id));
+	}
+	
+	@GetMapping("/{packageId}")
+	public ResponseEntity<?> getAllCities(@PathVariable Long packageId){
+		List<CityDTO> cities = cityService.getAllCityDetails(packageId);
+		return ResponseEntity.status(HttpStatus.FOUND).body(cities);
 	}
 }
