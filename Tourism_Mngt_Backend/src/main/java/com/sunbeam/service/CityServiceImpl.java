@@ -11,14 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sunbeam.custom_exception.ApiException;
 import com.sunbeam.dao.CityDao;
+import com.sunbeam.dao.HotelDao;
 import com.sunbeam.dao.ImageDao;
 import com.sunbeam.dao.PackageDao;
 import com.sunbeam.dto.CityDTO;
 import com.sunbeam.dto.CityImageDTO;
 import com.sunbeam.dto.CityRequestDTO;
 import com.sunbeam.dto.CityResponseDTO;
+import com.sunbeam.dto.HotelRequestDTO;
 import com.sunbeam.dto.ImageResponseDTO;
 import com.sunbeam.entities.City;
+import com.sunbeam.entities.Hotel;
 import com.sunbeam.entities.Image;
 
 @Service
@@ -34,6 +37,8 @@ public class CityServiceImpl implements CityService{
 	private ImageHandlingServiceImpl imageHandlingService;
 	@Autowired
 	private ImageDao imageDao;
+	@Autowired
+	private HotelDao hotelDao;
 	
 	
 	public List<CityDTO> getAllCityDetails(Long packageId){
@@ -67,6 +72,25 @@ public class CityServiceImpl implements CityService{
 		List<ImageResponseDTO> imageList = images.stream().map(image->mapper.map(image, ImageResponseDTO.class)).collect(Collectors.toList());
 		dto.setImages(imageList);
 		return dto;
+	}
+	
+	public void deleteCity(Long cityId) {
+        City city = cityDao.findById(cityId).orElseThrow();
+        List<Image> images = city.getImages();
+        List<Hotel> hotels = city.getHotels();
+        
+        images.forEach(image->imageDao.delete(image));
+        
+        hotels.forEach(hotel->hotelDao.delete(hotel));
+        
+        cityDao.delete(city);
+	}
+	
+	public String addHotel(HotelRequestDTO dto) {
+		City city = cityDao.findById(dto.getCity_id()).orElseThrow();
+		Hotel hotel = mapper.map(dto, Hotel.class);
+		city.addHotel(hotel);
+		return "Hotel for the city added successsfully";
 	}
 	
 }

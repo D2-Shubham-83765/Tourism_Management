@@ -92,5 +92,10 @@ public class City extends BaseEntity{
 	public void addImage(Image image) {
         images.add(image);
         image.setCityEntity(this); 
-	}   
+	}
+	
+	public void addHotel(Hotel hotel) {
+        hotels.add(hotel);
+        hotel.setCityEntity(this); 
+	}
 }

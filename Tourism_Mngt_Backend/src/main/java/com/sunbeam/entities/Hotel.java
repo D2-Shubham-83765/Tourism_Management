@@ -11,12 +11,14 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "hotels")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Hotel extends BaseEntity{
 	@Column(nullable = false)
     private String name;
