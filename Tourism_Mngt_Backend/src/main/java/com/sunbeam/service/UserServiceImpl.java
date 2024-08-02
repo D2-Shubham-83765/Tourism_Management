@@ -9,7 +9,10 @@ import com.sunbeam.custom_exception.ApiException;
 import com.sunbeam.dao.UserDao;
 import com.sunbeam.dto.ForgetPasswordDTO;
 import com.sunbeam.dto.UserDTO;
+<<<<<<< HEAD
 import com.sunbeam.entities.Role;
+=======
+>>>>>>> main
 import com.sunbeam.entities.User;
 
 @Service
@@ -36,11 +39,16 @@ public class UserServiceImpl implements UserService {
 		User user = userDao.findByEmailAndPassword(email, password);
 		if (user == null) {
 			return "Invalid Credentials!!";
+<<<<<<< HEAD
 		}else if(user.getRole()==Role.ADMIN) {
 			return "Admin logged in successfully";
 		}else {
 			return "User logged in successfully";
 		}
+=======
+		}else
+			return "User logged in successfully";
+>>>>>>> main
 	}
 
 	@Override
