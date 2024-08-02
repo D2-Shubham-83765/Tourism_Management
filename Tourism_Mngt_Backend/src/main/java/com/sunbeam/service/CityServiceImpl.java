@@ -2,6 +2,7 @@ package com.sunbeam.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import com.sunbeam.dao.PackageDao;
 import com.sunbeam.dto.CityDTO;
 import com.sunbeam.dto.CityImageDTO;
 import com.sunbeam.dto.CityRequestDTO;
+import com.sunbeam.dto.CityResponseDTO;
+import com.sunbeam.dto.ImageResponseDTO;
 import com.sunbeam.entities.City;
 import com.sunbeam.entities.Image;
 
@@ -57,12 +60,13 @@ public class CityServiceImpl implements CityService{
 		cityDao.save(city);
 	}
 	
-	public City getCityDetailsWithImages(Long id){
+	public CityResponseDTO getCityDetailsWithImages(Long id){
 		City city = cityDao.findCityWithImagesById(id);
-		if(city!=null)
-		return city;
-		else
-			throw new ApiException("Invalid City id");
+		CityResponseDTO dto = mapper.map(city,CityResponseDTO.class);
+		List<Image> images = city.getImages();
+		List<ImageResponseDTO> imageList = images.stream().map(image->mapper.map(image, ImageResponseDTO.class)).collect(Collectors.toList());
+		dto.setImages(imageList);
+		return dto;
 	}
 	
 }
