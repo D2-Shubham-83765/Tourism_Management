@@ -1,3 +1,4 @@
+
 package com.sunbeam.service;
 
 import org.modelmapper.ModelMapper;
@@ -41,6 +42,7 @@ public class UserServiceImpl implements UserService {
 		}else {
 			return "User logged in successfully";
 		}
+	}
 
 
 	@Override
