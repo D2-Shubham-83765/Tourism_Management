@@ -29,11 +29,6 @@ public class CityController {
 	@Autowired
 	private CityServiceImpl cityService;
 	
-	@GetMapping("/{packageId}")
-	public ResponseEntity<?> getAllCities(@PathVariable Long packageId){
-		List<CityDTO> cities = cityService.getAllCityDetails(packageId);
-		return ResponseEntity.status(HttpStatus.FOUND).body(cities);
-	}
 	
 	@PostMapping("/add")
 	public ResponseEntity<?> addCityDetails(@ModelAttribute CityRequestDTO dto){
@@ -53,5 +48,10 @@ public class CityController {
 		} catch (IOException e) {
 			throw new ApiException("Something went wrong");
 		}
+	}
+	
+	@GetMapping("/{cityId}")
+	public ResponseEntity<?> getCityDetailsWithImages(@PathVariable Long cityId){
+		return ResponseEntity.status(HttpStatus.FOUND).body(cityService.getCityDetailsWithImages(cityId));
 	}
 }

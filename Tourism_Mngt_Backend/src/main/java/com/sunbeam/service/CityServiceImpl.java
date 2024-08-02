@@ -7,6 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.sunbeam.custom_exception.ApiException;
 import com.sunbeam.dao.CityDao;
 import com.sunbeam.dao.ImageDao;
 import com.sunbeam.dao.PackageDao;
@@ -53,6 +55,14 @@ public class CityServiceImpl implements CityService{
 	        city.addImage(image);
 	    }
 		cityDao.save(city);
+	}
+	
+	public City getCityDetailsWithImages(Long id){
+		City city = cityDao.findCityWithImagesById(id);
+		if(city!=null)
+		return city;
+		else
+			throw new ApiException("Invalid City id");
 	}
 	
 }
