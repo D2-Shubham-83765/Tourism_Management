@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 		}else {
 			return "User logged in successfully";
 		}
-	}
+
 
 	@Override
 	public String setPassword(ForgetPasswordDTO dto) {
