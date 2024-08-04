@@ -12,7 +12,7 @@ const City = () => {
         'https://hblimg.mmtcdn.com/content/hubble/img/goakolkatadestimages/mmt/activities/m_Goa_9_l_667_1000.jpg',
         'https://hblimg.mmtcdn.com/content/hubble/img/goakolkatadestimages/mmt/activities/m_Goa_2_l_667_1000.jpg'
       ],
-      link: '/CityDetails'
+      // link: '/CityDetails'
     },
     {
       caption: 'Pondicherry',
@@ -21,7 +21,7 @@ const City = () => {
         'https://hblimg.mmtcdn.com/content/hubble/img/new_dest_imagemar/mmt/activities/m_Pondicherry_1_l_658_1200.jpg',
         'https://hblimg.mmtcdn.com/content/hubble/img/new_dest_imagemar/mmt/activities/m_Pondicherry_2_l_658_1200.jpg'
       ],
-      link: '/CityDetails'
+      // link: '/CityDetails'
     },
     {
       caption: 'Alibhag',
@@ -30,7 +30,7 @@ const City = () => {
         'https://hblimg.mmtcdn.com/content/hubble/img/new_dest_imagemar/mmt/activities/m_Alibaug_2_l_800_1200.jpg',
         'https://hblimg.mmtcdn.com/content/hubble/img/desttvimg/mmt/destination/m_Alibaug_tv_destination_img_3_l_911_1214.jpg'
       ],
-      link: '/CityDetails'
+      // link: '/CityDetails'
     },
     {
       caption: 'Kovalam',
@@ -39,7 +39,7 @@ const City = () => {
         'https://hblimg.mmtcdn.com/content/hubble/img/kovalam/mmt/destination/m_Kovalam_activity_food_l_502_753.jpg',
         'https://hblimg.mmtcdn.com/content/hubble/img/kovalam/mmt/destination/m_Kovalam_activity_heritage%20and%20culture_l_436_656.jpg'
       ],
-      link: '/CityDetails'
+      // link: '/CityDetails'
     }
   ];
 
