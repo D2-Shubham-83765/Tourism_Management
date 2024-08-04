@@ -69,6 +69,9 @@ public class City extends BaseEntity{
 
     @OneToMany(mappedBy = "cityEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "cityEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Hotel> hotels = new ArrayList<>();
 
 	public City(String name, String duration, LocalDate startingDate, LocalDate endingDate, String location,
 			String day1Description, String day2Description, String day3Description, String day4Description,
@@ -89,5 +92,10 @@ public class City extends BaseEntity{
 	public void addImage(Image image) {
         images.add(image);
         image.setCityEntity(this); 
-	}   
+	}
+	
+	public void addHotel(Hotel hotel) {
+        hotels.add(hotel);
+        hotel.setCityEntity(this); 
+	}
 }

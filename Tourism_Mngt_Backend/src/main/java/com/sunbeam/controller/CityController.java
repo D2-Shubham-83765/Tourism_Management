@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.CityDTO;
 import com.sunbeam.dto.CityImageDTO;
 import com.sunbeam.dto.CityRequestDTO;
+import com.sunbeam.dto.HotelDTO;
 import com.sunbeam.entities.City;
 import com.sunbeam.service.CityServiceImpl;
 
@@ -51,7 +53,18 @@ public class CityController {
 	}
 	
 	@GetMapping("/{cityId}")
-	public ResponseEntity<?> getCityDetailsWithImages(@PathVariable Long cityId){
-		return ResponseEntity.status(HttpStatus.FOUND).body(cityService.getCityDetailsWithImages(cityId));
+	public ResponseEntity<?> getCityDetails(@PathVariable Long cityId){
+		return ResponseEntity.status(HttpStatus.FOUND).body(cityService.getCityDetails(cityId));
+	}
+	
+	@PostMapping("/hotel/{cityId}")
+	public ResponseEntity<?> addHotelByCityId(@RequestBody HotelDTO dto){
+		return ResponseEntity.ok(cityService.addHotel(dto));
+	}
+	
+	@DeleteMapping("/{cityId}")
+	public ResponseEntity<?> deleteCity(@PathVariable Long cityId) {
+		cityService.deleteCity(cityId);
+		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("City has been deleted!!"));
 	}
 }

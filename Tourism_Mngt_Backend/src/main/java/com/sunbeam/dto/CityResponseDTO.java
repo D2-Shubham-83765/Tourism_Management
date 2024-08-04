@@ -32,4 +32,6 @@ public class CityResponseDTO {
     private Double price;
     
     private List<ImageResponseDTO> images = new ArrayList<>();
+    
+    private List<HotelDTO> hotels = new ArrayList<>();
 }
