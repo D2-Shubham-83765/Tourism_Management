@@ -8,13 +8,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 @Getter
 @Setter
-public class HotelRequestDTO {
+@NoArgsConstructor
+public class HotelDTO {
 	@JsonProperty(access = Access.READ_ONLY)
 	private Long id;
 	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Long city_id;
 	
     private String name;   
@@ -31,4 +34,17 @@ public class HotelRequestDTO {
   
     private Integer starRating;
     
+    private boolean free_WiFi; 
+   
+    private boolean housekeeping;
+   
+    private boolean pool;  
+  
+    private boolean bonfire;
+    
+    private boolean luggageAssistance;
+   
+    private boolean breakfast;
+   
+    private boolean restaurant;
 }

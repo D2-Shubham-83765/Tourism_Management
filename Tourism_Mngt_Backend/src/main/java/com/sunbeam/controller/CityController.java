@@ -21,7 +21,7 @@ import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.CityDTO;
 import com.sunbeam.dto.CityImageDTO;
 import com.sunbeam.dto.CityRequestDTO;
-import com.sunbeam.dto.HotelRequestDTO;
+import com.sunbeam.dto.HotelDTO;
 import com.sunbeam.entities.City;
 import com.sunbeam.service.CityServiceImpl;
 
@@ -53,18 +53,18 @@ public class CityController {
 	}
 	
 	@GetMapping("/{cityId}")
-	public ResponseEntity<?> getCityDetailsWithImages(@PathVariable Long cityId){
-		return ResponseEntity.status(HttpStatus.FOUND).body(cityService.getCityDetailsWithImages(cityId));
+	public ResponseEntity<?> getCityDetails(@PathVariable Long cityId){
+		return ResponseEntity.status(HttpStatus.FOUND).body(cityService.getCityDetails(cityId));
+	}
+	
+	@PostMapping("/hotel/{cityId}")
+	public ResponseEntity<?> addHotelByCityId(@RequestBody HotelDTO dto){
+		return ResponseEntity.ok(cityService.addHotel(dto));
 	}
 	
 	@DeleteMapping("/{cityId}")
-    public ResponseEntity<?> deleteCity(@PathVariable Long cityId) {
-        cityService.deleteCity(cityId);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("City has been deleted!!"));
-    }
-	
-	@PostMapping("/hotel/{cityId}")
-	public ResponseEntity<?> addHotelByCityId(@RequestBody HotelRequestDTO dto){
-		return ResponseEntity.ok(cityService.addHotel(dto));
+	public ResponseEntity<?> deleteCity(@PathVariable Long cityId) {
+		cityService.deleteCity(cityId);
+		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("City has been deleted!!"));
 	}
 }

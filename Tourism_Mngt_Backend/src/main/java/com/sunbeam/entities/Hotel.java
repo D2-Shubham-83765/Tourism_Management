@@ -40,12 +40,34 @@ public class Hotel extends BaseEntity{
     @Column(nullable = false)
     private Integer starRating;
     
+    @Column(nullable = false)
+    private boolean free_WiFi; 
+    
+    @Column(nullable = false)
+    private boolean housekeeping;
+    
+    @Column(nullable = false)
+    private boolean pool;  
+    
+    @Column(nullable = false)
+    private boolean bonfire;
+    
+    @Column(nullable = false)
+    private boolean luggageAssistance;
+    
+    @Column(nullable = false)
+    private boolean breakfast;
+    
+    @Column(nullable = false)
+    private boolean restaurant;
+    
     @ManyToOne
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City cityEntity;
 
 	public Hotel(String name, String address, LocalDate checkInDate, LocalDate checkOutDate, Double ratePerPerson,
-			Integer starRating) {
+			Integer starRating, boolean free_WiFi, boolean housekeeping, boolean pool, boolean bonfire,
+			boolean luggageAssistance, boolean breakfast, boolean restaurant, City cityEntity) {
 		super();
 		this.name = name;
 		this.address = address;
@@ -53,7 +75,13 @@ public class Hotel extends BaseEntity{
 		this.checkOutDate = checkOutDate;
 		this.ratePerPerson = ratePerPerson;
 		this.starRating = starRating;
+		this.free_WiFi = free_WiFi;
+		this.housekeeping = housekeeping;
+		this.pool = pool;
+		this.bonfire = bonfire;
+		this.luggageAssistance = luggageAssistance;
+		this.breakfast = breakfast;
+		this.restaurant = restaurant;
+		this.cityEntity = cityEntity;
 	}
-    
-    
 }
