@@ -50,7 +50,9 @@ public class PackageServiceImpl implements PackageService {
 	        List<PackageResponseDTO> packageResponse = new ArrayList<>();
 	        for (Package pkg : packagesList) {
 	            PackageResponseDTO dto = new PackageResponseDTO();
+	            dto.setId(pkg.getId());
 	            dto.setPackageName(pkg.getPackageName());
+	            dto.setPackageDetails(pkg.getPackageDetails());
 	            dto.setStartingPrice(pkg.getStartingPrice());
 	            byte[] image = imageHandlingService.serveImage(dto.getPackageName());
 	            dto.setImage(image);

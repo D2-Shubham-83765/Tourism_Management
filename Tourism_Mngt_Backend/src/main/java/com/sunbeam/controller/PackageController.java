@@ -36,15 +36,7 @@ public class PackageController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body("Package added successfully");
 	}
 	
-	@GetMapping
-	public ResponseEntity<?> getAllPackages(){
-		try {
-		List<PackageResponseDTO> packageDetails = packageServiceImpl.getPackageDetails();
-			return ResponseEntity.status(HttpStatus.FOUND).contentType(MediaType.IMAGE_JPEG).body(packageDetails);
-		} catch (IOException e) {
-			throw new ApiException("Something went wrong!! Try again");
-		}
-	}
+	
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletePackage(@PathVariable Long id){

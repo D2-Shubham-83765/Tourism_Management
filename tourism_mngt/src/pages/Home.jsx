@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Link } from "react-router-dom";
-import vrindavan from '../Images/vrindavan.png';
-import jungle_travel from '../Images/jungle travel.jpg';
-import couple from '../Images/couple.jpeg.jpg';
 import logo from '../Images/Samplelogo.png';
-import beach from '../Images/beach-jumping.webp'
-import honeymoon from '../Images/Honeymoon.jpg'
 import './home.css';
+import CityCards from "../components/CityCards";
 
 const Home = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -76,7 +72,7 @@ const Home = () => {
                 </Link>
                 <div className="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="loginSignupDropdown">
                   <a className="dropdown-item text-white">Login</a>
-                  <a className="dropdown-item text-white" href="#">Signup</a>
+                  <a className="dropdown-item text-white">Signup</a>
                 </div>
               </li>
             </ul>
@@ -112,83 +108,7 @@ const Home = () => {
 
       </main>
 
-      {/* Card List */}
-      <div className="card-group card-group-scroll">
-
-        <div className="card">
-          <img src={vrindavan} className="card-img-top" alt="Hollywood Sign on The Hill" />
-          <div className="card-body">
-            <h5 className="card-title"> <b>Pilgrimage</b></h5>
-            <p className="card-text">
-              This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-            </p>
-          </div>
-          <div className="card-footer">
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-
-        <div className="card" >
-          <img src={beach} className="card-img-top" alt="Palm Springs Road" />
-          <div className="card-body">
-            <h5 className="card-title"> <b>Beaches</b> </h5>
-            <p className="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-          </div>
-          <div className="card-footer">
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-
-        <Link to="/City" className="card">
-          <div>
-            <img src={jungle_travel} className="card-img-top" alt="Los Angeles Skyscrapers" />
-            <div className="card-body">
-              <h5 className="card-title"> <b>Adventure</b> </h5>
-              <p className="card-text">
-                This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.
-              </p>
-            </div>
-            <div className="card-footer">
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </div>
-          </div>
-        </Link>
-
-        <div className="card">
-          <img src={honeymoon} className="card-img-top" alt="Hollywood Sign on The Hill" />
-          <div className="card-body">
-            <h5 className="card-title"> <b>Honeymoon</b> </h5>
-            <p className="card-text">
-              This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-            </p>
-          </div>
-          <div className="card-footer">
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-        <div className="card">
-          <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/045.webp" className="card-img-top" alt="Palm Springs Road" />
-          <div className="card-body">
-            <h5 className="card-title">Card title</h5>
-            <p className="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-          </div>
-          <div className="card-footer">
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-        <div className="card">
-          <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/046.webp" className="card-img-top" alt="Los Angeles Skyscrapers" />
-          <div className="card-body">
-            <h5 className="card-title">Card title</h5>
-            <p className="card-text">
-              This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.
-            </p>
-          </div>
-          <div className="card-footer">
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-      </div>
+     <CityCards/>
 
       {/* Footer */}
       <footer className="bg-dark text-white text-center text-lg-start">

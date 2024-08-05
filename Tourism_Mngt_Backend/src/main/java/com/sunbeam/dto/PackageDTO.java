@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class PackageDTO {
 	private String packageName;
+	private String packageDetails;
 	private double startingPrice;
 	private MultipartFile imageFile;
 }

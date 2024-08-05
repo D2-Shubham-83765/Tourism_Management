@@ -121,7 +121,6 @@ function Register() {
      else {
       
       const result = await register(firstName, lastName, email, phoneNumber, password, confirmPassword, securityQuestionId, securityAnswer)
-      console.log(result)
       if (result.status === 'success') {
         toast.success('You are successfully registered')
         navigate('/')
@@ -233,7 +232,7 @@ function Register() {
                 value={securityQuestionId} onChange={handleQuestionChange} required  >
             <option value=''>Select question</option>
             <option value='1'>What is your favourite sport?</option>
-            <option value='2'>What is the your favourite color? </option>
+            <option value='2'>What is your favourite color? </option>
             <option value='3'>Which is your dream destination?</option>
             <option value='4'>In which city were you born?</option>
           </select>

@@ -31,7 +31,7 @@ public class TourismMngtBackendApplication {
 	            registry.addMapping("/**")
 	                    .allowedOrigins("http://localhost:3000")
 	                    .allowedMethods("GET", "POST", "PUT", "DELETE")
-	                    .allowedHeaders("Content-Type", "Accept", "Accept-Language", "Accept-Encoding");
+	                    .allowedHeaders("*");
 	        }
 	    };
 	}
