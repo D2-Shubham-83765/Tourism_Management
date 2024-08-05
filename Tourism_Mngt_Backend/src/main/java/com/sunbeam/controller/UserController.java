@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.ForgetPasswordDTO;
 import com.sunbeam.dto.LoginDTO;
 import com.sunbeam.dto.UserDTO;
@@ -24,7 +25,8 @@ public class UserController {
 	
 	@PostMapping("/register")
 	public ResponseEntity<?> addUser(@RequestBody @Valid UserDTO dto){
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.addNewUser(dto));
+		String message = userService.addNewUser(dto);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponse("success", message));
 	}
 	
 	@PostMapping("/login")

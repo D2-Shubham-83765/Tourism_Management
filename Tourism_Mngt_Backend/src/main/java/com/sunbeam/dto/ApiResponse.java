@@ -12,7 +12,14 @@ import lombok.Setter;
 @Setter
 public class ApiResponse {
 	private LocalDateTime timeStamp;
-	private String message;
+	private String message; 
+	private String status;
+	private Object data;
+
+	public ApiResponse(String status, Object data) {
+	        this.status = status;
+	        this.data = data;
+	}
 	public ApiResponse(String message) {
 		super();
 		this.message = message;

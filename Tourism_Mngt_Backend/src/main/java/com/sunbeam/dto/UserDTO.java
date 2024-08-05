@@ -38,7 +38,7 @@ public class UserDTO {
     @JsonProperty(access = Access.READ_ONLY)
     private Role role = Role.USER;
     
-    private SecurityQuestionDTO securityQuestion;
+    private SecurityQuestionDTO securityQuestionId;
     
     private String securityAnswer;
 }

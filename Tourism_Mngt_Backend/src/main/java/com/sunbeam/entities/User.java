@@ -6,6 +6,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -38,9 +40,9 @@ public class User extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private Role role = Role.USER;
 
-	@ManyToOne
-	@JoinColumn(name = "security_question_id")
-	private SecurityQuestion securityQuestion;
+	@OneToOne
+	@JoinColumn(name = "security_question_id", referencedColumnName = "id")
+	private SecurityQuestion securityQuestionId;
 
 	@Column(nullable = false)
 	private String securityAnswer;
