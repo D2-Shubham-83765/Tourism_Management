@@ -67,9 +67,6 @@ const Home = () => {
               </li>
 
               <li className="nav-item dropdown">
-                <Link to="/Register" className="nav-link dropdown-toggle" id="loginSignupDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ textDecoration: 'none' }}>
-                  Signup
-                </Link>
                 <div className="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="loginSignupDropdown">
                   <a className="dropdown-item text-white">Login</a>
                   <a className="dropdown-item text-white">Signup</a>

@@ -25,7 +25,7 @@ const CityCards = () =>{
         {Cities.map((city,id) => (
              <div  key={id} className="col-md-3 mb-3">
                 <div className="card">
-                    <img src={`data:image/jpeg;base64,${city.image}`} className="card-img-top" alt="Hollywood Sign on The Hill" />
+                    <img src={`data:image/jpeg;base64,${city.image}`} className="card-img-top" />
                     <div className="card-body">
                         <h5 className="card-title"> <b>{city.packageName}</b></h5>
                         <hr/>

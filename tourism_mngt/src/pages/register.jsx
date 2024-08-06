@@ -95,8 +95,11 @@ function Register() {
   const handleAnswerChange = (event) => {
     setSecurityAnswer(event.target.value);
   }
-
+const onSubmitting = (event) =>{
+  event.preventDefault();
+}
   const onRegister = async () => {
+  
     console.log('onRegister')
 
     if (firstName.length === 0) {
@@ -121,6 +124,7 @@ function Register() {
      else {
       
       const result = await register(firstName, lastName, email, phoneNumber, password, confirmPassword, securityQuestionId, securityAnswer)
+      console.log(result)
       if (result.status === 'success') {
         toast.success('You are successfully registered')
         navigate('/')
@@ -185,7 +189,7 @@ function Register() {
       <div><h2>Registration Page</h2></div>
       <br />
       <style>{mediaQueries}</style>
-      <form className='form-container' style={formContainerStyle}>
+      <form className='form-container' style={formContainerStyle} onSubmit={onSubmitting}>
         <div className='mb-3'>
           <label htmlFor='Name' style={labelStyle}>First Name :</label>
           <input  type='text'  className='form-control input'  id='name' placeholder="e.g Suresh" 
