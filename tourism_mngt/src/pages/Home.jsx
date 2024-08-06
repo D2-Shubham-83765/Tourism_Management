@@ -49,16 +49,13 @@ const Home = () => {
                 >
                   Login
                 </a>
-                <div className="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
-                  <a className="dropdown-item text-white" href="#">Action</a>
-                  <a className="dropdown-item text-white" href="#">Another action</a>
-                  <a className="dropdown-item text-white" href="#">Something else here</a>
-                </div>
               </li>
 
               <li className="nav-item dropdown">
+              <Link to="/Register" className="nav-link" style={{ textDecoration: 'none' }}>
+                  Sign Up
+                </Link>
                 <div className="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="loginSignupDropdown">
-                  <a className="dropdown-item text-white">Login</a>
                   <a className="dropdown-item text-white">Signup</a>
                 </div>
               </li>
