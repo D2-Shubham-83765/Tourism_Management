@@ -35,7 +35,7 @@ public class SecurityConfig {
 				.exceptionHandling().authenticationEntryPoint(authEntry).
 				and().
 				authorizeRequests()
-				.antMatchers("/", "/user/register","/user/login","/user/forget-password",
+				.antMatchers("/**", "/user/register","/user/login","/user/forget-password",
 						"/v*/api-doc*/**","/swagger-ui/**" ).permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
 				.anyRequest().authenticated()

@@ -6,6 +6,8 @@ import Register from './pages/register';
 import ContactUs from './pages/contactus';
 import AboutUs from './pages/aboutus';
 import City from './pages/cities';
+import AdminDashboard from './AdminPages/AdminDashboard';
+import AddPackages from './AdminPages/AddPackages';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,6 +22,7 @@ function App() {
         <Route path='/Register' element={<Register/>}/>
         <Route path='/City' element={<City/>}/>
         <Route path='/AdminDashboard' element={<AdminDashboard/>}/>
+        <Route path='/AddPackages' element={<AddPackages/>}/>
       </Routes>
        <ToastContainer/> 
     </div>
