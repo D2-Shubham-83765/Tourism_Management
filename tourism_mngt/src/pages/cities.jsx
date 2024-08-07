@@ -12,9 +12,9 @@ const City = () => {
         'https://hblimg.mmtcdn.com/content/hubble/img/goakolkatadestimages/mmt/activities/m_Goa_9_l_667_1000.jpg',
         'https://hblimg.mmtcdn.com/content/hubble/img/goakolkatadestimages/mmt/activities/m_Goa_2_l_667_1000.jpg'
       ],
-      // link: '/CityDetails'
+      // link: '/CityDetails' 
     },
-    {
+    { 
       caption: 'Pondicherry',
       photos: [
         'https://hblimg.mmtcdn.com/content/hubble/img/pondicherry/mmt/destination/m_Pondicherry_activity_beach_l_382_691.jpg',

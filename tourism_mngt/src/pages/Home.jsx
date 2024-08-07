@@ -50,20 +50,20 @@ const Home = () => {
                   Login
                 </a>
               </li>
-
+                        
               <li className="nav-item dropdown">
               <Link to="/Register" className="nav-link" style={{ textDecoration: 'none' }}>
                   Sign Up
                 </Link>
                 <div className="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="loginSignupDropdown">
-                  <a className="dropdown-item text-white">Signup</a>
+                  <a className="dropdown-item text-white">Signup</a> 
                 </div>
               </li>
             </ul>
           </div>
         </nav>
       </header>
-
+          
       {/* Main Content */}
       <main className="container"
         style={{
