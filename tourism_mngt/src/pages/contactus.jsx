@@ -59,7 +59,7 @@ function ContactUs() {
                                         Address: 
                                         <a href="https://www.google.com/maps?q=Hinjewadi,+Pune,+India" target="_blank" rel="noopener noreferrer" className="text-decoration-none"> Hinjewadi, Pune, India</a>
                                     </li>
-                                </ul>
+                                </ul> 
                             </div>
                         </div>
                     </div>
