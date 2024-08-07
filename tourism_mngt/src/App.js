@@ -6,6 +6,8 @@ import Register from './pages/register';
 import ContactUs from './pages/contactus';
 import AboutUs from './pages/aboutus';
 import City from './pages/cities';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -18,7 +20,7 @@ function App() {
         <Route path='/Register' element={<Register/>}/>
         <Route path='/City' element={<City/>}/>
       </Routes>
-        
+       <ToastContainer/> 
     </div>
   );
 }
