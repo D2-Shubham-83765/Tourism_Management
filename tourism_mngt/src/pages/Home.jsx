@@ -59,6 +59,8 @@ const Home = () => {
               <li className="nav-item dropdown">
                 <div className="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="loginSignupDropdown">
                   <a className="dropdown-item text-white">Login</a>
+                </div>  
+                <div className="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="loginSignupDropdown">
                   <a className="dropdown-item text-white">Signup</a>
                 </div>
               </li>
