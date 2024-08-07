@@ -57,8 +57,7 @@ const Navbar = () => {
                     navigate("/AdminHome");
                 }
             } else {
-                // Handle login failure (e.g., show an error message)
-                console.error("Login failed");
+               navigate("/")
             }
         } catch (error) {
             console.error("Error logging in", error);

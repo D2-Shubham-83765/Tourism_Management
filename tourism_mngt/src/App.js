@@ -19,7 +19,6 @@ function App() {
         <Route path='/AboutUs' element={<AboutUs/>}/>
         <Route path='/Register' element={<Register/>}/>
         <Route path='/City' element={<City/>}/>
-        <Route path='/AdminDashboard' element={<AdminDashboard/>}/>
       </Routes>
        <ToastContainer/> 
     </div>
