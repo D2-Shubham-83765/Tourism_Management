@@ -1,8 +1,6 @@
 package com.sunbeam.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +32,7 @@ import com.sunbeam.service.UserServiceImpl;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
@@ -72,9 +72,10 @@ public class UserController {
 				status(HttpStatus.CREATED).body(resp);
 	}
 	
+	
 	/*
 	 * @GetMapping("/user/session") public ResponseEntity<?>
-	 * getUserSession(HttpServletRequest request) { // Retrieve user details from
+	 * getUserSession(HttpServletRequest request) { // Retrieve user details from //
 	 * SecurityContext or custom service Authentication authentication =
 	 * SecurityContextHolder.getContext().getAuthentication(); if (authentication ==
 	 * null || !authentication.isAuthenticated()) { // User is not authenticated
@@ -92,6 +93,7 @@ public class UserController {
 	 * 
 	 * return ResponseEntity.ok().body(sessionData); }
 	 */
+	 
 
 	
 	@PostMapping("/forget-password")

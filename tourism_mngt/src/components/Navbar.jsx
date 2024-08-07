@@ -220,7 +220,7 @@ const Navbar = () => {
                                             color: '#337ab7'
                                         }}>Forgot Password?</a>
                                         <div>
-                                            <button type="submit" className="btn btn-primary" style={{
+                                            <button onClick={handleLogin} type="submit" className="btn btn-primary" style={{
                                                 width: '110px',
                                                 height: '45px',
                                                 fontSize: '16px',

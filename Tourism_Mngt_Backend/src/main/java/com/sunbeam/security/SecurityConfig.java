@@ -41,10 +41,8 @@ public class SecurityConfig {
 				and().
 				authorizeRequests()
 				.antMatchers("/**", "/user/register","/user/login","/user/forget-password",
-						"/v*/api-doc*/**","/swagger-ui/**" ).permitAll()
+						"/v*/api-doc*/**","/swagger-ui.html/**" ).permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
-				.antMatchers("/**").hasRole("USER")
-				.antMatchers("/packages/add").hasRole("ADMIN")
 				.anyRequest().authenticated()
 				.and()
 				.sessionManagement()

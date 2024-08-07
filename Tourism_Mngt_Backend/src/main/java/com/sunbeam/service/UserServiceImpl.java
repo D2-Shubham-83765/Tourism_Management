@@ -3,6 +3,7 @@ package com.sunbeam.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,11 +22,16 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 
 	@Override
 	public String addNewUser(UserDTO dto) {
 		if (dto.getPassword().equals(dto.getConfirmPassword())) {
 			User userEntity = mapper.map(dto, User.class);
+			String encodedPassword = passwordEncoder.encode(dto.getPassword());
+			userEntity.setPassword(encodedPassword);
 			userDao.save(userEntity);
 			return "User registered successfully";
 		}
