@@ -97,9 +97,9 @@ const City = () => {
     autoplay: true,
     autoplaySpeed: 2000,
   };
-
+      
   const imgStyle = {
-    width: '100%',
+    width: '100%', 
     height: '300px',
     objectFit: 'cover',
     borderRadius: '10px',
@@ -112,9 +112,9 @@ const City = () => {
       <br />
       <p style={{ fontSize: '17px', textAlign : 'center', marginLeft : '50px',  marginRight : '50px'}} >Imagine soft white sands, crystal-clear waters, and lush palm trees swaying in the breeze. Tropical beaches offer the perfect setting for relaxation and adventure.
       Snorkeling, scuba diving, paddleboarding, and sunbathing are popular activities. You can also explore vibrant coral reefs and diverse marine life. These beaches are ideal for families, offering gentle waves, shallow waters, and a range of amenities.
-
+           
       </p>
-      
+       
       <div style={galleryStyle}>
         {photoGroups.map((group, index) => (
           <div key={index} style={sliderContainerStyle}>
@@ -123,7 +123,7 @@ const City = () => {
             </div>
             <Slider {...settings} style={sliderStyle}>
               {group.photos.map((photo, idx) => (
-                <div key={idx}>
+                <div key={idx}> 
                   <a href={group.link} target="_blank" rel="noopener noreferrer">
                     <img src={photo} alt={`Photo ${index + 1}-${idx + 1}`} style={imgStyle} />
                   </a>

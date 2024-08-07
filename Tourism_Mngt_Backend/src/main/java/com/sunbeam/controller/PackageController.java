@@ -37,7 +37,6 @@ public class PackageController {
 	}
 	
 	
-	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletePackage(@PathVariable Long id){
 		return ResponseEntity.status(HttpStatus.GONE).body(packageServiceImpl.deletePackage(id));
@@ -48,4 +47,4 @@ public class PackageController {
 		List<CityDTO> cities = cityService.getAllCityDetails(packageId);
 		return ResponseEntity.status(HttpStatus.FOUND).body(cities);
 	}
-}
+} 
