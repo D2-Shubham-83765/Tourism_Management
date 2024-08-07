@@ -1,9 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function ContactUs() {
     const handleSubmit = () => {
-        // This function could handle form submission logic if needed
         console.log('Form submitted');
+    };
+
+    const navigate = useNavigate();
+    const onRequestCall = () => {
+        navigate('/');
     };
 
     return (
@@ -11,80 +16,78 @@ function ContactUs() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            minHeight: '100vh', // Use minHeight for full viewport height
-            flexDirection: 'column', // Stack items vertically
-            textAlign: 'center', // Center text horizontally
-            backgroundImage: `url('https://th.bing.com/th/id/R.68aecc196d9f0d49a064c0abcb26a8ec?rik=MFgYaGALFB7emg&riu=http%3a%2f%2fs1.bwallpapers.com%2fwallpapers%2f2014%2f01%2f24%2fbeach-1920x1080-wallpaper_105248535.jpg&ehk=ktGlbuzqNtJVMv70JBb%2fboKPQOZT9E1OS7GGUNfWlS8%3d&risl=&pid=ImgRaw&r=0')`, // Replace with your image URL
-            backgroundSize: 'cover', // Cover the entire background
-            backgroundPosition: 'center', // Center the background image
+            minHeight: '100vh',
+            flexDirection: 'column',
+            textAlign: 'center',
+            backgroundImage: `url('https://images.unsplash.com/photo-1528747045269-390fe33c19f2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
         }}>
-            <div style={{ marginTop: '50px' }}>
-                <h2>CONTACT US</h2>
-            </div>
-
-            {/* Additional box */}
-            <div style={{ display: 'flex', alignItems: 'center', marginTop: '20px', marginLeft: '-600px' }}>
-            
-                <div style={{marginLeft:'-300px',font:'-moz-initial'}}>
-                    <h5>Contact-Us Today</h5>
-                </div>
-               
-                
-                <div style={{ flex: '10' }}></div>
-
-                <div style={{ flex: '5', textAlign: 'center', marginRight: '-900px' }}>
-                    <div style={{ backgroundColor: '#f0f0f0', padding: '10px', borderRadius: '25px' }}>
-                        <h4>Additional Info</h4>
-                        <p>1. Contact Information <br/>
-                            2. Contact Form <br/>
-                            3. Frequently Asked Questions (FAQs)<br/>
-                            4. Feedback Section<br/>
-                            5. Accessibility Options<br/>
-                            6. Emergency Contact Information<br/>
-                            7. Privacy Policy and Terms of Service</p>
-                        
+            <div className="container mt-5">
+                <div className="row mb-4">
+                    <div className="col-md-12">
+                        <h2 className="text-white mb-3" style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>CONTACT US</h2>
+                        <p className="text-light lead">
+                            Have any questions? We'd love to hear from you. Reach out to us and we'll get back to you as soon as possible.
+                        </p>
                     </div>
-                    
                 </div>
-                
-            </div>
 
-            <div style={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                width: '100%',
-                maxWidth: '400px', // Adjust width as needed
-                marginTop: '20px', // Add margin to separate from heading
-            }}>
-                <div style={{ marginLeft: '-270px', marginTop: '-50px' }}>
-                    <h5>Call</h5>
-                    <p>1234567890</p>
+                <div className="row mb-4">
+                    <div className="col-md-6">
+                        <div className="card bg-light shadow-sm mb-4">
+                            <div className="card-body">
+                                <h5 className="card-title" style={{ fontWeight: 'bold' }}>Contact-Us Today</h5>
+                                <p className="card-text">
+                                    We're here to help you with any inquiries or concerns you may have. Please reach out to us through the information below.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="card bg-light shadow-sm">
+                            <div className="card-body">
+                                <h5 className="card-title" style={{ fontWeight: 'bold' }}>Contact Information</h5>
+                                <ul className="list-unstyled">
+                                    <li>
+                                        Email: 
+                                        <a href="mailto:shubhyatra@gmail.com" className="text-decoration-none"> shubhyatra@gmail.com</a>
+                                    </li>
+                                    <li>
+                                        Phone: 
+                                        <a href="tel:+123987456" className="text-decoration-none"> 123987456</a>
+                                    </li>
+                                    <li>
+                                        Address: 
+                                        <a href="https://www.google.com/maps?q=Hinjewadi,+Pune,+India" target="_blank" rel="noopener noreferrer" className="text-decoration-none"> Hinjewadi, Pune, India</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-md-6 d-flex align-items-center">
+                        <div className="card bg-light shadow-sm mx-auto" style={{ maxWidth: '800px' }}>
+                            <div className="card-body">
+                                <h4 className="text-black mb-4" style={{ fontWeight: 'bold' }}>Want us to call you?</h4>
+                                <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} style={{ width: '100%' }}>
+                                    <div className="form-group mb-3 text-start">
+                                        <label htmlFor="name" className="form-label">Name:</label>
+                                        <input type="text" id="name" className="form-control" placeholder="Enter your name" required />
+                                    </div>
+                                    <div className="form-group mb-3 text-start">
+                                        <label htmlFor="phone" className="form-label">MobNo:</label>
+                                        <input type="text" id="phone" className="form-control" placeholder="Enter your mobile no" required />
+                                    </div>
+                                    <div className="form-group mb-3 text-start">
+                                        <label htmlFor="email" className="form-label">Email:</label>
+                                        <input type="email" id="email" className="form-control" placeholder="Enter your email" required />
+                                    </div>
+                                    <button type="submit" className="btn btn-primary" onClick={onRequestCall}>Request Call</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div style={{ marginLeft: '-300px', marginTop: '-50px' }}>
-                    <h5>Email</h5>
-                    <p>abc@gmail.com</p>
-                </div>
             </div>
-
-            <div style={{ marginTop: '50px', textAlign: 'center', maxWidth: '400px' }}>
-                <h2 style={{ color: 'white' }}>Want us to call you</h2>
-                <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-                    <div style={{ marginBottom: '10px' }}>
-                        <label style={{ marginRight: '10px' }}>Name:</label>
-                        <input type="text" placeholder="Enter your name" />
-                    </div>
-                    <div style={{ marginBottom: '10px' }}>
-                        <label style={{ marginRight: '10px' }}>MobNo:</label>
-                        <input type="text" placeholder="Enter your mobile no" />
-                    </div>
-                    <div style={{ marginBottom: '10px' }}>
-                        <label style={{ marginRight: '10px' }}>Email:</label>
-                        <input type="email" placeholder="Enter your email" />
-                    </div>
-                    <button type="submit">Request Call</button>
-                </form>
-            </div>
-
         </div>
     );
 }
