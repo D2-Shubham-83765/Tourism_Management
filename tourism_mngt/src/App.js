@@ -6,6 +6,7 @@ import Register from './pages/register';
 import ContactUs from './pages/contactus';
 import AboutUs from './pages/aboutus';
 import City from './pages/cities';
+import AdminDashboard from './AdminPages/AdminDashboard';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path='/AboutUs' element={<AboutUs/>}/>
         <Route path='/Register' element={<Register/>}/>
         <Route path='/City' element={<City/>}/>
+        <Route path='/AdminDashboard' element={<AdminDashboard/>}/>
       </Routes>
         
     </div>
