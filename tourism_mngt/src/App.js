@@ -21,8 +21,11 @@ function App() {
         <Route path='/AboutUs' element={<AboutUs/>}/>
         <Route path='/Register' element={<Register/>}/>
         <Route path='/City' element={<City/>}/>
+<<<<<<< HEAD
         <Route path='/AdminDashboard' element={<AdminDashboard/>}/>
         <Route path='/AddPackages' element={<AddPackages/>}/>
+=======
+>>>>>>> 2a7064ec2c5d6bb1461573f9136912ca5727939f
       </Routes>
        <ToastContainer/> 
     </div>
