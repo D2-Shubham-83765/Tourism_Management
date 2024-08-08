@@ -17,12 +17,12 @@ function App() {
     <div>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/ContactUs' element={<ContactUs/>}/>
-        <Route path='/AboutUs' element={<AboutUs/>}/>
-        <Route path='/Register' element={<Register/>}/>
-        <Route path='/City' element={<City/>}/>
-        <Route path='/AdminDashboard' element={<AdminDashboard/>}/>
-        <Route path='/AddPackages' element={<AddPackages/>}/>
+        <Route path='/contact-us' element={<ContactUs/>}/>
+        <Route path='/about-us' element={<AboutUs/>}/>
+        <Route path='/register' element={<Register/>}/>
+        <Route path='/city' element={<City/>}/>
+        <Route path='/admin' element={<AdminDashboard/>}/>
+        <Route path='/add-packages' element={<AddPackages/>}/>
       </Routes>
        <ToastContainer/> 
     </div>

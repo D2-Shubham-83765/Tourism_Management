@@ -1,12 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import './home.css';
 import CityCards from "../components/CityCards";
 import Navbar from "../components/Navbar";
+import axios from "axios";
+import config from "../config";
 
 const Home = () => {
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [Cities, setCities] = useState([])
+
+    useEffect(()=>{
+        const fetchCities = async()=>{
+           try{
+            const response = await axios.get(`${config.url}/`)
+            console.log(response.data)
+            setCities(response.data)
+           }catch(error){
+            console.error("Error fetching cities", error)
+           }
+        }
+        fetchCities()
+    }, []);
 
   return (
     <div>
@@ -38,7 +53,7 @@ const Home = () => {
         </div>
       </main>
 
-      <CityCards />
+      <CityCards Cities={Cities} />
 
       {/* Footer */}
       <footer className="bg-dark text-white text-center text-lg-start" style={{ paddingTop: '20px' }}>

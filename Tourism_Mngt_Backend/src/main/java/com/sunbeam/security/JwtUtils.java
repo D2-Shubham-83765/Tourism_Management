@@ -1,6 +1,7 @@
 package com.sunbeam.security;
 
 import java.security.Key;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +42,7 @@ public class JwtUtils {
 	
 	// will be invoked by Authentication controller , upon successful
 		// authentication
+	@SuppressWarnings("deprecation")
 	public String generateJwtToken(Authentication authentication) {
 		CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
 		//JWT : userName,issued at ,exp date,digital signature(does not typically contain password , can contain authorities
@@ -48,7 +50,7 @@ public class JwtUtils {
 				.setSubject(userPrincipal.getUsername()) // setting subject part of the token(typically user
 				// name/email)
 				.setIssuedAt(new Date()) // Sets the JWT Claims iat (issued at) value of current date
-				.setExpiration(new Date((new Date()).getTime() + jwtExpirationinMs))  // Sets the JWT Claims exp
+						/* .setExpiration(new Date((new Date()).getTime() + jwtExpirationinMs)) */  // Sets the JWT Claims exp
 				// (expiration) value.
 				// setting a custom claim
 				.claim("authorities", userPrincipal.getAuthorities())
