@@ -5,12 +5,12 @@ import Home from './pages/Home';
 import Register from './pages/register';
 import ContactUs from './pages/contactus';
 import AboutUs from './pages/aboutus';
-import City from './pages/cities';
 import AdminDashboard from './AdminPages/AdminDashboard';
 import AddPackages from './AdminPages/AddPackages';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CityPage from './pages/cities';
+import CityCards from './components/CityCards';
 
 
 function App() {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import config from '../config';
+import { useParams } from 'react-router-dom';
 
 const CityPage = () => {
     const { id } = useParams(); // Get the city ID from the route
@@ -28,9 +28,6 @@ const CityPage = () => {
         };
         fetchCityData();
     }, [id]);
-
-    if (error) return <div>{error}</div>;
-    if (!cityData) return <div>Loading...</div>;
 
     // Convert byte array to base64 string
   
