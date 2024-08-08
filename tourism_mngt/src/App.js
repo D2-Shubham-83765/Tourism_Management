@@ -8,18 +8,23 @@ import AboutUs from './pages/aboutus';
 import City from './pages/cities';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CityPage from './pages/cities';
 
 
 function App() {
   return (
     <div>
       <Routes>
+
+
         <Route path='/' element={<Home/>}/>
         <Route path='/ContactUs' element={<ContactUs/>}/>
         <Route path='/AboutUs' element={<AboutUs/>}/>
         <Route path='/Register' element={<Register/>}/>
-        <Route path='/City' element={<City/>}/>
-        <Route path='/AdminDashboard' element={<AdminDashboard/>}/>
+        <Route path='/packages/:packageId' element={<CityPage/>}/>
+        
+ 
+      
       </Routes>
        <ToastContainer/> 
     </div>

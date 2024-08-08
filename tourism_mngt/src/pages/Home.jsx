@@ -39,7 +39,7 @@ const Home = () => {
       </main>
 
       <CityCards />
-
+          
       {/* Footer */}
       <footer className="bg-dark text-white text-center text-lg-start" style={{ paddingTop: '20px' }}>
         <div className="container p-4" style={{ maxWidth: '1100px' }}>

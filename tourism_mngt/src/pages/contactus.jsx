@@ -52,7 +52,7 @@ function ContactUs() {
                                         <a href="mailto:shubhyatra@gmail.com" className="text-decoration-none"> shubhyatra@gmail.com</a>
                                     </li>
                                     <li>
-                                        Phone: 
+                                        Phone:   
                                         <a href="tel:+123987456" className="text-decoration-none"> 123987456</a>
                                     </li>
                                     <li>

@@ -44,7 +44,7 @@ public class City extends BaseEntity{
    
     @Column(name = "starting_date", nullable = false)
     private LocalDate startingDate;
-
+    
   
     @Column(name = "ending_date", nullable = false)
     private LocalDate endingDate;
