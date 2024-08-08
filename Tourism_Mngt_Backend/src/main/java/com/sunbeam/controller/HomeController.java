@@ -17,6 +17,7 @@ import com.sunbeam.dto.PackageResponseDTO;
 import com.sunbeam.service.PackageServiceImpl;
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:3000")
 public class HomeController {
 	@Autowired
 	private PackageServiceImpl packageServiceImpl;

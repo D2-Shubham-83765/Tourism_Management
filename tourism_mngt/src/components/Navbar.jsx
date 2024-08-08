@@ -57,8 +57,7 @@ const Navbar = () => {
                     navigate("/AdminHome");
                 }
             } else {
-                // Handle login failure (e.g., show an error message)
-                console.error("Login failed");
+               navigate("/")
             }
         } catch (error) {
             console.error("Error logging in", error);
@@ -221,7 +220,7 @@ const Navbar = () => {
                                             color: '#337ab7'
                                         }}>Forgot Password?</a>
                                         <div>
-                                            <button type="submit" className="btn btn-primary" style={{
+                                            <button onClick={handleLogin} type="submit" className="btn btn-primary" style={{
                                                 width: '110px',
                                                 height: '45px',
                                                 fontSize: '16px',

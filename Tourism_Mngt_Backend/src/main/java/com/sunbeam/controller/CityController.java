@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,6 +28,7 @@ import com.sunbeam.service.CityServiceImpl;
 
 @RestController
 @RequestMapping("/cities")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CityController {
 	@Autowired
 	private CityServiceImpl cityService;
@@ -67,4 +69,8 @@ public class CityController {
 		cityService.deleteCity(cityId);
 		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("City has been deleted!!"));
 	}
+	/*
+	 * @PostMapping("/traveller/add") public ResponseEntity<?>
+	 * addTraveller(@RequestBody Tra)
+	 */
 }
