@@ -10,12 +10,15 @@ import AdminDashboard from './AdminPages/AdminDashboard';
 import AddPackages from './AdminPages/AddPackages';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CityPage from './pages/cities';
 
 
 function App() {
   return (
     <div>
       <Routes>
+
+
         <Route path='/' element={<Home/>}/>
         <Route path='/contact-us' element={<ContactUs/>}/>
         <Route path='/about-us' element={<AboutUs/>}/>

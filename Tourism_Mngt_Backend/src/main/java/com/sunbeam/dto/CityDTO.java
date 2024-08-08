@@ -13,5 +13,5 @@ public class CityDTO {
 	private byte[] cityImage;
 	private String duration;
 	private Double price;
-	
+    
 }

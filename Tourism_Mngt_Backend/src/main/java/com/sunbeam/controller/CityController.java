@@ -53,12 +53,12 @@ public class CityController {
 			throw new ApiException("Something went wrong");
 		}
 	}
-	
+	  
 	@GetMapping("/{cityId}")
 	public ResponseEntity<?> getCityDetails(@PathVariable Long cityId){
 		return ResponseEntity.status(HttpStatus.FOUND).body(cityService.getCityDetails(cityId));
 	}
-	
+      
 	@PostMapping("/hotel/{cityId}")
 	public ResponseEntity<?> addHotelByCityId(@RequestBody HotelDTO dto){
 		return ResponseEntity.ok(cityService.addHotel(dto));
