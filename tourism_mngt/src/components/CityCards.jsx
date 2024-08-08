@@ -1,25 +1,8 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import config from "../config";
 
 
-const CityCards = () => {
-    const [Cities, setCities] = useState([]);
+const CityCards = ({Cities}) =>{
 
-    const navigate = useNavigate()
-    useEffect(() => {
-        const fetchCities = async () => {
-            try {
-                const response = await axios.get(`${config.url}/`);
-                console.log(response.data);
-                setCities(response.data);
-            } catch (error) {
-                console.error("Error fetching cities", error);
-            }
-        };
-        fetchCities();
-    }, []);
+    
 
     const handleOnCardCLick=(id)=>{
         navigate(`/packages/${id}`)

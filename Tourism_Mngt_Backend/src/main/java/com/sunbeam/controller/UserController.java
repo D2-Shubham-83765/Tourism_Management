@@ -1,5 +1,10 @@
 package com.sunbeam.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -26,7 +31,6 @@ import com.sunbeam.dto.LoginResponse;
 import com.sunbeam.dto.UserDTO;
 import com.sunbeam.security.CustomUserDetails;
 import com.sunbeam.security.JwtUtils;
-import com.sunbeam.security.SecurityConfig;
 import com.sunbeam.service.UserServiceImpl;
 
 
@@ -62,40 +66,21 @@ public class UserController {
 						request.getPassword());
 		//invoke auth mgr's authenticate method;
 		Authentication verifiedToken = authManager.authenticate(token);
+		
+		List<String> roles = verifiedToken.getAuthorities().stream()
+                .map(Object::toString)
+                .collect(Collectors.toList());
+		
 		//=> authentication n authorization  successful !
 		System.out.println(verifiedToken.getPrincipal().getClass());//custom user details object
 		//create JWT n send it to the clnt in response
 		LoginResponse resp=new LoginResponse
 				(utils.generateJwtToken(verifiedToken),
-				"You have been logged in");
+				"You have been logged in", roles);
 		return ResponseEntity.
 				status(HttpStatus.CREATED).body(resp);
 	}
-	
-	
-	/*
-	 * @GetMapping("/user/session") public ResponseEntity<?>
-	 * getUserSession(HttpServletRequest request) { // Retrieve user details from //
-	 * SecurityContext or custom service Authentication authentication =
-	 * SecurityContextHolder.getContext().getAuthentication(); if (authentication ==
-	 * null || !authentication.isAuthenticated()) { // User is not authenticated
-	 * return ResponseEntity.ok().body(Map.of("loggedIn", false)); }
-	 * 
-	 * // Assuming you have a custom UserDetails implementation CustomUserDetails
-	 * userDetails = (CustomUserDetails) authentication.getPrincipal();
-	 * 
-	 * 
-	 * Map<String, Object> sessionData = new HashMap<>();
-	 * sessionData.put("loggedIn", true); sessionData.put("email",
-	 * userDetails.getUsername()); sessionData.put("isAdmin",
-	 * userDetails.getAuthorities().stream(). anyMatch(a ->
-	 * a.getAuthority().equals("ROLE_ADMIN")));
-	 * 
-	 * return ResponseEntity.ok().body(sessionData); }
-	 */
-	 
 
-	
 	@PostMapping("/forget-password")
 	public ResponseEntity<?> forgetPassword(@RequestBody @Valid ForgetPasswordDTO dto){
 		return ResponseEntity.status(HttpStatus.OK).body(userService.setPassword(dto));
