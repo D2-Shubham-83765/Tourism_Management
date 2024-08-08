@@ -5,12 +5,12 @@ import Home from './pages/Home';
 import Register from './pages/register';
 import ContactUs from './pages/contactus';
 import AboutUs from './pages/aboutus';
-import City from './pages/cities';
 import AdminDashboard from './AdminPages/AdminDashboard';
 import AddPackages from './AdminPages/AddPackages';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CityPage from './pages/cities';
+import CityCards from './components/CityCards';
 
 
 function App() {
@@ -23,16 +23,11 @@ function App() {
         <Route path='/ContactUs' element={<ContactUs/>}/>
         <Route path='/AboutUs' element={<AboutUs/>}/>
         <Route path='/Register' element={<Register/>}/>
-<<<<<<< HEAD
-        <Route path='/packages/:packageId' element={<CityPage/>}/>
-        
- 
-      
-=======
-        <Route path='/City' element={<City/>}/>
+        <Route path='/CityPage' element={<CityPage/>}/>
         <Route path='/AdminDashboard' element={<AdminDashboard/>}/>
+        <Route path="/" element={<CityCards />} />
+        <Route path="/packages/:id" element={<CityPage />} />
         <Route path='/AddPackages' element={<AddPackages/>}/>
->>>>>>> 73419441388e464beba1946ebb20b9f6f9cb0c75
       </Routes>
        <ToastContainer/> 
     </div>

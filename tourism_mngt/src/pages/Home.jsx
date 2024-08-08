@@ -23,7 +23,7 @@ const Home = () => {
           backgroundPosition: "center",
           width: "100%"
         }}>
-
+           
         {/* Anim Text */}
         <div className="container22" >
           <span className="mytext1">Welcome to Shubhyatra </span>
@@ -31,7 +31,7 @@ const Home = () => {
             <span className="mytext2"> Enjoy Hassle Free Holiday </span>
           </div>
         </div>
-
+         
         <div className="additional-text">
           <span className="left-text" >24*7 Service</span>
           <span className="right-text" >4.5 Star Customer Rating</span>
