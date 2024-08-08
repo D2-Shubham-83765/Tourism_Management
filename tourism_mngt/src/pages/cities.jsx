@@ -1,30 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import config from '../config';
 
 const CityPage = () => {
-    const { packageId } = useParams(); // Get the city ID from the route
-    const [cityData, setCityData] = useState(null);
+    const { id } = useParams(); // Get the city ID from the route
+    const [cityData, setCityData] = useState([]);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchCityData = async () => {
             try {
-                const response = await axios.get(`/packages/${packageId}`); // Adjust API URL
-                console.log('Fetched data:', response.data); // Debugging
-                setCityData(response.data);
-            } catch (error) {
-                console.error("Error fetching city data", error);
-                setError('Failed to fetch city data');
-            }
+              console.log(id)
+              const token = localStorage.getItem('token')
+                const response = await axios.get(`${config.url}/packages/${id}` ,{
+                  headers: {
+                    Authorization: `Bearer ${token}`, 
+                  }
+                }
+                ) 
+                console.log('Fetched data:', response.data);
+                setCityData(response.data)
+          } catch (error) {
+              console.error("Error fetching city data:", error.response ? error.response.data : error.message);
+              setError('Failed to fetch city data');
+          }
         };
         fetchCityData();
-    }, [packageId]);
+    }, [id]);
 
     if (error) return <div>{error}</div>;
     if (!cityData) return <div>Loading...</div>;
-
-    const { name, cityDetails, cityImage, duration, price } = cityData;
 
     // Convert byte array to base64 string
   

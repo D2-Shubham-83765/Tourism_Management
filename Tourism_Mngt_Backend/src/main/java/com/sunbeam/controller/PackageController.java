@@ -41,12 +41,13 @@ public class PackageController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletePackage(@PathVariable Long id){
-		return ResponseEntity.status(HttpStatus.GONE).body(packageServiceImpl.deletePackage(id));
+		return ResponseEntity.status(HttpStatus.GONE).contentType(MediaType.APPLICATION_JSON).body(packageServiceImpl.deletePackage(id));
 	}
 	
-	@GetMapping("/{packageId}")
-	public ResponseEntity<?> getAllCities(@PathVariable Long packageId){
-		List<CityDTO> cities = cityService.getAllCityDetails(packageId);
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getAllCities(@PathVariable String id){
+		List<CityDTO> cities = cityService.getAllCityDetails(id);
+		System.out.println(cities);
 		return ResponseEntity.status(HttpStatus.FOUND).body(cities);
 	}
 } 
