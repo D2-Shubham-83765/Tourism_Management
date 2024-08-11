@@ -8,6 +8,7 @@ const CityPage = () => {
     const { id } = useParams(); // Get the city ID from the route
     const [cityData, setCityData] = useState([]);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true); // Add loading state
 
     useEffect(() => {
         const fetchCityData = async () => {
@@ -18,47 +19,64 @@ const CityPage = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                
-                console.log('Fetched data:', response.data);
+
                 setCityData(response.data);
+                setLoading(false); // Set loading to false after data is fetched
             } catch (error) {
                 console.error("Error fetching city data:", error.response ? error.response.data : error.message);
                 setError('Failed to fetch city data');
+                setLoading(false); // Set loading to false if there's an error
             }
         };
         fetchCityData();
     }, [id]);
 
+    if (loading) {
+        return (
+            <div className="loader-container">
+                <p>Loading...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return <div className="error-message">{error}</div>;
+    }
+
     return (
         <div className='city-page'>
-            <br />
-            <h1 className='page-title'>Book your favourite Beach now !</h1>
-            <div className='card-group'>
-                {cityData.map((city, index) => (
-                    <div key={index} className="col-md-3">
-                        <div className="card">
-                            <img
-                                src={`data:image/jpeg;base64,${city.cityImage}`}
-                                className="card-img-top"
-                                alt={city.packageName}
-                            />
-                            <div className="card-body">
-                                <div className="city-header">
-                                    <h5 className="city-name">{city.name}</h5>
-                                    <div className="duration-box">{city.duration}</div>
+            {cityData.length > 0 && (
+                <>
+                <br />
+                    <h1 className='page-title'>Book your favourite Beach now!</h1>
+                    <div className='card-group'>
+                        {cityData.map((city, index) => (
+                            <div key={index} className="col-md-3">
+                                <div className="card">
+                                    <img
+                                        src={`data:image/jpeg;base64,${city.cityImage}`}
+                                        className="card-img-top"
+                                        alt={city.packageName}
+                                    />
+                                    <div className="card-body">
+                                        <div className="city-header">
+                                            <h5 className="city-name">{city.name}</h5>
+                                            <div className="duration-box">{city.duration}</div>
+                                        </div>
+                                        <hr />
+                                        <p className="card-text">{city.cityDetails}</p>
+                                    </div>
+                                    <div className="card-footer">
+                                        <small className="text-muted">
+                                            &#8377; {city.price}/person
+                                        </small>
+                                    </div>
                                 </div>
-                                <hr />
-                                <p className="card-text">{city.cityDetails}</p>
                             </div>
-                            <div className="card-footer">
-                                <small className="text-muted">
-                                    &#8377; {city.price} / person
-                                </small>
-                            </div>
-                        </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                </>
+            )}
         </div>
     );
 };
