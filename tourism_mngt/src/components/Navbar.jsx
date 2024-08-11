@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from '../Images/ShubhYatra-removebg-preview.png';
 import axios from 'axios';
 import config from '../config';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);

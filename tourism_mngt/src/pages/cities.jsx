@@ -19,6 +19,7 @@ const CityPage = () => {
                   }
                 }
                 ) 
+                
                 console.log('Fetched data:', response.data);
                 setCityData(response.data)
           } catch (error) {
@@ -34,7 +35,7 @@ const CityPage = () => {
 
     return (
      
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <div className='card-group card-group-scroll'>
           {cityData.map((city,id)=>(
             <div key={id} className="col-md-3 mb-3">
                 <div className="card">
@@ -44,16 +45,16 @@ const CityPage = () => {
                         alt={city.packageName}
                     />
                     <div className="card-body">
-                        <h5 className="card-title">
-                            <b>{city.name}</b>
-                            <b>{city.duration}</b>
-                        </h5>
+                        <div className="city-header">
+                            <h5 className="city-name">{city.name}</h5>
+                            <div className="duration-box">{city.duration}</div>
+                        </div>
                         <hr />
                         <p className="card-text">{city.cityDetails}</p>
                     </div>
                     <div className="card-footer">
                         <small className="text-muted">
-                            starting at &#8377; {city.price}
+                             &#8377; {city.price} / person
                         </small>
                     </div>
                 </div>
