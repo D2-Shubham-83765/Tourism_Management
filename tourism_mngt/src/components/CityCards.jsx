@@ -1,8 +1,10 @@
 
+import { useNavigate } from "react-router-dom";
 
 const CityCards = ({Cities}) =>{
 
-    
+    const navigate = useNavigate();
+
 
     const handleOnCardCLick=(id)=>{
         navigate(`/packages/${id}`)

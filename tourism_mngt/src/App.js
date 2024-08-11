@@ -20,12 +20,12 @@ function App() {
 
 
         <Route path='/' element={<Home/>}/>
-        <Route path='/contact-us' element={<ContactUs/>}/>
-        <Route path='/about-us' element={<AboutUs/>}/>
-        <Route path='/register' element={<Register/>}/>
-        <Route path='/city' element={<City/>}/>
+        <Route path='/ContactUs' element={<ContactUs/>}/>
+        <Route path='/AboutUs' element={<AboutUs/>}/>
+        <Route path='/Register' element={<Register/>}/>
+        <Route path='/CityPage' element={<CityPage/>}/>
         <Route path='/admin' element={<AdminDashboard/>}/>
-        <Route path='/add-packages' element={<AddPackages/>}/>
+        <Route path='/AddPackages' element={<AddPackages/>}/>
       </Routes>
        <ToastContainer/> 
     </div>
