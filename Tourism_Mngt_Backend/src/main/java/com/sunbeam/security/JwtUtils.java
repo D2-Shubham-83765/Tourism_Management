@@ -2,6 +2,7 @@ package com.sunbeam.security;
 
 import java.security.Key;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.sunbeam.custom_exception.ApiException;
@@ -92,9 +94,25 @@ public class JwtUtils {
 	}
 	
 	public List<GrantedAuthority> getAuthoritiesFromClaims(Claims claims){
-		String authString = (String) claims.get("authorities");
-		List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authString);
-		authorities.forEach(System.out::println);
-		return authorities;
+		
+		/*
+		 * String authString = (String) claims.get("authorities");
+		 * List<GrantedAuthority> authorities =
+		 * AuthorityUtils.commaSeparatedStringToAuthorityList(authString);
+		 * authorities.forEach(System.out::println); return authorities;
+		 */
+		 
+		List<?> roles = claims.get("roles", List.class);
+	    List<GrantedAuthority> authorities = new ArrayList<>();
+
+	    if (roles != null) {
+	        for (Object role : roles) {
+	            if (role instanceof String) {
+	                authorities.add(new SimpleGrantedAuthority((String) role));
+	            }
+	        }
+	    }
+
+	    return authorities;
 	}
 }

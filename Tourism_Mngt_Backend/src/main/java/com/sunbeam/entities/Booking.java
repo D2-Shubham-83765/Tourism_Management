@@ -29,4 +29,8 @@ public class Booking extends BaseEntity{
 	@JoinColumn(name = "city_id", referencedColumnName = "id")
 	private City cityId;
 	
+	private Long noOfPassengers;
+	
+	private Double totalCost;
+	
 }
