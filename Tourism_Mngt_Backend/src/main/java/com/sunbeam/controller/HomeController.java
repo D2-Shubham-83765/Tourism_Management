@@ -17,6 +17,7 @@ import com.sunbeam.dto.PackageResponseDTO;
 import com.sunbeam.service.PackageServiceImpl;
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:3000")
 public class HomeController {
 	@Autowired
 	private PackageServiceImpl packageServiceImpl;
@@ -25,6 +26,7 @@ public class HomeController {
 	public ResponseEntity<?> getAllPackages(){
 		try {
 		List<PackageResponseDTO> packageDetails = packageServiceImpl.getPackageDetails();
+		System.out.println(packageDetails);
 			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(packageDetails);
 		} catch (IOException e) {
 			throw new ApiException("Something went wrong!! Try again");

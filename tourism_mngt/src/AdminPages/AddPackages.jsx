@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import config from '../config';
+import { toast } from 'react-toastify';
 
 export default function AddPackages() {
   const [packageName, setPackageName] = useState('');
@@ -29,9 +30,9 @@ export default function AddPackages() {
       setpackageDetails('');
       setImageFile(null);
       setstartingPrice('');
-      alert('Package added successfully!');
+      toast.success('Package added successfully!');
     } catch (error) {
-      console.error('Error adding package', error);
+      toast.error('Error adding package', error);
       alert('Failed to add package. Please try again.');
     }
   };

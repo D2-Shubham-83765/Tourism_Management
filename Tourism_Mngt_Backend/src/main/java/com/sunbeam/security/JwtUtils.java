@@ -1,6 +1,8 @@
 package com.sunbeam.security;
 
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.sunbeam.custom_exception.ApiException;
@@ -41,6 +44,7 @@ public class JwtUtils {
 	
 	// will be invoked by Authentication controller , upon successful
 		// authentication
+	@SuppressWarnings("deprecation")
 	public String generateJwtToken(Authentication authentication) {
 		CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
 		//JWT : userName,issued at ,exp date,digital signature(does not typically contain password , can contain authorities
@@ -48,7 +52,7 @@ public class JwtUtils {
 				.setSubject(userPrincipal.getUsername()) // setting subject part of the token(typically user
 				// name/email)
 				.setIssuedAt(new Date()) // Sets the JWT Claims iat (issued at) value of current date
-				.setExpiration(new Date((new Date()).getTime() + jwtExpirationinMs))  // Sets the JWT Claims exp
+						/* .setExpiration(new Date((new Date()).getTime() + jwtExpirationinMs)) */  // Sets the JWT Claims exp
 				// (expiration) value.
 				// setting a custom claim
 				.claim("authorities", userPrincipal.getAuthorities())
@@ -90,9 +94,25 @@ public class JwtUtils {
 	}
 	
 	public List<GrantedAuthority> getAuthoritiesFromClaims(Claims claims){
-		String authString = (String) claims.get("authorities");
-		List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authString);
-		authorities.forEach(System.out::println);
-		return authorities;
+		
+		/*
+		 * String authString = (String) claims.get("authorities");
+		 * List<GrantedAuthority> authorities =
+		 * AuthorityUtils.commaSeparatedStringToAuthorityList(authString);
+		 * authorities.forEach(System.out::println); return authorities;
+		 */
+		 
+		List<?> roles = claims.get("roles", List.class);
+	    List<GrantedAuthority> authorities = new ArrayList<>();
+
+	    if (roles != null) {
+	        for (Object role : roles) {
+	            if (role instanceof String) {
+	                authorities.add(new SimpleGrantedAuthority((String) role));
+	            }
+	        }
+	    }
+
+	    return authorities;
 	}
 }

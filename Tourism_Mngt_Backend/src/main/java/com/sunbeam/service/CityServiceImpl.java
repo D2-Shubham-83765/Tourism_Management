@@ -40,8 +40,9 @@ public class CityServiceImpl implements CityService{
 	private HotelDao hotelDao;
 	
 	
-	public List<CityDTO> getAllCityDetails(Long packageId){
-		List<CityDTO> cityList = cityDao.findByPackageId(packageId);
+	public List<CityDTO> getAllCityDetails(String packageId){
+		Long pkgId = Long.parseLong(packageId);
+		List<CityDTO> cityList = cityDao.findByPackageId(pkgId);
 		return cityList;
 	}
 	

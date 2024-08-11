@@ -12,11 +12,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@SuppressWarnings("deprecation")
+
 @EnableWebSecurity
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -41,10 +43,8 @@ public class SecurityConfig {
 				and().
 				authorizeRequests()
 				.antMatchers("/**", "/user/register","/user/login","/user/forget-password",
-						"/v*/api-doc*/**","/swagger-ui/**" ).permitAll()
+						"/v*/api-doc*/**","/swagger-ui.html/**" ).permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
-//				.antMatchers("/**").hasRole("USER")
-//				.antMatchers("/packages/add").hasRole("ADMIN")
 				.anyRequest().authenticated()
 				.and()
 				.sessionManagement()

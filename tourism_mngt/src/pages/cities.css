@@ -1,0 +1,25 @@
+.city-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Space between header and content */
+}
+
+.city-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0;
+    flex-grow: 1; /* Ensure the city name takes up available space */
+}
+
+.duration-box {
+    background-color: #f0f0f0; /* Light grey background */
+    padding: 5px 10px;
+    border-radius: 15px; /* Curved edges */
+    font-size: 0.9em;
+    color: #333; /* Text color */
+    white-space: nowrap; /* Prevent text wrapping */
+    margin-left: 10px; /* Space between city name and duration box */
+    display: inline-block; /* Ensure the box is displayed inline */
+}
+

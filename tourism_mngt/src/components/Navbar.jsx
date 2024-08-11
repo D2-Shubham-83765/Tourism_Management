@@ -11,58 +11,49 @@ const Navbar = () => {
     const [userEmail, setUserEmail] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isAdmin, setIsAdmin] = useState(false);
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        // Check if the user is logged in when the component mounts
-        const checkUserSession = async () => {
-            try {
-                const response = await axios.get(`${config.url}/user/login`);
-                if (response.data.loggedIn) {
-                    setIsLoggedIn(true);
-                    setUserEmail(response.data.email);
-                    setIsAdmin(response.data.isAdmin);
-                }
-            } catch (error) {
-                console.error("Error checking user session", error);
-            }
-        };
-        checkUserSession();
-    }, [isLoggedIn,userEmail]);
 
-    const handleLogout = async () => {
-        try {
-            await axios.post(`${config.url}/user/logout`);
-            setIsLoggedIn(false);
-            setUserEmail("");
-            setIsAdmin(false);
-        } catch (error) {
-            console.error("Error logging out", error);
-        }
-    };
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('roles');
 
-    const handleLogin = async (event) => {
-        event.preventDefault();
+        setIsLoggedIn(false);
+        setUserEmail("");
+    
+        navigate('/');
+      };
+
+    const handleLogin = async () => {
+       
         try {
-            const response = await axios.post(`${config.url}/user/login`, { email, password });
-            if (response.data.success) {
+            const response = await axios.post(`${config.url}/user/login`, {
+              email,
+              password
+            });
+      
+            const { token, roles } = response.data;
+
+            localStorage.setItem('token', token);
+            localStorage.setItem('roles', JSON.stringify(roles));
+            setUserEmail(email)
+      
+            if (roles.includes('ADMIN')) {
+             navigate('/admin');
+             setIsLoggedIn(true);
+
+            } else if (roles.includes('USER')) {
+                navigate('/');
                 setIsLoggedIn(true);
-                setUserEmail(response.data.email);
-                setIsAdmin(response.data.isAdmin);
-                setShowLoginModal(false);
-
-                // Redirect to AdminHome if the user is an admin
-                if (response.data.isAdmin) {
-                    navigate("/AdminHome");
-                }
             } else {
-               navigate("/")
+              // Handle other roles or scenarios
+              console.log('Unknown role:', roles);
             }
-        } catch (error) {
-            console.error("Error logging in", error);
-        }
+      
+          } catch (error) {
+            console.error('Login failed:', error);
+          }
     };
 
     return (
@@ -99,9 +90,9 @@ const Navbar = () => {
                                         </span>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" style={{ textDecoration: 'none' }} onClick={handleLogout}>
+                                        <button type= "button" className="nav-link" style={{ textDecoration: 'none' }} onClick={handleLogout}>
                                             Logout
-                                        </a>
+                                        </button>
                                     </li>
                                 </>
                             ) : (
@@ -221,7 +212,7 @@ const Navbar = () => {
                                             color: '#337ab7'
                                         }}>Forgot Password?</a>
                                         <div>
-                                            <button type="submit" className="btn btn-primary" style={{
+                                            <button onClick={() => { handleLogin(); setShowLoginModal(false); }} type="submit" className="btn btn-primary" style={{
                                                 width: '110px',
                                                 height: '45px',
                                                 fontSize: '16px',
