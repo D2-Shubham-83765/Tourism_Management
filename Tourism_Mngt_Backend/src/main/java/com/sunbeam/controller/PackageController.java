@@ -48,6 +48,6 @@ public class PackageController {
 	public ResponseEntity<?> getAllCities(@PathVariable String id){
 		List<CityDTO> cities = cityService.getAllCityDetails(id);
 		System.out.println(cities);
-		return ResponseEntity.status(HttpStatus.FOUND).body(cities);
+		return ResponseEntity.status(HttpStatus.OK).body(cities);
 	}
 } 
