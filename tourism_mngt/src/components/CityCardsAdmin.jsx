@@ -1,30 +1,51 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import config from "../config";
-import { useNavigate } from "react-router-dom";
-import AdminDashboard from "../AdminPages/AdminDashboard";
 import { toast } from "react-toastify";
 
 const CityCardsAdmin = () => {
     const [cities, setCities] = useState([]);
-    const navigate = useNavigate();
-
+    const [editingCity, setEditingCity] = useState(null);
+    const [refresh, setRefresh] = useState(false);
+    const [updatedCity, setUpdatedCity] = useState({
+        packageName: '',
+        packageDetails: '',
+        startingPrice: ''
+    });
+   
     useEffect(() => {
         const fetchCities = async () => {
             try {
                 const response = await axios.get(`${config.url}/`);
-                console.log(response.data);
-                setCities(response.data);
+                if (response.data !== cities) {
+                    setCities(response.data);
+                }
             } catch (error) {
                 console.error("Error fetching cities", error);
             }
         };
         fetchCities();
-    }, [cities]); // Add a dependency to re-run the effect after deletion
+    }, [refresh]); // Re-fetch cities when cities state changes
 
-    const handleUpdate = (id) => {
-        // Implement the update functionality
-        console.log("Update city with id:", id);
+    const handleUpdate = (city) => {
+        setEditingCity(city.id);
+        setUpdatedCity({
+            packageName: updatedCity.packageName,
+            packageDetails: updatedCity.packageDetails,
+            startingPrice: updatedCity.startingPrice
+        });
+    };
+
+    const saveUpdatedCity = async (id) => {
+        try {
+            await axios.put(`${config.url}/packages/update/${id}`,updatedCity)
+            toast.success("City details updated successfully");
+            setEditingCity(null); // Close the editing mode
+            setRefresh(prev => !prev); // Toggle `refresh` to force re-fetch
+            setCities([]); // Trigger re-fetch
+        } catch (error) {
+            console.error("Error updating city", error);
+        }
     };
 
     const handleDelete = async (id) => {
@@ -44,14 +65,45 @@ const CityCardsAdmin = () => {
                     <div className="card">
                         <img src={`data:image/jpeg;base64,${city.image}`} className="card-img-top" alt={city.packageName} />
                         <div className="card-body">
-                            <h5 className="card-title"><b>{city.packageName}</b></h5>
-                            <hr />
-                            <p className="card-text">{city.packageDetails}</p>
+                            {editingCity === city.id ? (
+                                <>
+                                    <input
+                                        type="text"
+                                        value={updatedCity.packageName}
+                                        onChange={(e) => setUpdatedCity({ ...updatedCity, packageName: e.target.value })}
+                                        placeholder="Package Name"
+                                        className="form-control mb-2"
+                                    />
+                                    <textarea
+                                        value={updatedCity.packageDetails}
+                                        onChange={(e) => setUpdatedCity({ ...updatedCity, packageDetails: e.target.value })}
+                                        placeholder="Package Details"
+                                        className="form-control mb-2"
+                                    />
+                                    <input
+                                        type="number"
+                                        value={updatedCity.startingPrice}
+                                        onChange={(e) => setUpdatedCity({ ...updatedCity, startingPrice: e.target.value })}
+                                        placeholder="Starting Price"
+                                        className="form-control mb-2"
+                                    />
+                                    <div className="d-flex justify-content-between">
+                                        <button className="btn btn-success btn-sm" onClick={() => saveUpdatedCity(city.id)}>Save</button>
+                                        <button className="btn btn-secondary btn-sm" onClick={() => setEditingCity(null)}>Cancel</button>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <h5 className="card-title"><b>{city.packageName}</b></h5>
+                                    <hr />
+                                    <p className="card-text">{city.packageDetails}</p>
+                                </>
+                            )}
                         </div>
                         <div className="card-footer">
                             <small className="text-muted">Starting at &#8377; {city.startingPrice}</small>
                             <div className="d-flex justify-content-center mt-2 gap-2">
-                                <button className="btn btn-primary btn-sm" onClick={() => handleUpdate(city.id)}>Update</button>
+                                <button className="btn btn-primary btn-sm" onClick={() => handleUpdate(city)}>Update</button>
                                 <button className="btn btn-danger btn-sm" onClick={() => handleDelete(city.id)}>Delete</button>
                             </div>
                         </div>

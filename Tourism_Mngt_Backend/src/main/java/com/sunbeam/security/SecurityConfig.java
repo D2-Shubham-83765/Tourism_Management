@@ -43,8 +43,8 @@ public class SecurityConfig {
 				.antMatchers("/**", "/user/register","/user/login","/user/forget-password",
 						"/v*/api-doc*/**","/swagger-ui/**" ).permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
-				.antMatchers("/**").hasRole("USER")
-				.antMatchers("/packages/add").hasRole("ADMIN")
+//				.antMatchers("/**").hasRole("USER")
+//				.antMatchers("/packages/add").hasRole("ADMIN")
 				.anyRequest().authenticated()
 				.and()
 				.sessionManagement()

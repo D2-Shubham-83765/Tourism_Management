@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from '../Images/ShubhYatra-removebg-preview.png';
 import axios from 'axios';
 import config from '../config';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -18,7 +19,7 @@ const Navbar = () => {
         // Check if the user is logged in when the component mounts
         const checkUserSession = async () => {
             try {
-                const response = await axios.get(`${config.url}/user/session`);
+                const response = await axios.get(`${config.url}/user/login`);
                 if (response.data.loggedIn) {
                     setIsLoggedIn(true);
                     setUserEmail(response.data.email);
@@ -29,7 +30,7 @@ const Navbar = () => {
             }
         };
         checkUserSession();
-    }, []);
+    }, [isLoggedIn,userEmail]);
 
     const handleLogout = async () => {
         try {
