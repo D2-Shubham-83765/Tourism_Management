@@ -5,14 +5,14 @@ import { register } from "../services/user";
 import { toast } from 'react-toastify';
 
 function Register() {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [securityQuestionId, setSecurityQuestionId] = useState('')
-  const [securityAnswer, setSecurityAnswer] = useState('')
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [securityQuestionId, setSecurityQuestionId] = useState('');
+  const [securityAnswer, setSecurityAnswer] = useState('');
 
   const inputStyle = {
     width: '100%',
@@ -55,6 +55,11 @@ function Register() {
     margin: '0 10px',
   };
 
+  const headingStyle = {
+    fontWeight: 'bold',
+    fontSize: '30px',
+  };
+
   const navigate = useNavigate();
 
   const onCancel = () => {
@@ -62,192 +67,114 @@ function Register() {
   };
 
   const isValidEmail = () => {
-    return email.includes('@')
-  }
-  const handleFirstName = (event) =>{
-    setFirstName(event.target.value);
-  }
+    return email.includes('@');
+  };
 
-  const handleLastName = (event)=> {
-    setLastName(event.target.value);
-  }
+  const handleFirstName = (event) => setFirstName(event.target.value);
+  const handleLastName = (event) => setLastName(event.target.value);
+  const handleEmail = (event) => setEmail(event.target.value);
+  const handlePhone = (event) => setPhoneNumber(event.target.value);
+  const handlePassword = (event) => setPassword(event.target.value);
+  const handleConfirmPassword = (event) => setConfirmPassword(event.target.value);
+  const handleQuestionChange = (event) => setSecurityQuestionId(event.target.value);
+  const handleAnswerChange = (event) => setSecurityAnswer(event.target.value);
 
-  const handleEmail = (event) => {
-    setEmail(event.target.value);
-  }
+  const onSubmitting = (event) => event.preventDefault();
 
-  const handlePhone = (event) => {
-    setPhoneNumber(event.target.value);
-  }
-
-  const handlePassword = (event) => {
-    setPassword(event.target.value);
-  }
-
-  const handleConfirmPassword = (event) => {
-    setConfirmPassword(event.target.value);
-  }
-
-  const handleQuestionChange = (event) => {
-    setSecurityQuestionId(event.target.value);
-  }
-
-  const handleAnswerChange = (event) => {
-    setSecurityAnswer(event.target.value);
-  }
-const onSubmitting = (event) =>{
-  event.preventDefault();
-}
   const onRegister = async () => {
-  
-    console.log('onRegister')
+    console.log('onRegister');
 
     if (firstName.length === 0) {
-      toast.warning('enter first name')
+      toast.warning('Enter first name');
     } else if (lastName.length === 0) {
-      toast.warning('enter last name')
+      toast.warning('Enter last name');
     } else if (email.length === 0) {
-      toast.warning('enter email')
+      toast.warning('Enter email');
     } else if (!isValidEmail()) {
-      toast.warning('Email is not valid')
-    }else if (phoneNumber.length === 0) {
-      toast.warning('Enter phone number')
-    }else if (password.length === 0) {
-      toast.warning('enter password')
+      toast.warning('Email is not valid');
+    } else if (phoneNumber.length === 0) {
+      toast.warning('Enter phone number');
+    } else if (password.length === 0) {
+      toast.warning('Enter password');
     } else if (confirmPassword.length === 0) {
-      toast.warning('confirm password')
+      toast.warning('Confirm password');
     } else if (password !== confirmPassword) {
-      toast.warning('password does not match')
-    }else if (securityAnswer.length ===0){
-      toast.warning('enter security answer')
-    }
-     else {
-      
-      const result = await register(firstName, lastName, email, phoneNumber, password, confirmPassword, securityQuestionId, securityAnswer)
-      console.log(result)
+      toast.warning('Passwords do not match');
+    } else if (securityAnswer.length === 0) {
+      toast.warning('Enter security answer');
+    } else {
+      const result = await register(firstName, lastName, email, phoneNumber, password, confirmPassword, securityQuestionId, securityAnswer);
+      console.log(result);
       if (result.status === 'success') {
-        toast.success('You are successfully registered')
-        navigate('/')
+        toast.success('You are successfully registered');
+        navigate('/');
       } else {
-        toast.error('Failed to register the user')
+        toast.error('Failed to register the user');
       }
     }
-  }
+  };
 
-  
-  const mediaQueries = `
-    @media (max-width: 1024px) {
-      .container {
-        padding: 20px;
-      }
-
-      .form-container {
-        width: 100%;
-        max-width: 90%;
-      }
-
-      .input {
-        width: 100%;
-        max-width: 100%;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 15px;
-      }
-
-      .form-container {
-        padding: 15px;
-      }
-
-      .input {
-        width: 100%;
-        max-width: 100%;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 10px;
-      }
-
-      .form-container {
-        padding: 10px;
-      }
-
-      .input {
-        width: 100%;
-        max-width: 100%;
-      }
-    }
-  `;
-  
   return (
-    <div className='container' style={containerStyle}>
+    <div style={containerStyle}>
       <br />
-      <div><h2>Registration Page</h2></div>
+      <div><h2 style={headingStyle}>Registration Page</h2></div>
       <br />
-      <style>{mediaQueries}</style>
-      <form className='form-container' style={formContainerStyle} onSubmit={onSubmitting}>
+      <form style={formContainerStyle} onSubmit={onSubmitting}>
         <div className='mb-3'>
           <label htmlFor='Name' style={labelStyle}>First Name :</label>
-          <input  type='text'  className='form-control input'  id='name' placeholder="e.g Suresh" 
-            style={inputStyle} onChange={handleFirstName} required/>
+          <input type='text' className='form-control' id='name' placeholder="e.g Suresh" 
+            style={inputStyle} onChange={handleFirstName} required />
         </div>
 
         <div className='mb-3'>
           <label htmlFor='Name' style={labelStyle}>Last Name :</label>
-          <input  type='text'  className='form-control input'  id='name' placeholder="e.g Suresh" 
-            style={inputStyle} onChange={handleLastName} required/>
+          <input type='text' className='form-control' id='name' placeholder="e.g Suresh" 
+            style={inputStyle} onChange={handleLastName} required />
         </div>
 
         <div className='mb-3'>
           <label htmlFor='Email' style={labelStyle}>Email :</label>
-          <input type='email' className='form-control input' id='Email' placeholder="abc@gmail.com" 
+          <input type='email' className='form-control' id='Email' placeholder="abc@gmail.com" 
             style={inputStyle} onChange={handleEmail} required />
         </div>
 
         <div className='mb-3'>
           <label htmlFor='Password' style={labelStyle}>Password :</label>
-          <input type='password' className='form-control input'  id='password' placeholder="******" style={inputStyle} 
-            onChange={handlePassword} required  minLength={8} />
+          <input type='password' className='form-control' id='password' placeholder="******" 
+            style={inputStyle} onChange={handlePassword} required minLength={8} />
           <small style={{ color: 'black' }}>Password must be at least 8 characters long.</small>
-
         </div>
 
         <div className='mb-3'>
           <label htmlFor='Password' style={labelStyle}>Confirm Password :</label>
-          <input type='password' className='form-control input'  id='confirm-password' placeholder="******" style={inputStyle} 
-            onChange={handleConfirmPassword} required  minLength={8} />
+          <input type='password' className='form-control' id='confirm-password' placeholder="******" 
+            style={inputStyle} onChange={handleConfirmPassword} required minLength={8} />
           <small style={{ color: 'black' }}>Password must be at least 8 characters long.</small>
-
         </div>
 
         <div className='mb-3'>
           <label htmlFor='Phone' style={labelStyle}>Phone :</label>
-          <input type='number' className='form-control input' id='phoneNumber' placeholder="Phone" style={inputStyle}onChange={handlePhone}  required  pattern="\d{10}" />
-      
+          <input type='number' className='form-control' id='phoneNumber' placeholder="Phone" 
+            style={inputStyle} onChange={handlePhone} required pattern="\d{10}" />
         </div>
 
         <div className='mb-3'>
           <label htmlFor='Security question' style={labelStyle}>Security Question :</label>
-          <select  id='security_ques'  className='form-control input' style={inputStyle} 
-                value={securityQuestionId} onChange={handleQuestionChange} required  >
+          <select id='security_ques' className='form-control' style={inputStyle} 
+                value={securityQuestionId} onChange={handleQuestionChange} required>
             <option value=''>Select question</option>
             <option value='1'>What is your favourite sport?</option>
             <option value='2'>What is your favourite color? </option>
             <option value='3'>Which is your dream destination?</option>
             <option value='4'>In which city were you born?</option>
           </select>
-          
+
           <label htmlFor='Security answer' style={labelStyle}>Security Answer :</label>
-          <input type='text' className='form-control input' id='Answer' placeholder="give your answer" style={inputStyle} 
-            onChange={handleAnswerChange}required />
-        
+          <input type='text' className='form-control' id='Answer' placeholder="Give your answer" 
+            style={inputStyle} onChange={handleAnswerChange} required />
         </div>
 
-        <div className='mb-3' style={buttonContainerStyle}>
+        <div style={buttonContainerStyle}>
           <button type='submit' className='btn btn-success' style={buttonStyle} onClick={onRegister}>Register</button>
           <button type='button' className='btn btn-secondary' style={buttonStyle} onClick={onCancel}>Cancel</button>
         </div>
