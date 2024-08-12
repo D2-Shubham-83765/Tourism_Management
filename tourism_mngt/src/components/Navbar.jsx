@@ -14,46 +14,54 @@ const Navbar = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        // Check if there's a token in localStorage
+        const token = localStorage.getItem('token');
+        const storedEmail = localStorage.getItem('userEmail');
+        if (token && storedEmail) {
+            setIsLoggedIn(true);
+            setUserEmail(storedEmail);
+        }
+    }, []);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('roles');
+        localStorage.removeItem('userEmail');
 
         setIsLoggedIn(false);
         setUserEmail("");
-    
+
         navigate('/');
-      };
+    };
 
     const handleLogin = async () => {
-       
         try {
             const response = await axios.post(`${config.url}/user/login`, {
-              email,
-              password
+                email,
+                password
             });
-      
+
             const { token, roles } = response.data;
 
             localStorage.setItem('token', token);
             localStorage.setItem('roles', JSON.stringify(roles));
-            setUserEmail(email)
-      
-            if (roles.includes('ADMIN')) {
-             navigate('/admin');
-             setIsLoggedIn(true);
+            localStorage.setItem('userEmail', email);
 
+            setUserEmail(email);
+            setIsLoggedIn(true);
+
+            if (roles.includes('ADMIN')) {
+                navigate('/admin');
             } else if (roles.includes('USER')) {
                 navigate('/');
-                setIsLoggedIn(true);
             } else {
-              // Handle other roles or scenarios
-              console.log('Unknown role:', roles);
+                console.log('Unknown role:', roles);
             }
-      
-          } catch (error) {
+
+        } catch (error) {
             console.error('Login failed:', error);
-          }
+        }
     };
 
     return (
@@ -71,12 +79,12 @@ const Navbar = () => {
                             </li>
 
                             <li className="nav-item">
-                                <Link to="/ContactUs" className="nav-link" style={{ textDecoration: 'none' }}>
+                                <Link to="/contact-us" className="nav-link" style={{ textDecoration: 'none' }}>
                                     Contact Us
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/AboutUs" className="nav-link" style={{ textDecoration: 'none' }}>
+                                <Link to="/about-us" className="nav-link" style={{ textDecoration: 'none' }}>
                                     About Us
                                 </Link>
                             </li>
@@ -90,7 +98,7 @@ const Navbar = () => {
                                         </span>
                                     </li>
                                     <li className="nav-item">
-                                        <button type= "button" className="nav-link" style={{ textDecoration: 'none' }} onClick={handleLogout}>
+                                        <button type="button" className="nav-link" style={{ textDecoration: 'none' }} onClick={handleLogout}>
                                             Logout
                                         </button>
                                     </li>

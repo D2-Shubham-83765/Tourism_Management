@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CityPage from './pages/cities';
 import CityCards from './components/CityCards';
+import AddCity from './AdminPages/AddCity';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path='/packages/:id' element={<CityPage/>}/>
         <Route path='/admin' element={<AdminDashboard/>}/>
         <Route path='/add-packages' element={<AddPackages/>}/>
+        <Route path='/add-city' element={<AddCity/>}/>
       </Routes>
        <ToastContainer/> 
     </div>
