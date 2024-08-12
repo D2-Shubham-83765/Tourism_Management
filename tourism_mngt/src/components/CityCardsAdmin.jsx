@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import config from "../config";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CityCardsAdmin = () => {
     const [cities, setCities] = useState([]);
@@ -12,7 +13,7 @@ const CityCardsAdmin = () => {
         packageDetails: '',
         startingPrice: ''
     });
-   
+
     useEffect(() => {
         const fetchCities = async () => {
             try {
@@ -25,20 +26,20 @@ const CityCardsAdmin = () => {
             }
         };
         fetchCities();
-    }, [refresh]); // Re-fetch cities when cities state changes
+    }, [refresh]); // Re-fetch cities when refresh state changes
 
     const handleUpdate = (city) => {
         setEditingCity(city.id);
         setUpdatedCity({
-            packageName: updatedCity.packageName,
-            packageDetails: updatedCity.packageDetails,
-            startingPrice: updatedCity.startingPrice
+            packageName: city.packageName, // Pre-fill with existing data
+            packageDetails: city.packageDetails,
+            startingPrice: city.startingPrice
         });
     };
 
     const saveUpdatedCity = async (id) => {
         try {
-            await axios.put(`${config.url}/packages/update/${id}`,updatedCity)
+            await axios.put(`${config.url}/packages/update/${id}`, updatedCity);
             toast.success("City details updated successfully");
             setEditingCity(null); // Close the editing mode
             setRefresh(prev => !prev); // Toggle `refresh` to force re-fetch
@@ -58,11 +59,16 @@ const CityCardsAdmin = () => {
         }
     };
 
+    const navigate = useNavigate();
+    const handleOnCardClick=(id)=>{
+        navigate(`/packages/${id}`);
+    }
+
     return (
         <div className="card-group card-group-scroll">
             {cities.map((city, id) => (
-                <div key={id} className="col-md-3 mb-3">
-                    <div className="card">
+                <div key={id} className="col-md-3 mb-3"  >
+                    <div className="card" onClick={()=>handleOnCardClick(city.id)}>  
                         <img src={`data:image/jpeg;base64,${city.image}`} className="card-img-top" alt={city.packageName} />
                         <div className="card-body">
                             {editingCity === city.id ? (
