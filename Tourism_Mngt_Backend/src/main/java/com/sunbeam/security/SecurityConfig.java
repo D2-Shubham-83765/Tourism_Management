@@ -43,11 +43,11 @@ public class SecurityConfig {
 				.exceptionHandling().authenticationEntryPoint(authEntry).
 				and().
 				authorizeRequests()
-				.antMatchers("/", "/user/register","/user/login","/user/forget-password",
-						"/v*/api-doc*/**","/swagger-ui.html/**" ).permitAll()
+				.antMatchers("/", "/**", "/user/register","/user/login","/user/forget-password",
+						"/v*/api-doc*/**","/swagger-ui/**" ).permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
 				.antMatchers("/packages/**").hasAuthority("USER")
-//				.antMatchers("/packages/add").hasRole("ADMIN")
+				.antMatchers("/packages/add").hasAuthority("ADMIN")
 				.anyRequest().authenticated()
 				.and()
 				.sessionManagement()
