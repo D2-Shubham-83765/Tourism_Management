@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import logo from '../Images/ShubhYatra-removebg-preview.png';
 import axios from 'axios';
 import config from '../config';
 import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -47,6 +49,8 @@ const Navbar = () => {
             localStorage.setItem('token', token);
             localStorage.setItem('roles', JSON.stringify(roles));
             localStorage.setItem('userEmail', email);
+          
+            toast.success('Login successful!');
 
             setUserEmail(email);
             setIsLoggedIn(true);
@@ -58,9 +62,9 @@ const Navbar = () => {
             } else {
                 console.log('Unknown role:', roles);
             }
-
+      
         } catch (error) {
-            console.error('Login failed:', error);
+            toast.error('Login failed. Please check your email and password.');
         }
     };
 
@@ -73,7 +77,7 @@ const Navbar = () => {
                     </a>
 
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul className="navbar-nav ml-auto">
+                        <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
                                 <a className="nav-link">Home</a>
                             </li>
@@ -88,17 +92,32 @@ const Navbar = () => {
                                     About Us
                                 </Link>
                             </li>
+                            
+                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                            
+                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
                         </ul>
-                        <ul className="navbar-nav ml-auto" style={{ marginLeft: '900px' }}>
+                        <ul className="navbar-nav ml-auto">
                             {isLoggedIn ? (
-                                <>
+                                <> 
                                     <li className="nav-item">
                                         <span className="nav-link" style={{ textDecoration: 'none' }}>
-                                            Hello, {userEmail}
+                                            <FontAwesomeIcon icon={faUser} /> Hello, {userEmail}
                                         </span>
                                     </li>
                                     <li className="nav-item">
-                                        <button type="button" className="nav-link" style={{ textDecoration: 'none' }} onClick={handleLogout}>
+                          
+                                        <button type="button" className="nav-link btn btn-link" onClick={handleLogout} style={{ textDecoration: 'none' }}>
+
                                             Logout
                                         </button>
                                     </li>
@@ -162,7 +181,7 @@ const Navbar = () => {
                                 }}>Login</h5>
                             </div>
                             <div className="modal-body">
-                                <form onSubmit={handleLogin}>
+                                <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
                                     <div className="form-group" style={{ marginBottom: '20px' }}>
                                         <label htmlFor="email" style={{
                                             fontSize: '18px',
@@ -214,13 +233,9 @@ const Navbar = () => {
                                         justifyContent: 'space-between',
                                         alignItems: 'center'
                                     }}>
-                                        <a className="ml-3" href="/" style={{
-                                            textDecoration: 'none',
-                                            fontSize: '14px',
-                                            color: '#337ab7'
-                                        }}>Forgot Password?</a>
                                         <div>
-                                            <button onClick={() => { handleLogin(); setShowLoginModal(false); }} type="submit" className="btn btn-primary" style={{
+                                            <br />
+                                            <button onClick={() => { handleLogin(); setShowLoginModal(false); }} type="button" className="btn btn-primary" style={{
                                                 width: '110px',
                                                 height: '45px',
                                                 fontSize: '16px',
@@ -241,6 +256,12 @@ const Navbar = () => {
                                                 borderRadius: '5px',
                                                 transition: 'background-color 0.3s ease'
                                             }}>Close</button>
+                                            &nbsp; &nbsp;
+                                            <Link to="/forgot-password" style={{
+                                                textDecoration: 'none',
+                                                fontSize: '14px',
+                                                color: '#337ab7'
+                                            }}>Forgot Password?</Link>
                                         </div>
                                     </div>
                                 </form>

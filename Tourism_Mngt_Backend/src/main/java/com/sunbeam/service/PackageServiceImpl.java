@@ -14,7 +14,7 @@ import com.sunbeam.custom_exception.ResourceNotFoundException;
 import com.sunbeam.custom_exception.ApiException;
 import com.sunbeam.dao.PackageDao;
 import com.sunbeam.dto.PackageResponseDTO;
-import com.sunbeam.dto.updatePackageDTO;
+import com.sunbeam.dto.UpdatePackageDTO;
 import com.sunbeam.entities.Package;
 
 import com.sunbeam.dto.ApiResponse;
@@ -78,7 +78,7 @@ public class PackageServiceImpl implements PackageService {
 //		return "Package updated successfully";
 //	}
 	
-	public String updatePackage(Long id, updatePackageDTO dto) {
+	public String updatePackage(Long id, UpdatePackageDTO dto) {
 		Package pack = packageDao.findById(id).orElseThrow(()-> new RuntimeException("Package not found"));
 		pack.setPackageName(dto.getPackageName());
 		pack.setPackageDetails(dto.getPackageDetails());

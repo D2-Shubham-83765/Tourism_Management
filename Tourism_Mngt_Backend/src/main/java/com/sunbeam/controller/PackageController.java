@@ -23,7 +23,7 @@ import com.sunbeam.custom_exception.ApiException;
 import com.sunbeam.dto.CityDTO;
 import com.sunbeam.dto.PackageDTO;
 import com.sunbeam.dto.PackageResponseDTO;
-import com.sunbeam.dto.updatePackageDTO;
+import com.sunbeam.dto.UpdatePackageDTO;
 import com.sunbeam.entities.Package;
 import com.sunbeam.service.CityServiceImpl;
 import com.sunbeam.service.PackageService;
@@ -66,7 +66,7 @@ public class PackageController {
 //	}
 	
 	@PutMapping("/update/{packageId}")
-	public ResponseEntity<?> updatePackage(@PathVariable Long packageId, @RequestBody updatePackageDTO dto){
+	public ResponseEntity<?> updatePackage(@PathVariable Long packageId, @RequestBody UpdatePackageDTO dto){
 		//Object obj = packageServiceImpl.updatePackage(packageId, dto);
 		return ResponseEntity.status(HttpStatus.OK).body(packageServiceImpl.updatePackage(packageId, dto));
 	}

@@ -35,7 +35,7 @@ function ContactUs() {
 
                 <div className="row mb-4">
                     <div className="col-md-6">
-                        <div className="card bg-light shadow-sm mb-4">
+                        <div className="card bg-light shadow-sm mb-4" style={{ maxHeight: '200px', overflow: 'auto' }}>
                             <div className="card-body">
                                 <h5 className="card-title" style={{ fontWeight: 'bold' }}>Contact-Us Today</h5>
                                 <p className="card-text">
@@ -43,7 +43,7 @@ function ContactUs() {
                                 </p>
                             </div>
                         </div>
-                        <div className="card bg-light shadow-sm">
+                        <div className="card bg-light shadow-sm" style={{ maxHeight: '200px', overflow: 'auto' }}>
                             <div className="card-body">
                                 <h5 className="card-title" style={{ fontWeight: 'bold' }}>Contact Information</h5>
                                 <ul className="list-unstyled">
@@ -65,7 +65,7 @@ function ContactUs() {
                     </div>
 
                     <div className="col-md-6 d-flex align-items-center">
-                        <div className="card bg-light shadow-sm mx-auto" style={{ maxWidth: '800px' }}>
+                        <div className="card bg-light shadow-sm mx-auto" style={{ maxWidth: '800px', maxHeight: '400px', overflow: 'auto' }}>
                             <div className="card-body">
                                 <h4 className="text-black mb-4" style={{ fontWeight: 'bold' }}>Want us to call you?</h4>
                                 <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} style={{ width: '100%' }}>

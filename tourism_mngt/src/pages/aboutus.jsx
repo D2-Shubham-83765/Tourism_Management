@@ -21,6 +21,8 @@ function AboutUs() {
     textAlign: 'center',
     marginBottom: '20px',
     position: 'relative',
+    // No background color or image, ensures only the background image is visible
+    background: 'none',
   };
 
   const sectionStyle = {
@@ -79,6 +81,8 @@ function AboutUs() {
     margin: '20px 0',
     fontWeight: 'bold',
     color: '#333',
+    // Ensures no background is applied to heading
+    background: 'none',
   };
 
   const subHeadingStyle = {

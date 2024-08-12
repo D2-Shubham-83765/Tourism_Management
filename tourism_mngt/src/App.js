@@ -12,6 +12,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import CityPage from './pages/cities';
 import CityCards from './components/CityCards';
 import AddCity from './AdminPages/AddCity';
+import CityDetails from './pages/citydetails';
+
 
 
 function App() {
@@ -21,14 +23,15 @@ function App() {
 
 
         <Route path='/' element={<Home/>}/>
-        <Route path='/contact-us' element={<ContactUs/>}/>
-        <Route path='/about-us' element={<AboutUs/>}/>
+        <Route path='/ContactUs' element={<ContactUs/>}/>
+        <Route path='/AboutUs' element={<AboutUs/>}/>
         <Route path='/register' element={<Register/>}/>
         {/* <Route path='/city' element={<City/>}/>  */}
         <Route path='/packages/:id' element={<CityPage/>}/>
         <Route path='/admin' element={<AdminDashboard/>}/>
         <Route path='/add-packages' element={<AddPackages/>}/>
         <Route path='/add-city' element={<AddCity/>}/>
+        <Route path='/CityDetails' element={<CityDetails/>}/>
       </Routes>
        <ToastContainer/> 
     </div>

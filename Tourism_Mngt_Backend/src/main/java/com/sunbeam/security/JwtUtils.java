@@ -55,7 +55,7 @@ public class JwtUtils {
 						/* .setExpiration(new Date((new Date()).getTime() + jwtExpirationinMs)) */  // Sets the JWT Claims exp
 				// (expiration) value.
 				// setting a custom claim
-				.claim("authorities", userPrincipal.getAuthorities())
+				.claim("authorities", getAuthoritiesInString(userPrincipal.getAuthorities()))
 				.signWith(key, SignatureAlgorithm.HS512)  // Signs the constructed JWT using the specified
 				// algorithm with the specified key, producing a
 				// JWS(Json web signature=signed JWT)
@@ -95,24 +95,26 @@ public class JwtUtils {
 	
 	public List<GrantedAuthority> getAuthoritiesFromClaims(Claims claims){
 		
-		/*
-		 * String authString = (String) claims.get("authorities");
-		 * List<GrantedAuthority> authorities =
-		 * AuthorityUtils.commaSeparatedStringToAuthorityList(authString);
-		 * authorities.forEach(System.out::println); return authorities;
-		 */
+		
+		
+		  String authString = (String) claims.get("authorities");
+		  List<GrantedAuthority> authorities =
+		  AuthorityUtils.commaSeparatedStringToAuthorityList(authString);
+		  authorities.forEach(System.out::println); return authorities;
 		 
-		List<?> roles = claims.get("roles", List.class);
-	    List<GrantedAuthority> authorities = new ArrayList<>();
+		 
+		 
+		
+		
+		/*
+		 * List<?> roles = claims.get("authorities", List.class); List<GrantedAuthority>
+		 * authorities = new ArrayList<>();
+		 * 
+		 * if (roles != null) { for (Object role : roles) { if (role instanceof String)
+		 * { authorities.add(new SimpleGrantedAuthority((String) role)); } } }
+		 */
+		/* return authorities; */
+		 
 
-	    if (roles != null) {
-	        for (Object role : roles) {
-	            if (role instanceof String) {
-	                authorities.add(new SimpleGrantedAuthority((String) role));
-	            }
-	        }
-	    }
-
-	    return authorities;
 	}
 }

@@ -5,6 +5,7 @@ const CityCards = ({Cities}) =>{
     const navigate = useNavigate();
 
     const handleOnCardCLick=(id)=>{
+        // check session exist before routing
         navigate(`/packages/${id}`)
     }
 
