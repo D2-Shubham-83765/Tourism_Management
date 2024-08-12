@@ -67,9 +67,11 @@ const CityPage = () => {
                                         <p className="card-text">{city.cityDetails}</p>
                                     </div>
                                     <div className="card-footer">
-                                        <small className="text-muted">
-                                            &#8377; {city.price}/person
-                                        </small>
+                                        <div className="price-box">
+                                            <small className="text-muted">
+                                                &#8377; {city.price}/person
+                                            </small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
