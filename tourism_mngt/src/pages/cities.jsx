@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import config from '../config';
-import { useParams } from 'react-router-dom';
-import './cities.css'; // Import the CSS file for styling
+import { useParams, useNavigate } from 'react-router-dom';
+import './cities.css'; // Import the CSS file for styling3
 
 const CityPage = () => {
     const { id } = useParams(); // Get the city ID from the route
     const [cityData, setCityData] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true); // Add loading state
+    const navigate = useNavigate(); // Initialize useNavigate hook
+
+
 
     useEffect(() => {
         const fetchCityData = async () => {
@@ -35,27 +38,38 @@ const CityPage = () => {
         return (
             <div className="loader-container">
                 <p>Loading...</p>
-            </div>
+            </div>  
         );
-    }
+    } 
 
     if (error) {
         return <div className="error-message">{error}</div>;
     }
 
+    const handleCardClick = (iden) => {
+        navigate(`/cities/${iden}`);
+    };
+        
     return (
         <div className='city-page'>
             {cityData.length > 0 && (
+
                 <>
                 <br />
                     <h1 className='page-title'>Book your favourite City!</h1>
+
                     <div className='card-group'>
-                        {cityData.map((city, index) => (
-                            <div key={index} className="col-md-3">
+                        {cityData.map((city, id) => (
+                            <div
+                                key={id} 
+                                className="col-md-3" 
+                                onClick={() => handleCardClick(city.id)} // Handle click event
+                                style={{ cursor: 'pointer' }} // Change cursor to pointer
+                            >
                                 <div className="card">
                                     <img
                                         src={`data:image/jpeg;base64,${city.cityImage}`}
-                                        className="card-img-top"
+                                       className="card-img-top"
                                         alt={city.packageName}
                                     />
                                     <div className="card-body">
