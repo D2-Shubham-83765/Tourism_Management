@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class updatePackageDTO {
+public class UpdatePackageDTO {
 	private String packageName;
 	private String packageDetails;
 	private double startingPrice;
