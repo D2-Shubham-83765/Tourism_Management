@@ -16,13 +16,24 @@ const Navbar = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        // Check if there's a token in localStorage
+        const token = localStorage.getItem('token');
+        const storedEmail = localStorage.getItem('userEmail');
+        if (token && storedEmail) {
+            setIsLoggedIn(true);
+            setUserEmail(storedEmail);
+        }
+    }, []);
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('roles');
+        localStorage.removeItem('userEmail');
 
         setIsLoggedIn(false);
         setUserEmail("");
-    
+
         navigate('/');
     };
 
@@ -37,17 +48,17 @@ const Navbar = () => {
 
             localStorage.setItem('token', token);
             localStorage.setItem('roles', JSON.stringify(roles));
-            setUserEmail(email);
-
+            localStorage.setItem('userEmail', email);
+          
             toast.success('Login successful!');
+
+            setUserEmail(email);
+            setIsLoggedIn(true);
 
             if (roles.includes('ADMIN')) {
                 navigate('/admin');
-                setIsLoggedIn(true);
-
             } else if (roles.includes('USER')) {
                 navigate('/');
-                setIsLoggedIn(true);
             } else {
                 console.log('Unknown role:', roles);
             }
@@ -72,12 +83,12 @@ const Navbar = () => {
                             </li>
 
                             <li className="nav-item">
-                                <Link to="/ContactUs" className="nav-link" style={{ textDecoration: 'none' }}>
+                                <Link to="/contact-us" className="nav-link" style={{ textDecoration: 'none' }}>
                                     Contact Us
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/AboutUs" className="nav-link" style={{ textDecoration: 'none' }}>
+                                <Link to="/about-us" className="nav-link" style={{ textDecoration: 'none' }}>
                                     About Us
                                 </Link>
                             </li>
@@ -104,7 +115,9 @@ const Navbar = () => {
                                         </span>
                                     </li>
                                     <li className="nav-item">
+                          
                                         <button type="button" className="nav-link btn btn-link" onClick={handleLogout} style={{ textDecoration: 'none' }}>
+
                                             Logout
                                         </button>
                                     </li>
