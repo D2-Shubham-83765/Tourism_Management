@@ -35,6 +35,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain authorizeRequests(HttpSecurity http) throws Exception {
 		//URL based authorization rules
+		System.out.println(http.headers());
 				http.cors()
 				.and().
 		//disable CSRF token generation n verification
@@ -42,9 +43,11 @@ public class SecurityConfig {
 				.exceptionHandling().authenticationEntryPoint(authEntry).
 				and().
 				authorizeRequests()
-				.antMatchers("/**", "/user/register","/user/login","/user/forget-password",
+				.antMatchers("/", "/user/register","/user/login","/user/forget-password",
 						"/v*/api-doc*/**","/swagger-ui.html/**" ).permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
+				.antMatchers("/packages/**").hasAuthority("USER")
+//				.antMatchers("/packages/add").hasRole("ADMIN")
 				.anyRequest().authenticated()
 				.and()
 				.sessionManagement()

@@ -48,7 +48,7 @@ const CityPage = () => {
             {cityData.length > 0 && (
                 <>
                 <br />
-                    <h1 className='page-title'>Book your favourite Beach now!</h1>
+                    <h1 className='page-title'>Book your favourite City!</h1>
                     <div className='card-group'>
                         {cityData.map((city, index) => (
                             <div key={index} className="col-md-3">
