@@ -68,8 +68,8 @@ const CityCardsAdmin = () => {
         <div className="card-group card-group-scroll">
             {cities.map((city, id) => (
                 <div key={id} className="col-md-3 mb-3"  >
-                    <div className="card" onClick={()=>handleOnCardClick(city.id)}>  
-                        <img src={`data:image/jpeg;base64,${city.image}`} className="card-img-top" alt={city.packageName} />
+                    <div className="card" >  
+                        <img src={`data:image/jpeg;base64,${city.image}`} className="card-img-top" alt={city.packageName} onClick={()=>handleOnCardClick(city.id)}/>
                         <div className="card-body">
                             {editingCity === city.id ? (
                                 <>

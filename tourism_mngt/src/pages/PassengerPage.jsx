@@ -12,7 +12,7 @@ const PassengerPage = () => {
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target; 
 
         // Ensure that the adhar number only accepts up to 12 digits
         if (name === 'adhar' && (value.length > 12 || isNaN(value))) {
