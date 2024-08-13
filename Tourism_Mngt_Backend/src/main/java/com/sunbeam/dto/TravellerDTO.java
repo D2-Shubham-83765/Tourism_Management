@@ -21,5 +21,4 @@ public class TravellerDTO {
 
 	private String aadhaarNo;
 	
-	private String bookingNo;
 }
