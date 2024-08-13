@@ -51,34 +51,52 @@ const Navbar = () => {
 
     const handleLogin = async () => {
         try {
+            // Send a POST request to the login endpoint with the user's email and password
             const response = await axios.post(`${config.url}/user/login`, {
                 email,
                 password
             });
-
+    
+            // Destructure the token and roles from the response data
             const { token, roles } = response.data;
-
+    
+            // Store the token in localStorage for authentication purposes
             localStorage.setItem('token', token);
+            
+            // Store the user's roles in localStorage, converting the roles array to a JSON string
             localStorage.setItem('roles', JSON.stringify(roles));
+            
+            // Store the user's email in localStorage
             localStorage.setItem('userEmail', email);
-          
+            
+            // Display a success message to the user
             toast.success('Login successful!');
-
+    
+            // Update the state with the user's email
             setUserEmail(email);
+            
+            // Update the state to reflect that the user is logged in
             setIsLoggedIn(true);
-
+    
+            // Navigate to the admin dashboard if the user has an ADMIN role
             if (roles.includes('ADMIN')) {
                 navigate('/admin');
-            } else if (roles.includes('USER')) {
+            } 
+            // Navigate to the home page if the user has a USER role
+            else if (roles.includes('USER')) {
                 navigate('/');
-            } else {
+            } 
+            // Log an error message if the role is unknown
+            else {
                 console.log('Unknown role:', roles);
             }
-      
+    
         } catch (error) {
+            // Display an error message if the login fails
             toast.error('Login failed. Please check your email and password.');
         }
     };
+    
 
     return (
         <div>
