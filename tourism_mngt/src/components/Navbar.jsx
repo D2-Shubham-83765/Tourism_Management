@@ -19,14 +19,22 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Check if there's a token in localStorage
+        // Check if there's a token stored in localStorage
         const token = localStorage.getItem('token');
+        
+        // Retrieve the stored email from localStorage
         const storedEmail = localStorage.getItem('userEmail');
+    
+        // If both token and storedEmail exist, consider the user as logged in
         if (token && storedEmail) {
+            // Update the state to reflect that the user is logged in
             setIsLoggedIn(true);
+    
+            // Update the state with the stored email
             setUserEmail(storedEmail);
         }
-    }, []);
+    }, []);  // Empty dependency array ensures this effect runs only once, on component mount
+    
 
     const handleLogout = () => {
         // Remove the authentication token from localStorage
