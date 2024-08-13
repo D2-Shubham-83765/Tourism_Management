@@ -13,6 +13,7 @@ import CityPage from './pages/cities';
 import CityCards from './components/CityCards';
 import AddCity from './AdminPages/AddCity';
 import CityDetails from './pages/citydetails';
+import UpdateCity from './AdminPages/UpdateCity';
 
 
 
@@ -34,8 +35,7 @@ function App() {
         <Route path='/add-packages' element={<AddPackages/>}/>
         <Route path='/add-city' element={<AddCity/>}/>
         <Route path='/cities/:cityId' element={<CityDetails/>}/>
- 
-            
+        <Route path='/update-city/:cityId' element={<UpdateCity/>} />
       </Routes>
        <ToastContainer/> 
     </div>

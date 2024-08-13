@@ -15,15 +15,19 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class User extends BaseEntity {
 	@Column(length = 30, nullable = false)
 	private String firstName;
@@ -69,4 +73,6 @@ public class User extends BaseEntity {
         bookings.add(booking);
         booking.setUserEntity(this); 
 	}
+	
+	
 }

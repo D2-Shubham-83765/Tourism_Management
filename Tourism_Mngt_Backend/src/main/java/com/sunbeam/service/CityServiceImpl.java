@@ -65,8 +65,9 @@ public class CityServiceImpl implements CityService{
 		cityDao.save(city);
 	}
 	
-	public CityResponseDTO getCityDetails(Long id){
-		City city = cityDao.findCityWithImagesById(id);
+	public CityResponseDTO getCityDetails(String id){
+		Long pkgId = Long.parseLong(id);
+		City city = cityDao.findCityWithImagesById(pkgId);
 		CityResponseDTO dto = mapper.map(city,CityResponseDTO.class);
 		List<Image> images = city.getImages();
 		List<Hotel> hotels = city.getHotels();

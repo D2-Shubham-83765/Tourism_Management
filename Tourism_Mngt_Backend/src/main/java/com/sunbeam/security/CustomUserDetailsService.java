@@ -22,6 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		User user = userDao.findByEmail(email)
 				.orElseThrow(()-> 
 				new UsernameNotFoundException("Email not found!!"));
+		System.out.println(user.toString());
 		return new CustomUserDetails(user);
 	}
 	

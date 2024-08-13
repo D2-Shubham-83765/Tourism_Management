@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import config from '../config';
 import { toast } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
+
+
 
 export default function AddCity() {
   const [name, setname] = useState('');
@@ -16,7 +19,14 @@ export default function AddCity() {
   const [endingDate, setEndingDate] = useState('');
   const [location, setlocation] = useState('');
   const [price, setprice] = useState('');
-  const [package_id, setpackage_id] = useState('');
+
+  const pageLocation = useLocation();
+const queryParams = new URLSearchParams(pageLocation.search);
+  const [package_id, setpackage_id] = useState(queryParams.get('packageId'));
+
+
+  
+  // const package_id = queryParams.get('packageId');
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();

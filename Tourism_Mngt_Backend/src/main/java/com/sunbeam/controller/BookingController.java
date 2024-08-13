@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunbeam.custom_exception.ResourceNotFoundException;
 import com.sunbeam.dto.BookingRequestDTO;
 import com.sunbeam.dto.BookingResponseDTO;
+import com.sunbeam.dto.UserBookingDTO;
 import com.sunbeam.service.BookingServiceImpl;
 
 @RestController
@@ -37,10 +39,10 @@ public class BookingController {
         }
 	}
 	
-	@GetMapping("/get-bookings/{id}")
-	public ResponseEntity<?> getUserBookings(@PathVariable Long id){
+	@GetMapping("/get-bookings")
+	public ResponseEntity<?> getUserBookings(@RequestParam String email){
 		try {
-			List<BookingResponseDTO> list = bookingService.getUserAllBookingDetails(id);
+			UserBookingDTO list = bookingService.getUserAllBookingDetails(email);
             return ResponseEntity.ok(list);
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

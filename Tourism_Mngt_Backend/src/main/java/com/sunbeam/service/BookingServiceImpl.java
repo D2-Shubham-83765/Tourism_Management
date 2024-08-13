@@ -1,6 +1,7 @@
 package com.sunbeam.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import com.sunbeam.dao.BookingDao;
 import com.sunbeam.dao.UserDao;
 import com.sunbeam.dto.BookingRequestDTO;
 import com.sunbeam.dto.BookingResponseDTO;
+import com.sunbeam.dto.UserBookingDTO;
 import com.sunbeam.entities.Booking;
 import com.sunbeam.entities.User;
 
@@ -38,17 +40,29 @@ public class BookingServiceImpl implements BookingService{
 		book = mapper.map(dto, Booking.class);
 		book.setBookingNo(UUID.randomUUID().toString());
 		System.out.println(dto.getUser_id());
-		book.setUserEntity(userDao.findById(dto.getUser_id()).orElseThrow(()-> new ResourceNotFoundException("User doesn't exist")));
+		book.setUserEntity(userDao.findByEmail(dto.getUser_id()).orElseThrow(()-> new ResourceNotFoundException("User doesn't exist")));
 		bookingDao.save(book);
 		return "Booking has been generated";
 	}
 	
-	public List<BookingResponseDTO> getUserAllBookingDetails(Long id){
-		User user = userDao.findBookingByUserId(id);
-		List<Booking> bookings = user.getBookings();
-		System.out.println(bookings);
-		List<BookingResponseDTO> bookingList = bookings.stream().map(booking-> 
-		mapper.map(booking, BookingResponseDTO.class)).collect(Collectors.toList());
-		return bookingList;
+	public UserBookingDTO getUserAllBookingDetails(String email){
+		User user = userDao.findByEmail(email).orElseThrow(()-> new ApiException("Email not found"));
+		UserBookingDTO dto = new UserBookingDTO();
+		dto.setEmail(user.getEmail());
+		
+		List<BookingResponseDTO> bookingDTOs = user.getBookings().stream().map(booking -> {
+            BookingResponseDTO bookingDTO = new BookingResponseDTO();
+            bookingDTO.setBookingNo(booking.getBookingNo());
+            bookingDTO.setPackageName(booking.getPackageName());
+            bookingDTO.setCityName(booking.getCityName());
+            bookingDTO.setNoOfPassengers(booking.getNoOfPassengers());
+            bookingDTO.setTotalCost(booking.getTotalCost());
+            bookingDTO.setBookingStatus(booking.isPaymentStatus());
+            return bookingDTO;
+        }).collect(Collectors.toList());
+
+        dto.setBookings(bookingDTOs);
+
+        return dto;
 		}
 }

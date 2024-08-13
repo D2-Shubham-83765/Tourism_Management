@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.sunbeam.dto.BookingRequestDTO;
 import com.sunbeam.dto.BookingResponseDTO;
+import com.sunbeam.dto.UserBookingDTO;
 
 public interface BookingService {
 	String addBookingDetails(BookingRequestDTO dto);
 	
-	List<BookingResponseDTO> getUserAllBookingDetails(Long id);
+	UserBookingDTO getUserAllBookingDetails(String email);
 }

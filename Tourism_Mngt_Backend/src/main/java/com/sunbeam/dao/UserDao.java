@@ -11,7 +11,4 @@ public interface UserDao extends JpaRepository<User, Long>{
 	User findByEmailAndPassword(String email, String password);
 	
 	Optional<User> findByEmail(String email);
-
-	@Query("SELECT u FROM User u LEFT JOIN FETCH u.bookings WHERE u.id = :bookingId")
-	User findBookingByUserId(Long bookingId);
 }
