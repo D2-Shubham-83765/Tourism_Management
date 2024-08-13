@@ -55,8 +55,7 @@ public class CityController {
 	}
 	  
 	@GetMapping("/{cityId}")
-	public ResponseEntity<?> getCityDetails(@PathVariable Long cityId){
-	
+	public ResponseEntity<?> getCityDetails(@PathVariable String cityId){
 		return ResponseEntity.status(HttpStatus.OK).body(cityService.getCityDetails(cityId));
 	}
       

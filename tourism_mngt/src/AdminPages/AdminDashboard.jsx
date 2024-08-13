@@ -18,7 +18,7 @@ const AdminDashboard = () => {
 
             <div className="container-fluid mb-5" style={{ marginLeft: '680px' }}>
                 <button className="btn btn-info">
-                    <Link to="/AddPackages" className="nav-link" style={{ textDecoration: 'none' }}>
+                    <Link to="/add-packages" className="nav-link" style={{ textDecoration: 'none' }}>
                         Add Packages
                     </Link>
                 </button>
