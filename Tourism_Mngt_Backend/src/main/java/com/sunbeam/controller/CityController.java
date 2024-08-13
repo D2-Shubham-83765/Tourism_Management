@@ -57,7 +57,7 @@ public class CityController {
 	@GetMapping("/{cityId}")
 	public ResponseEntity<?> getCityDetails(@PathVariable Long cityId){
 	
-		return ResponseEntity.status(HttpStatus.FOUND).body(cityService.getCityDetails(cityId));
+		return ResponseEntity.status(HttpStatus.OK).body(cityService.getCityDetails(cityId));
 	}
       
 	@PostMapping("/hotel/{cityId}")
