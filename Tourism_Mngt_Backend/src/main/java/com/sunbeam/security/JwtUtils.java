@@ -55,6 +55,7 @@ public class JwtUtils {
 						/* .setExpiration(new Date((new Date()).getTime() + jwtExpirationinMs)) */  // Sets the JWT Claims exp
 				// (expiration) value.
 				// setting a custom claim
+				.claim("userId", userPrincipal.getUserId())
 				.claim("authorities", getAuthoritiesInString(userPrincipal.getAuthorities()))
 				.signWith(key, SignatureAlgorithm.HS512)  // Signs the constructed JWT using the specified
 				// algorithm with the specified key, producing a

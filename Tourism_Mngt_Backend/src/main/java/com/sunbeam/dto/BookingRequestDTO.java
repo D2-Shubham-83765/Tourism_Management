@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BookingRequestDTO {
 
-	private Long user_id;
+	private String user_id;
 	
 	private String packageName;
 	
