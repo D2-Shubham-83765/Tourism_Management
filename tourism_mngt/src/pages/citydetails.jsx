@@ -183,7 +183,7 @@ const CityDetails = () => {
     return <div>No data available</div>;
   }
 
-  const imageUrl = (imagePath) => `${config.url}/images/${imagePath}`;
+  const imageUrl = (imagePath) => `${config.url}${imagePath}`;
 
   const renderFacilities = (facilities) => (
     <ul style={styles.facilitiesList}>

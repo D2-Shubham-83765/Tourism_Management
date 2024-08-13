@@ -29,6 +29,7 @@ public class HomeController {
 		System.out.println(packageDetails);
 			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(packageDetails);
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new ApiException("Something went wrong!! Try again");
 		}
 	}

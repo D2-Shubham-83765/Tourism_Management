@@ -47,7 +47,7 @@ public class SecurityConfig {
 						"/v*/api-doc*/**","/swagger-ui/**" ).permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
 				.antMatchers("/packages/**").hasAuthority("USER")
-				.antMatchers("/packages/add").hasAuthority("ADMIN")
+				.antMatchers("/admin","/packages/add").hasAuthority("ADMIN")
 				.anyRequest().authenticated()
 				.and()
 				.sessionManagement()
