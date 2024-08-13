@@ -29,15 +29,25 @@ const Navbar = () => {
     }, []);
 
     const handleLogout = () => {
+        // Remove the authentication token from localStorage
         localStorage.removeItem('token');
+        
+        // Remove the user's roles from localStorage
         localStorage.removeItem('roles');
+        
+        // Remove the user's email from localStorage
         localStorage.removeItem('userEmail');
 
+        // Update the state to reflect that the user is no longer logged in
         setIsLoggedIn(false);
+
+        // Clear the user email state
         setUserEmail("");
 
+        // Navigate the user back to the home page (or landing page)
         navigate('/');
     };
+
 
     const handleLogin = async () => {
         try {
