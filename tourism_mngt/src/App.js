@@ -16,13 +16,15 @@ import CityDetails from './pages/citydetails';
 
 
 
+
+
 function App() {
   return (
     <div>
       <Routes>
 
 
-        <Route path='/' element={<Home/>}/>
+        <Route path='/' element={<Home/>}/> 
         <Route path='/ContactUs' element={<ContactUs/>}/>
         <Route path='/AboutUs' element={<AboutUs/>}/>
         <Route path='/register' element={<Register/>}/>
@@ -31,7 +33,9 @@ function App() {
         <Route path='/admin' element={<AdminDashboard/>}/>
         <Route path='/add-packages' element={<AddPackages/>}/>
         <Route path='/add-city' element={<AddCity/>}/>
-        <Route path='/CityDetails' element={<CityDetails/>}/>
+        <Route path='/cities/:cityId' element={<CityDetails/>}/>
+ 
+            
       </Routes>
        <ToastContainer/> 
     </div>

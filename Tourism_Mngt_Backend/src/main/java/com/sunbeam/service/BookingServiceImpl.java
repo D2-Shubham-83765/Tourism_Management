@@ -36,7 +36,7 @@ public class BookingServiceImpl implements BookingService{
 	
 	public String addBookingDetails(BookingRequestDTO dto) {
 		book = mapper.map(dto, Booking.class);
-		book.setBookingNo(UUID.randomUUID().toString());
+		book.setBooking_no(UUID.randomUUID().toString());
 		System.out.println(dto.getUser_id());
 		book.setUserEntity(userDao.findById(dto.getUser_id()).orElseThrow(()-> new ResourceNotFoundException("User doesn't exist")));
 		bookingDao.save(book);
