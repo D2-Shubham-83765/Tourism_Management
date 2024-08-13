@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
+               
 const CityCards = ({Cities}) =>{
     
     const navigate = useNavigate();
@@ -8,7 +8,7 @@ const CityCards = ({Cities}) =>{
         // check session exist before routing
         navigate(`/packages/${id}`)
     }
-
+    
     return (
         <div className="card-group card-group-scroll">
             {Cities.map((city, id) => (
