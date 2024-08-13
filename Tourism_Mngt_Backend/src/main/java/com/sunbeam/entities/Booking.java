@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Booking extends BaseEntity{
-	@Column(nullable = false)
+	@Column(name="booking_no",nullable = false)
 	private String bookingNo;
 	
 	@ManyToOne
