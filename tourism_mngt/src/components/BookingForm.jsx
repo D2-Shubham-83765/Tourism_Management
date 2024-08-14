@@ -37,7 +37,7 @@ const BookingForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      {/* <div> */}
         {/* <label>Booking No:</label>
         <input
           type="text"
