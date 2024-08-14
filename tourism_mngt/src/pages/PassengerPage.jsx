@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './PassengerPage.css';  // Assuming you'll add some basic styling
+import { useNavigate } from 'react-router-dom';
 
 const PassengerPage = () => {
     const [passengers, setPassengers] = useState([]);
@@ -11,6 +12,9 @@ const PassengerPage = () => {
         adhar: '',
     });
 
+    const navigate = useNavigate(); 
+
+   
     const handleChange = (e) => {
         const { name, value } = e.target; 
 
@@ -34,9 +38,21 @@ const PassengerPage = () => {
         setPassengers([...passengers, passenger]);
         setPassenger({ name: '', age: '', gender: '', email: '', adhar: '' });  // Reset form
     };
+   
+    const goToPaymentsPage = () => {
+        navigate('/payments'); // Adjust the path to your payments page route
+    };
 
+    const goBack = () => {
+        navigate(-1); // Go back to the previous page
+    };
+    
     return (
+
+        
+    
         <div className="passenger-page">
+            
             <h2>Passenger Details</h2>
 
             <form onSubmit={handleSubmit} className="passenger-form">
@@ -96,7 +112,7 @@ const PassengerPage = () => {
                 </div>
                 <button type="submit">Add Passenger</button>
             </form>
-
+ <br /> <br />
             <h3>Passenger List</h3>
             <table className="passenger-table">
                 <thead>
@@ -105,7 +121,7 @@ const PassengerPage = () => {
                         <th>Age</th>
                         <th>Gender</th>
                         <th>Email</th>
-                        <th>Adhar</th>
+                        <th>Aadhar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -120,7 +136,14 @@ const PassengerPage = () => {
                     ))}
                 </tbody>
             </table>
+
+      
+                <button onClick={goToPaymentsPage} className="go-to-payments-button">
+                    Go to Payments Page
+                </button>
         </div>
+
+        
     );
 };
 

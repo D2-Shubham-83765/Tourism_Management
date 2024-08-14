@@ -14,6 +14,7 @@ import CityCards from './components/CityCards';
 import AddCity from './AdminPages/AddCity';
 import CityDetails from './pages/citydetails';
 import UpdateCity from './AdminPages/UpdateCity';
+import PassengerPage from './pages/PassengerPage';
 
 
 
@@ -26,8 +27,8 @@ function App() {
 
 
         <Route path='/' element={<Home/>}/> 
-        <Route path='/ContactUs' element={<ContactUs/>}/>
-        <Route path='/AboutUs' element={<AboutUs/>}/>
+        <Route path='/contact-us' element={<ContactUs/>}/>
+        <Route path='/about-us' element={<AboutUs/>}/>
         <Route path='/register' element={<Register/>}/>
         {/* <Route path='/city' element={<City/>}/>  */}
         <Route path='/packages/:id' element={<CityPage/>}/>
@@ -36,6 +37,8 @@ function App() {
         <Route path='/add-city' element={<AddCity/>}/>
         <Route path='/cities/:cityId' element={<CityDetails/>}/>
         <Route path='/update-city/:cityId' element={<UpdateCity/>} />
+        <Route path='/PassengerPage' element={<PassengerPage/>} />
+
       </Routes>
        <ToastContainer/> 
     </div>
