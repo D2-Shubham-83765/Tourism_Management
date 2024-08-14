@@ -81,7 +81,7 @@ const CityDetails = () => {
           cityInfo.images.map((imagePath, index) => (
             <img
               key={index}
-              src={imageUrl(imagePath)}
+              src={`${config.url}${imagePath.imagePath}`}
               alt={`City Image ${index + 1}`}
               style={styles.cityImage}
               onError={(e) => {

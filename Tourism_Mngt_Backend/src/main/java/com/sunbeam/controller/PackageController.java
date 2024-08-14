@@ -47,7 +47,7 @@ public class PackageController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletePackage(@PathVariable Long id){
-		return ResponseEntity.status(HttpStatus.GONE).contentType(MediaType.APPLICATION_JSON).body(packageServiceImpl.deletePackage(id));
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(packageServiceImpl.deletePackage(id));
 	}
 	
 	@GetMapping("/{id}")
