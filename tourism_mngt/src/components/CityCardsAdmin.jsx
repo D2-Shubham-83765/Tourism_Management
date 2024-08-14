@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const CityCardsAdmin = () => {
     const [cities, setCities] = useState([]);
+    const[isDeleted,setIsDeleted] =useState(false);
     const [editingCity, setEditingCity] = useState(null);
     const [refresh, setRefresh] = useState(false);
     const [updatedCity, setUpdatedCity] = useState({
@@ -13,21 +14,22 @@ const CityCardsAdmin = () => {
         packageDetails: '',
         startingPrice: ''
     });
-
-    useEffect(() => {
-        const fetchCities = async () => {
-            try {
-                const response = await axios.get(`${config.url}/`);
-                if (response.data !== cities) {
-                    setCities(response.data);
-                }
-            } catch (error) {
-                console.error("Error fetching cities", error);
+    const fetchCities = async () => {
+        try {
+            const response = await axios.get(`${config.url}/`);
+            if (response.data !== cities) {
+                setCities(response.data);
             }
-        };
+        } catch (error) {
+            console.error("Error fetching cities", error);
+        }
+    };
+    useEffect(() => {
         fetchCities();
-    }, [refresh]); // Re-fetch cities when refresh state changes
-
+    }, []); // Re-fetch cities when refresh state changes
+    useEffect(()=>{
+        fetchCities()
+    },[isDeleted])
     const handleUpdate = (city) => {
         setEditingCity(city.id);
         setUpdatedCity({
@@ -50,13 +52,19 @@ const CityCardsAdmin = () => {
     };
 
     const handleDelete = async (id) => {
+        if(window.confirm("Are you sure to delete package?")){
         try {
-            await axios.delete(`${config.url}/packages/${id}`);
+           const response =  await axios.delete(`${config.url}/packages/${id}`);
+           if(response!=null){
+            console.log("sffssf")
             toast.success("Deleted city with id:", id);
-            setCities([]); // Reset the cities state to trigger re-fetch
+            setIsDeleted(true);
+            setCities([]);
+            } // Reset the cities state to trigger re-fetch
         } catch (error) {
             console.error("Error deleting city", error);
         }
+    }
     };
 
     const navigate = useNavigate();
