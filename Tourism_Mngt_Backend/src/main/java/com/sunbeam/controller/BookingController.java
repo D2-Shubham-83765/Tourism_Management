@@ -6,6 +6,7 @@ import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,6 +49,28 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
+	}
+	
+	@GetMapping("/all-bookings")
+	public ResponseEntity<?> getAllBookings(){
+		try {
+			List<BookingResponseDTO> list = bookingService.getAllBookings();
+            return ResponseEntity.ok(list);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
+	}
+	
+	@DeleteMapping("/delete-booking")
+	public ResponseEntity<?> deleteBooking(@RequestParam String bookingNo){
+		try {
+			String message = bookingService.deleteBooking(bookingNo);
+            return ResponseEntity.ok(message);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 	}
 }

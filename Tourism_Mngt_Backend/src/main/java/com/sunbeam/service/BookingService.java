@@ -10,4 +10,8 @@ public interface BookingService {
 	String addBookingDetails(BookingRequestDTO dto);
 	
 	UserBookingDTO getUserAllBookingDetails(String email);
+	
+	List<BookingResponseDTO> getAllBookings();
+	
+	String deleteBooking(String bookingNo);
 }

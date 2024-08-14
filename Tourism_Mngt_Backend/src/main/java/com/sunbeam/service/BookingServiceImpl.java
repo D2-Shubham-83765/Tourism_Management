@@ -1,7 +1,6 @@
 package com.sunbeam.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.sunbeam.custom_exception.ApiException;
 import com.sunbeam.custom_exception.ResourceNotFoundException;
 import com.sunbeam.dao.BookingDao;
+import com.sunbeam.dao.TravellerDao;
 import com.sunbeam.dao.UserDao;
 import com.sunbeam.dto.BookingRequestDTO;
 import com.sunbeam.dto.BookingResponseDTO;
@@ -32,12 +32,13 @@ public class BookingServiceImpl implements BookingService{
 	private UserDao userDao;
 	
 	@Autowired
+	private TravellerDao travellerDao;
+	
+	@Autowired
 	private ModelMapper mapper;
 	
-	Booking book;
-	
 	public String addBookingDetails(BookingRequestDTO dto) {
-		book = mapper.map(dto, Booking.class);
+		Booking book = mapper.map(dto, Booking.class);
 		book.setBookingNo(UUID.randomUUID().toString());
 		System.out.println(dto.getUser_id());
 		book.setUserEntity(userDao.findByEmail(dto.getUser_id()).orElseThrow(()-> new ResourceNotFoundException("User doesn't exist")));
@@ -65,4 +66,31 @@ public class BookingServiceImpl implements BookingService{
 
         return dto;
 		}
+	
+	public List<BookingResponseDTO> getAllBookings() {
+		
+		List<BookingResponseDTO> bookingDTOs = bookingDao.findAll().stream().map(booking-> {
+			 BookingResponseDTO bookingDTO = new BookingResponseDTO();
+	            bookingDTO.setBookingNo(booking.getBookingNo());
+	            bookingDTO.setPackageName(booking.getPackageName());
+	            bookingDTO.setCityName(booking.getCityName());
+	            bookingDTO.setNoOfPassengers(booking.getNoOfPassengers());
+	            bookingDTO.setTotalCost(booking.getTotalCost());
+	            bookingDTO.setBookingStatus(booking.isPaymentStatus());
+	            return bookingDTO;
+	        }).collect(Collectors.toList());
+		return bookingDTOs;
+	}
+	
+	public String deleteBooking(String bookingNo) {
+		Booking booking = bookingDao.findByBookingNo(bookingNo);
+		if(booking!=null) {
+			User user = booking.getUserEntity();
+	        user.getBookings().remove(booking);
+	        travellerDao.deleteByBookingNo(bookingNo);
+			bookingDao.delete(booking);
+		}else
+			throw new ApiException("Invalid booking No");
+		return "Booking has been deleted";
+	}	
 }
