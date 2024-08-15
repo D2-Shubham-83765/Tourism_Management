@@ -42,7 +42,7 @@ const CityCardsAdmin = () => {
     const saveUpdatedCity = async (id) => {
         try {
             await axios.put(`${config.url}/packages/update/${id}`, updatedCity);
-            toast.success("City details updated successfully");
+            toast.success("Package details updated successfully");
             setEditingCity(null); // Close the editing mode
             setRefresh(prev => !prev); // Toggle `refresh` to force re-fetch
             setCities([]); // Trigger re-fetch
@@ -56,8 +56,7 @@ const CityCardsAdmin = () => {
         try {
            const response =  await axios.delete(`${config.url}/packages/${id}`);
            if(response!=null){
-            console.log("sffssf")
-            toast.success("Deleted city with id:", id);
+            toast.success("Package deleted successfully");
             setIsDeleted(true);
             setCities([]);
             } // Reset the cities state to trigger re-fetch
@@ -66,6 +65,22 @@ const CityCardsAdmin = () => {
         }
     }
     };
+
+    // const handleDelete = async (id) => {
+    //     if(window.confirm("Are you sure to delete package?")){
+    //     try {
+    //        const response =  await axios.delete(${config.url}/packages/${id});
+    //        if(response!=null){
+    //         console.log("sffssf")
+    //         toast.success("Deleted city with id:", id);
+    //         setIsDeleted(true);
+    //         setCities([]);
+    //         } // Reset the cities state to trigger re-fetch
+    //     } catch (error) {
+    //         console.error("Error deleting city", error);
+    //     }
+    // }
+    // };
 
     const navigate = useNavigate();
     const handleOnCardClick=(id)=>{

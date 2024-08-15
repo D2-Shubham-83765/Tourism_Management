@@ -19,6 +19,11 @@ import PassengerPage from './pages/PassengerPage';
 import ForgotPassword from './pages/forgetPassword';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faStar);
+
 
 
 

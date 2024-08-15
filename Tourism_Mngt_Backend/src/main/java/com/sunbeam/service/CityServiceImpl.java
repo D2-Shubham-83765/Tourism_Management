@@ -17,6 +17,7 @@ import com.sunbeam.dto.CityDTO;
 import com.sunbeam.dto.CityImageDTO;
 import com.sunbeam.dto.CityRequestDTO;
 import com.sunbeam.dto.CityResponseDTO;
+import com.sunbeam.dto.CityUpdateDTO;
 import com.sunbeam.dto.HotelDTO;
 import com.sunbeam.dto.ImageResponseDTO;
 import com.sunbeam.entities.City;
@@ -99,4 +100,22 @@ public class CityServiceImpl implements CityService{
 		return "Hotel for the city added successsfully";
 	}
 	
+	public String updateCity(Long id, CityUpdateDTO dto) {
+		City city = cityDao.findById(id).orElseThrow( ()-> new RuntimeException("City not found"));
+		city.setName(dto.getName());
+		city.setCityDetails(dto.getCityDetails());
+		city.setDuration(dto.getDuration());
+		city.setDay1Description(dto.getDay1Description());
+		city.setDay2Description(dto.getDay2Description());
+		city.setDay3Description(dto.getDay3Description());
+		city.setDay4Description(dto.getDay4Description());
+		city.setStartingDate(dto.getStartingDate());
+		city.setEndingDate(dto.getEndingDate());
+		city.setLocation(dto.getLocation());
+		city.setPrice(dto.getPrice());
+		cityDao.save(city);
+		return "City updated successfully";
+	}
+	
 }
+
