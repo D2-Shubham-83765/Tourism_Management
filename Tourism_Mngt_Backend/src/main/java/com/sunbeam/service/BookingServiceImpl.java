@@ -39,9 +39,7 @@ public class BookingServiceImpl implements BookingService{
 	
 	public String addBookingDetails(BookingRequestDTO dto) {
 		Booking book = mapper.map(dto, Booking.class);
-		book.setBookingNo(UUID.randomUUID().toString());
-		System.out.println(dto.getUser_id());
-		book.setUserEntity(userDao.findByEmail(dto.getUser_id()).orElseThrow(()-> new ResourceNotFoundException("User doesn't exist")));
+		book.setUserEntity(userDao.findByEmail(dto.getEmail()).orElseThrow(()-> new ResourceNotFoundException("User doesn't exist")));
 		bookingDao.save(book);
 		return book.getBookingNo();
 	}
@@ -81,6 +79,15 @@ public class BookingServiceImpl implements BookingService{
 	        }).collect(Collectors.toList());
 		return bookingDTOs;
 	}
+	
+	public void updatePaymentStatus(String bookingNo, boolean paymentStatus) {
+        Booking booking = bookingDao.findByBookingNo(bookingNo);
+        if (booking == null) {
+            throw new ResourceNotFoundException("Booking not found.");
+        }
+        booking.setPaymentStatus(paymentStatus);
+        bookingDao.save(booking);
+    }
 	
 	public String deleteBooking(String bookingNo) {
 		Booking booking = bookingDao.findByBookingNo(bookingNo);

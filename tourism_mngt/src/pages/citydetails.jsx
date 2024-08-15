@@ -16,7 +16,7 @@ const CityDetails = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [totalPrice, setTotalPrice] = useState(null); // State to hold the total price
-
+  const [bookingNo, setBookingNo] = useState('');
 
   
   const navigate = useNavigate();
@@ -61,6 +61,7 @@ const CityDetails = () => {
 
   const handleHotelClick = (hotel) => {
     setSelectedHotel(hotel);
+    localStorage.setItem('hotelName', hotel.name);
     // Update the total price when a hotel is selected
     setTotalPrice((cityInfo.price || 0) + (hotel.ratePerPerson || 0));
   };
@@ -83,9 +84,23 @@ const CityDetails = () => {
     </ul>
   );
 
-  const Addpass = () => {
-    navigate('/PassengerPage');
-  };
+  const generateBookingNo = () => {
+    const base = 'BN';
+    const randomPart = Math.random().toString(36).substring(2, 10).toUpperCase(); // Generate a random string
+    const timestampPart = Date.now().toString().slice(-4); // Last 4 digits of the current timestamp
+    
+    const newBookingNo = `${base}-${randomPart}-${timestampPart}`;
+    return newBookingNo;
+};
+
+const Addpass = () => {
+  const newBookingNo = generateBookingNo();  // Generate booking number
+  console.log('Booking No in Addpass:', newBookingNo); // Debugging statement
+
+  localStorage.setItem('bookingNo', newBookingNo);
+  localStorage.setItem('totalPrice', totalPrice);
+  navigate('/PassengerPage');
+};
 
   if (loading) {
     return <div style={styles.loaderContainer}>Loading...</div>;

@@ -32,7 +32,14 @@ const Navbar = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('roles');
         localStorage.removeItem('userEmail');
-
+        localStorage.removeItem('totalCost');	
+        localStorage.removeItem('bookingNo')
+        localStorage.removeItem('selectedPackageName')
+        localStorage.removeItem('hotelName')
+        localStorage.removeItem('selectedCityName')
+        localStorage.removeItem('noOfPassengers')	
+        localStorage.removeItem('totalPrice')
+    
         setIsLoggedIn(false);
         setUserEmail("");
 

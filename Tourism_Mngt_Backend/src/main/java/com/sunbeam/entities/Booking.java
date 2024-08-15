@@ -31,6 +31,9 @@ public class Booking extends BaseEntity implements Serializable {
 	@Column(nullable = false)
 	private String cityName;
 	
+	@Column(nullable = false)
+	private String hotelName;
+	
 	private Long noOfPassengers;
 	
 	private Double totalCost;

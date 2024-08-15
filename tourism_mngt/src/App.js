@@ -17,17 +17,14 @@ import CityDetails from './pages/citydetails';
 import UpdateCity from './AdminPages/UpdateCity';
 import PassengerPage from './pages/PassengerPage';
 import ForgotPassword from './pages/forgetPassword';
+import BookingSummary from './components/BookingSummary';
+import PaymentConfirmation from './components/PaymentConfirmation';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faStar);
-
-
-
-
-
 
 function App() {
   return (
@@ -38,7 +35,6 @@ function App() {
         <Route path='/contact-us' element={<ContactUs/>}/>
         <Route path='/about-us' element={<AboutUs/>}/>
         <Route path='/register' element={<Register/>}/>
-        {/* <Route path='/city' element={<City/>}/>  */}
         <Route path='/packages/:id' element={<CityPage/>}/>
         <Route path='/admin-dashboard' element={<AdminDashboard/>}/>
         <Route path='/update-packages' element={<PackagesList/>}/>
@@ -48,6 +44,8 @@ function App() {
         <Route path='/update-city/:cityId' element={<UpdateCity/>} />
         <Route path='/PassengerPage' element={<PassengerPage/>} />
         <Route path='/forgot-password' element={<ForgotPassword/>} />
+        <Route path= '/booking-summary' element={<BookingSummary/>} />
+        <Route path='/payment-confirmation' element={<PaymentConfirmation/>} />
       </Routes>
       <Footer/>
        <ToastContainer/> 

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import './PassengerPage.css'; 
 import { useNavigate } from 'react-router-dom';
@@ -13,16 +14,13 @@ const PassengerPage = () => {
         email: '',
         aadhaar: '',
     });
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
 
     const navigate = useNavigate(); 
 
-   
     const handleChange = (e) => {
-        const { name, value } = e.target; 
+        const { name, value } = e.target;
 
-        // Ensure that the adhar number only accepts up to 12 digits
+        // Ensure that the aadhaar number only accepts up to 12 digits
         if (name === 'aadhaar' && (value.length > 12 || isNaN(value))) {
             return;
         }
@@ -30,35 +28,64 @@ const PassengerPage = () => {
         setPassenger({ ...passenger, [name]: value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Check if the adhar number is exactly 12 digits
+        // Check if the aadhaar number is exactly 12 digits
         if (passenger.aadhaar.length !== 12) {
             alert('Aadhaar number must be exactly 12 digits.');
             return;
         }
 
-        const bookingNo = localStorage.getItem('bookingNo');
+        // Add the new passenger to the local list
+        setPassengers([...passengers, passenger]);
 
-        const passengerWithBooking = { ...passenger, bookingNo };
-
-        setLoading(true);
-        setError(null)
-
-        try {
-            const response = await axios.post(`${config.url}/traveller`, passengerWithBooking);
-            setPassengers([...passengers, response.data]);
-            setPassenger({ name: '', age: '', gender: '', email: '', aadhaar: '' });  // Reset form
-        } catch (error) {
-            setError(error.response?.data?.message || 'Failed to add passenger');
-        } finally {
-            setLoading(false);
-        }
+        // Reset the form for a new entry
+        setPassenger({ name: '', age: '', gender: '', email: '', aadhaar: '' });
     };
    
-    const viewBookingSummary = () => {
-        navigate('/booking-summary'); // Adjust the path to your payments page route
+    const viewBookingSummary = async () => {
+        try {
+            const email = localStorage.getItem('userEmail')
+            const bookingNo = localStorage.getItem('bookingNo');
+            const packageName = localStorage.getItem('selectedPackageName');
+            const cityName = localStorage.getItem('selectedCityName');
+            const hotelName = localStorage.getItem('hotelName');
+            const totalPrice = localStorage.getItem('totalPrice');
+            console.log(email);
+            const payload = {
+                bookingNo,
+                email: email,
+                packageName: packageName, 
+                cityName: cityName,       
+                hotelName: hotelName,     
+                noOfPassengers: passengers.length,
+                totalCost: passengers.length * totalPrice,
+            };
+            const response = await axios.post(`${config.url}/booking/save-details`, payload);
+            console.log(response);
+            
+            const travellers = passengers.map(p => ({
+                name: p.name,
+                age: p.age,
+                gender: p.gender.toUpperCase(),
+                email: p.email,
+                aadhaarNo: p.aadhaar, // Ensure this matches your DTO
+            }));
+    
+            const travellerPayload = {
+                travellers,
+                bookingNo,
+            };
+            await axios.post(`${config.url}/traveller/add`, travellerPayload);
+            localStorage.setItem('noOfPassengers', passengers.length);
+            localStorage.setItem('totalCost', passengers.length * totalPrice );
+            navigate('/booking-summary');
+        
+        } catch (error) {
+            console.error('Failed to process booking summary:', error);
+            alert('An error occurred while processing the booking summary.');
+        }
     };
 
     const goBack = () => {
@@ -66,11 +93,7 @@ const PassengerPage = () => {
     };
     
     return (
-
-        
-    
         <div className="passenger-page">
-            
             <h2>Passenger Details</h2>
 
             <form onSubmit={handleSubmit} className="passenger-form">
@@ -119,7 +142,7 @@ const PassengerPage = () => {
                     />
                 </div>
                 <div>
-                    <label>Adhar:</label>
+                    <label>Aadhaar:</label>
                     <input 
                         type="number" 
                         name="aadhaar" 
@@ -130,7 +153,8 @@ const PassengerPage = () => {
                 </div>
                 <button type="submit">Add Passenger</button>
             </form>
- <br /> <br />
+
+            <br /><br />
             <h3>Passenger List</h3>
             <table className="passenger-table">
                 <thead>
@@ -139,7 +163,7 @@ const PassengerPage = () => {
                         <th>Age</th>
                         <th>Gender</th>
                         <th>Email</th>
-                        <th>Aadhar</th>
+                        <th>Aadhaar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -149,19 +173,16 @@ const PassengerPage = () => {
                             <td>{p.age}</td>
                             <td>{p.gender}</td>
                             <td>{p.email}</td>
-                            <td>{p.adhar}</td>
+                            <td>{p.aadhaar}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
 
-      
-                <button onClick={viewBookingSummary} className="go-to-booking-button">
-                    View Booking Summary
-                </button>
+            <button onClick={viewBookingSummary} className="go-to-booking-button">
+                View Booking Summary
+            </button>
         </div>
-
-        
     );
 };
 
