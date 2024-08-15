@@ -7,4 +7,5 @@ public interface UserService {
 	String addNewUser(UserDTO dto);
 	String login(String email, String password);
 	String setPassword(ForgetPasswordDTO dto);	
+	String deleteUser(String email);
 }
