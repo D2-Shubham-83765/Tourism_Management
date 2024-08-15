@@ -1,281 +1,376 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import config from '../config';
-import { toast } from 'react-toastify';
-import { useParams, useNavigate } from 'react-router-dom';
 
-export default function UpdateCity() {
-    const { id } = useParams(); // Get the city ID from the route
-    const [name, setName] = useState('');
-    const [cityDetails, setCityDetails] = useState('');
-    const [cityImage, setCityImage] = useState(null);
-    const [day1Description, setDay1Description] = useState('');
-    const [day2Description, setDay2Description] = useState('');
-    const [day3Description, setDay3Description] = useState('');
-    const [day4Description, setDay4Description] = useState('');
-    const [duration, setDuration] = useState('');
-    const [startingDate, setStartingDate] = useState('');
-    const [endingDate, setEndingDate] = useState('');
-    const [location, setLocation] = useState('');
-    const [price, setPrice] = useState('');
-    const [package_id, setPackageId] = useState('');
-    const [currentCityImage, setCurrentCityImage] = useState('');
-    const [loading, setLoading] = useState(true);
+// Define styles first without any dependencies on itself
+const inputFieldStyle = {
+    width: '100%',
+    padding: '8px',
+    marginBottom: '10px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+};
+
+const textAreaFieldStyle = {
+    width: '100%',
+    padding: '8px',
+    marginBottom: '10px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    resize: 'vertical',
+    height: '100px',
+};
+
+const saveButtonStyle = {
+    display: 'block',
+    width: '220px',
+    padding: '12px',
+    margin: '0 auto',
+    textAlign: 'center',
+    backgroundColor: '#28a745',
+    color: '#fff',
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
+    borderRadius: '8px',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease, transform 0.3s ease',
+};
+
+const cancelButtonStyle = {
+    ...saveButtonStyle,
+    backgroundColor: '#e74c3c',
+};
+
+const styles = {
+    container: {
+        fontFamily: 'Arial, sans-serif',
+        padding: '20px',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        backgroundColor: '#f4f4f9',
+    },
+    cityHeader: {
+        textAlign: 'center',
+        marginBottom: '30px',
+    },
+    cityName: {
+        fontSize: '3rem',
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: '10px',
+    },
+    cityDescription: {
+        fontSize: '1.2rem',
+        color: '#555',
+        marginBottom: '20px',
+        lineHeight: '1.5',
+    },
+    cityInfoBox: {
+        backgroundColor: '#fff',
+        borderRadius: '10px',
+        padding: '20px',
+        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+        marginBottom: '20px',
+        width: '60%',
+        margin: '0 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    cityInfoHeader: {
+        fontSize: '1.4rem',
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: '15px',
+    },
+    cityInfo: {
+        fontSize: '1rem',
+        color: '#666',
+        marginBottom: '10px',
+    },
+    cityInfoBoxItem: {
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        marginBottom: '10px',
+    },
+    cityPrice: {
+        fontSize: '1.6rem',
+        color: '#e67e22',
+        fontWeight: 'bold',
+        marginBottom: '20px',
+    },
+    images: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '20px',
+        justifyContent: 'center',
+        marginBottom: '20px',
+    },
+    cityImage: {
+        borderRadius: '10px',
+        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+        width: '350px',
+        height: '220px',
+        objectFit: 'cover',
+    },
+    bookNowButton: {
+        display: 'block',
+        width: '220px',
+        padding: '12px',
+        margin: '0 auto',
+        textAlign: 'center',
+        backgroundColor: '#007BFF',
+        color: '#fff',
+        fontSize: '1.2rem',
+        fontWeight: 'bold',
+        borderRadius: '8px',
+        textDecoration: 'none',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s ease, transform 0.3s ease',
+    },
+    bookNowButtonHover: {
+        backgroundColor: '#0056b3',
+        transform: 'scale(1.05)',
+    },
+    hotels: {
+        marginTop: '30px',
+    },
+    hotelsTitle: {
+        fontSize: '2.5rem',
+        color: '#333',
+        marginBottom: '20px',
+        textAlign: 'center',
+    },
+    hotelCard: {
+        border: '1px solid #ddd',
+        borderRadius: '10px',
+        padding: '20px',
+        marginBottom: '20px',
+        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+        backgroundColor: '#fff',
+        maxWidth: '500px',
+        margin: '0 auto',
+    },
+    hotelName: {
+        fontSize: '1.8rem',
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: '10px',
+    },
+    hotelInfo: {
+        fontSize: '1.1rem',
+        color: '#666',
+        marginBottom: '8px',
+    },
+    hotelFacilities: {
+        fontSize: '1.2rem',
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: '10px',
+    },
+    facilitiesList: {
+        listStyleType: 'none',
+        padding: '0',
+        margin: '0',
+    },
+    facilitiesListItem: {
+        fontSize: '1.1rem',
+        color: '#555',
+        marginBottom: '5px',
+    },
+    inputField: inputFieldStyle,
+    textAreaField: textAreaFieldStyle,
+    saveButton: saveButtonStyle,
+    cancelButton: cancelButtonStyle,
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '10px',
+        marginTop: '20px',
+    },
+};
+
+const UpdateCity = () => {
+    const { cityId } = useParams();
+    const [cityInfo, setCityInfo] = useState(null);
+    const [editedCityInfo, setEditedCityInfo] = useState({});
     const [error, setError] = useState(null);
-
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         const fetchCityData = async () => {
             try {
                 const token = localStorage.getItem('token');
-                if (!token) {
-                    throw new Error("No token found");
-                }
-                console.log("Token:", token); // Log token to verify
-                console.log("Fetching data from:", `${config.url}/cities/${id}`);
-                
-                const response = await axios.get(`${config.url}/cities/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                const response = await axios.get(`${config.url}/cities/${cityId}`, {
+                    headers: { Authorization: `Bearer ${token}` },
                 });
-    
-                console.log("City Data:", response.data); // Log response data for debugging
-    
-                const city = response.data;
-                setName(city.name);
-                setCityDetails(city.cityDetails);
-                setCurrentCityImage(city.cityImage);
-                setDay1Description(city.day1Description);
-                setDay2Description(city.day2Description);
-                setDay3Description(city.day3Description);
-                setDay4Description(city.day4Description);
-                setDuration(city.duration);
-                setStartingDate(city.startingDate);
-                setEndingDate(city.endingDate);
-                setLocation(city.location);
-                setPrice(city.price);
-                setPackageId(city.package_id);
+
+                setCityInfo(response.data);
+                setEditedCityInfo(response.data); // Initialize with existing data
                 setLoading(false);
             } catch (error) {
-                console.error("Error fetching city data:", error.response ? error.response.data : error.message);
-                setError(`Failed to fetch city data: ${error.response ? error.response.data.message : error.message}`);
+                setError('Failed to fetch city data');
                 setLoading(false);
             }
         };
-    
+
         fetchCityData();
-    }, [id]);
-    
+    }, [cityId]);
 
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('cityDetails', cityDetails);
-        if (cityImage) formData.append('cityImage', cityImage);
-        formData.append('day1Description', day1Description);
-        formData.append('day2Description', day2Description);
-        formData.append('day3Description', day3Description);
-        formData.append('day4Description', day4Description);
-        formData.append('duration', duration);
-        formData.append('startingDate', startingDate);
-        formData.append('endingDate', endingDate);
-        formData.append('location', location);
-        formData.append('price', price);
-        formData.append('package_id', package_id);
+    const handleInputChange = (e) => {
+        setEditedCityInfo({
+            ...editedCityInfo,
+            [e.target.name]: e.target.value,
+        });
+    };
 
+    const handleSave = async () => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`${config.url}/cities/${id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${token}`,
-                }
+            const response = await axios.put(`${config.url}/cities/update/${cityId}`, editedCityInfo, {
+                headers: { Authorization: `Bearer ${token}` },
             });
-            toast.success('City updated successfully!');
-            navigate(`/cities/${id}`);
+
+            if (response.status === 200 || response.status === 204) {
+                // Successfully updated
+                setCityInfo(editedCityInfo); // Update state with new data
+                setIsEditing(false); // Exit editing mode
+            } else {
+                throw new Error(`Unexpected status code: ${response.status}`);
+            }
         } catch (error) {
-            toast.error('Error updating city');
-            console.error("Error updating city:", error.response ? error.response.data : error.message); // Log detailed error
-            alert('Failed to update city. Please try again.');
+            console.error('Error updating city data:', error);
+            if (error.response) {
+                // Server responded with a status code outside of 2xx range
+                alert(`Failed to save changes: ${error.response.data.message || error.response.data}`);
+            } else if (error.request) {
+                // Request was made but no response was received
+                alert('Failed to save changes: No response from server');
+            } else {
+                // Something happened in setting up the request
+                alert(`Failed to save changes: ${error.message}`);
+            }
         }
     };
 
-    if (loading) {
-        return (
-            <div style={{ textAlign: 'center', padding: '20px' }}>
-                <p>Loading...</p>
-            </div>
-        );
-    }
+    const handleCancel = () => {
+        setEditedCityInfo(cityInfo); // Reset changes
+        setIsEditing(false);
+    };
 
-    if (error) {
-        return <div style={{ color: 'red', textAlign: 'center', padding: '20px' }}>{error}</div>;
-    }
-
-    return (
-        <div style={{
-            maxWidth: 600,
-            margin: '40px auto',
-            padding: 20,
-            border: '5px solid #ddd',
-            borderRadius: 10,
-            boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'
-        }}>
-            <div style={{
-                textAlign: 'center',
-                marginBottom: 20
-            }}>
-                <h2 style={{
-                    fontWeight: 'bold',
-                    color: '#333'
-                }}>Update City</h2>
-            </div>
-            <form onSubmit={handleFormSubmit}>
-                <label style={{ display: 'block', marginBottom: 5 }}>City Name</label>
+    const renderEditableField = (label, field, type = 'text') => (
+        <div style={styles.cityInfoBoxItem}>
+            <p style={styles.cityInfo}>{label}: </p>
+            {isEditing ? (
                 <input
-                    type="text"
-                    placeholder="e.g., Paris"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 40, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
+                    type={type}
+                    name={field}
+                    value={editedCityInfo[field] || ''}
+                    onChange={handleInputChange}
+                    style={styles.inputField}
                 />
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>City Details</label>
-                <textarea
-                    placeholder="Add Details"
-                    value={cityDetails}
-                    onChange={(e) => setCityDetails(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 100, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
-                />
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>Upload Image</label>
-                <input
-                    type="file"
-                    onChange={(e) => setCityImage(e.target.files[0])}
-                    style={{ width: '100%', height: 50, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '20px' }}
-                />
-                {currentCityImage && (
-                    <div>
-                        <img
-                            src={`data:image/jpeg;base64,${currentCityImage}`}
-                            alt="Current City"
-                            style={{ width: '100%', height: 'auto', borderRadius: 5, marginBottom: '20px' }}
-                        />
-                    </div>
-                )}
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>Day 1 Description</label>
-                <textarea
-                    placeholder="Day 1 Description"
-                    value={day1Description}
-                    onChange={(e) => setDay1Description(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 100, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
-                />
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>Day 2 Description</label>
-                <textarea
-                    placeholder="Day 2 Description"
-                    value={day2Description}
-                    onChange={(e) => setDay2Description(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 100, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
-                />
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>Day 3 Description</label>
-                <textarea
-                    placeholder="Day 3 Description"
-                    value={day3Description}
-                    onChange={(e) => setDay3Description(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 100, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
-                />
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>Day 4 Description</label>
-                <textarea
-                    placeholder="Day 4 Description"
-                    value={day4Description}
-                    onChange={(e) => setDay4Description(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 100, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
-                />
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>Duration</label>
-                <input
-                    type="text"
-                    placeholder="e.g., 4 days"
-                    value={duration}
-                    onChange={(e) => setDuration(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 40, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
-                />
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>Starting Date</label>
-                <input
-                    type="date"
-                    value={startingDate}
-                    onChange={(e) => setStartingDate(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 40, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
-                />
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>Ending Date</label>
-                <input
-                    type="date"
-                    value={endingDate}
-                    onChange={(e) => setEndingDate(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 40, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
-                />
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>Location</label>
-                <input
-                    type="text"
-                    placeholder="e.g., Paris, Lyon"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 40, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
-                />
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>City Price</label>
-                <input
-                    type="number"
-                    placeholder="Add Price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 40, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
-                />
-                <br />
-                <label style={{ display: 'block', marginBottom: 5 }}>Package ID</label>
-                <input
-                    type="number"
-                    placeholder="Add Package ID"
-                    value={package_id}
-                    onChange={(e) => setPackageId(e.target.value)}
-                    required
-                    style={{ width: '100%', height: 40, padding: 10, border: '1px solid #ccc', borderRadius: 5, marginBottom: '10px' }}
-                />
-                <br />
-                <button type="submit" style={{
-                    width: 200,
-                    height: 40,
-                    backgroundColor: '#4CAF50',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: 5,
-                    cursor: 'pointer',
-                    margin: '20px auto',
-                    display: 'block'
-                }}>Update City</button>
-            </form>
+            ) : (
+                <span>{cityInfo[field] || `${label} not available`}</span>
+            )}
         </div>
     );
-}
+
+    const renderEditableTextArea = (label, field) => (
+        <div style={styles.cityInfoBoxItem}>
+            <p style={styles.cityInfo}>{label}: </p>
+            {isEditing ? (
+                <textarea
+                    name={field}
+                    value={editedCityInfo[field] || ''}
+                    onChange={handleInputChange}
+                    style={styles.textAreaField}
+                />
+            ) : (
+                <span>{cityInfo[field] || `${label} not available`}</span>
+            )}
+        </div>
+    );
+
+    if (loading) return <div className="loader-container">Loading...</div>;
+    if (error) return <div className="error-message">{error}</div>;
+    if (!cityInfo) return <div>No data available</div>;
+
+    return (
+        <div style={styles.container}>
+            <div style={styles.cityHeader}>
+                {renderEditableField('City Name', 'name')}
+                {renderEditableTextArea('City Description', 'cityDetails')}
+
+                <div style={styles.cityInfoBox}>
+                    <h2 style={styles.cityInfoHeader}>Trip Details</h2>
+                    {renderEditableField('Duration', 'duration')}
+                    {renderEditableTextArea('Day 1 Plan', 'day1Description')}
+                    {renderEditableTextArea('Day 2 Plan', 'day2Description')}
+                    {renderEditableTextArea('Day 3 Plan', 'day3Description')}
+                    {renderEditableTextArea('Day 4 Plan', 'day4Description')}
+                    {renderEditableField('Starting Date', 'startingDate', 'date')}
+                    {renderEditableField('Ending Date', 'endingDate', 'date')}
+                    {renderEditableField('Location', 'location')}
+                </div>
+            </div>
+
+            <div style={styles.images}>
+                {cityInfo.images && cityInfo.images.length > 0 ? (
+                    cityInfo.images.map((imagePath, index) => (
+                        <img
+                            key={index}
+                            src={`${config.url}${imagePath.imagePath}`}
+                            alt={`City Image ${index + 1}`}
+                            style={styles.cityImage}
+                        />
+                    ))
+                ) : (
+                    <p>No images available</p>
+                )}
+            </div>
+
+            <div style={styles.hotels}>
+                <h3 style={styles.hotelsTitle}>Hotels</h3>
+                {cityInfo.hotels && cityInfo.hotels.length > 0 ? (
+                    cityInfo.hotels.map((hotel, index) => (
+                        <div key={index} style={styles.hotelCard}>
+                            {renderEditableField('Hotel Name', `hotels[${index}].name`)}
+                            {renderEditableField('Address', `hotels[${index}].address`)}
+                            {renderEditableField('Rate per Person', `hotels[${index}].ratePerPerson`)}
+                            {renderEditableField('Rating', `hotels[${index}].starRating`)}
+                            {renderEditableTextArea('Facilities', `hotels[${index}].facilities`)}
+                        </div>
+                    ))
+                ) : (
+                    <p>No hotels available</p>
+                )}
+            </div>
+
+            {isEditing ? (
+                <div style={styles.buttonContainer}>
+                    <button style={styles.saveButton} onClick={handleSave}>
+                        Save
+                    </button>
+                    <button style={styles.cancelButton} onClick={handleCancel}>
+                        Cancel
+                    </button>
+                </div>
+            ) : (
+                <div style={styles.buttonContainer}>
+                    <button
+                        style={styles.bookNowButton}
+                        onClick={() => setIsEditing(true)}
+                    >
+                        Update
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default UpdateCity;
