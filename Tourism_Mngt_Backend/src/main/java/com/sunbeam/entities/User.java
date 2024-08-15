@@ -67,6 +67,7 @@ public class User extends BaseEntity {
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.password = password;
+		
 	}
 	
 	public void addImage(Booking booking) {

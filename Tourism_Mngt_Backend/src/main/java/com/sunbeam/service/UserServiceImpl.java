@@ -1,6 +1,9 @@
 
 package com.sunbeam.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +15,7 @@ import com.sunbeam.custom_exception.ResourceNotFoundException;
 import com.sunbeam.dao.UserDao;
 import com.sunbeam.dto.ForgetPasswordDTO;
 import com.sunbeam.dto.UserDTO;
+import com.sunbeam.dto.UserResponseDTO;
 import com.sunbeam.entities.Role;
 import com.sunbeam.entities.User;
 
@@ -75,5 +79,17 @@ public class UserServiceImpl implements UserService {
 		return "User has been deleted successfully!!";
 	}
 	
+	public List<UserResponseDTO> getAllUsers(){
+		List<UserResponseDTO> list = userDao.findAll().stream().map(user->{
+			UserResponseDTO dto = new UserResponseDTO();
+			dto.setEmail(user.getEmail());
+			dto.setFirstName(user.getFirstName());
+			dto.setLastName(user.getLastName());
+			dto.setPhoneNumber(user.getPhoneNumber());
+			
+			return dto;
+		}).collect(Collectors.toList());
+		return list;	
+	}
 	
 }

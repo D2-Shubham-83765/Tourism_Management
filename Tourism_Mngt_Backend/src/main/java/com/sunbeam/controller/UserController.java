@@ -32,6 +32,7 @@ import com.sunbeam.dto.ForgetPasswordDTO;
 import com.sunbeam.dto.LoginDTO;
 import com.sunbeam.dto.LoginResponse;
 import com.sunbeam.dto.UserDTO;
+import com.sunbeam.dto.UserResponseDTO;
 import com.sunbeam.security.CustomUserDetails;
 import com.sunbeam.security.JwtUtils;
 import com.sunbeam.service.UserServiceImpl;
@@ -46,8 +47,8 @@ public class UserController {
 	
 	  @Autowired 
 	  private AuthenticationManager authManager;
+	  
 	 
-	
 	@Autowired
 	private JwtUtils utils;
 	
@@ -94,6 +95,12 @@ public class UserController {
 	public ResponseEntity<?> deleteUser(@RequestParam String email){
 		String message = userService.deleteUser(email);
 		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("success", message));
+	}
+	
+	@GetMapping("/get-all")
+	public ResponseEntity<?> getAllUsers(){
+		List<UserResponseDTO> allUsers = userService.getAllUsers();
+		return ResponseEntity.status(HttpStatus.OK).body(allUsers);
 	}
 	
 }

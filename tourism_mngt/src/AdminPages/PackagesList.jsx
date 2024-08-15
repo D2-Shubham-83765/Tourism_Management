@@ -12,7 +12,7 @@ const PackagesList = () => {
     return (
         <div>
 
-            <Navbar />
+            
 
             <CityCardsAdmin />
 

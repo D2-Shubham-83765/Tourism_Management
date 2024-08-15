@@ -10,6 +10,11 @@
     justify-content: center;
 }
 
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .card-admin {
     background-color: #90fdff;
     border: 1px solid #ddd;
@@ -25,12 +30,12 @@
     justify-content: center;
 }
 
-.card h3 {
+.card-admin h3 {
     margin: 0;
     font-size: 14px; /* Adjust font size to fit within the height */
 }
 
-.card p {
+.card-admin p {
     font-size: 22px; /* Adjust font size to fit within the height */
     font-weight: bold;
     margin: 5px 0 0; /* Adjust margin to fit within the height */

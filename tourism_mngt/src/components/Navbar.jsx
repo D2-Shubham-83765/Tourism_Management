@@ -83,13 +83,17 @@ const Navbar = () => {
             <header>
                 <nav className="navbar navbar-expand-lg navbar-dark" style={{ height: '70px', backgroundColor: 'black', boxShadow: '2px 1px 5px 5px rgba(0, 0, 0, 0.521)' }}>
                     <a className="navbar-brand d-flex align-items-center">
-                        <img src={logo} height="100" className="mr-2" alt="Website Logo" style={{ marginLeft: '20px' }} />
+                    <Link to="/">
+      <img src={logo} alt="Company Logo" style={{ width: '150px', height: 'auto' }} />
+    </Link>
                     </a>
 
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <a className="nav-link">Home</a>
+                            <Link to="/" className="nav-link" style={{ textDecoration: 'none' }}>
+                                    Home
+                                </Link>
                             </li>
 
                             <li className="nav-item">
