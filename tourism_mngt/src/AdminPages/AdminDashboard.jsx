@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
+import { Link } from 'react-router-dom';
 import config from '../config';
 import './AdminDashboard.css';
 
@@ -24,9 +25,9 @@ const AdminDashboard = () => {
                     axios.get(`${config.url}/admin/cities/count`),
                 ]);
                 console.log('Users response:', usersResponse.data);  // Log API response
-        console.log('Bookings response:', bookingsResponse.data);
-        console.log('Packages response:', packagesResponse.data);
-        console.log('Cities response:', citiesResponse.data);
+                console.log('Bookings response:', bookingsResponse.data);
+                console.log('Packages response:', packagesResponse.data);
+                console.log('Cities response:', citiesResponse.data);
 
                 // Update state with the fetched counts
                 setCounts({
@@ -55,21 +56,29 @@ const AdminDashboard = () => {
             <br />
             <br/>
             <div className="dashboard-cards">
-                <div className="card-admin">
-                    <h3>Users</h3>
-                    <p>{counts.users}</p>
-                </div>
-                <div className="card-admin">
-                    <h3>Bookings</h3>
-                    <p>{counts.bookings}</p>
-                </div>
-                <div className="card-admin">
-                    <h3>Packages</h3>
-                    <p>{counts.packages}</p>
-                </div>
-                <div className="card-admin">
-                    <h3>Cities</h3>
-                    <p>{counts.cities}</p>
+                <Link to="/users" className="card-link">
+                    <div className="card-admin">
+                        <h3>Users</h3>
+                        <p>{counts.users}</p>
+                    </div>
+                </Link>
+                <Link to="/bookings" className="card-link">
+                    <div className="card-admin">
+                        <h3>Bookings</h3>
+                        <p>{counts.bookings}</p>
+                    </div>
+                </Link>
+                <Link to="/update-packages" className="card-link">
+                    <div className="card-admin">
+                        <h3>Packages</h3>
+                        <p>{counts.packages}</p>
+                    </div>
+                </Link>
+                <div className="card-link">
+                    <div className="card-admin">
+                        <h3>Cities</h3>
+                        <p>{counts.cities}</p>
+                    </div>
                 </div>
             </div>
         </div>

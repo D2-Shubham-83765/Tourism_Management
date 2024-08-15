@@ -21,6 +21,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import UserListComponent from './AdminPages/UserList';
 
 library.add(faStar);
 
@@ -48,6 +49,7 @@ function App() {
         <Route path='/update-city/:cityId' element={<UpdateCity/>} />
         <Route path='/PassengerPage' element={<PassengerPage/>} />
         <Route path='/forgot-password' element={<ForgotPassword/>} />
+        <Route path='/users' element={<UserListComponent/>} />
       </Routes>
       <Footer/>
        <ToastContainer/> 

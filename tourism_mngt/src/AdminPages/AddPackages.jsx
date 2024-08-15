@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import config from '../config';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { toast } from 'react-toastify';
 
 export default function AddPackages() {
   const [packageName, setPackageName] = useState('');
-  const [packageDetails, setpackageDetails] = useState('');
+  const [packageDetails, setPackageDetails] = useState('');
   const [imageFile, setImageFile] = useState(null);
-  const [startingPrice, setstartingPrice] = useState('');
+  const [startingPrice, setStartingPrice] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -27,12 +29,14 @@ export default function AddPackages() {
       console.log(response.data);
       // Reset form fields after successful submission
       setPackageName('');
-      setpackageDetails('');
+      setPackageDetails('');
       setImageFile(null);
-      setstartingPrice('');
+      setStartingPrice('');
       toast.success('Package added successfully!');
+      // Navigate to another page
+      navigate('/update-packages');
     } catch (error) {
-      toast.error('Error adding package', error);
+      toast.error('Error adding package');
       alert('Failed to add package. Please try again.');
     }
   };
@@ -83,7 +87,7 @@ export default function AddPackages() {
         <textarea
           placeholder="Add Description"
           value={packageDetails}
-          onChange={(e) => setpackageDetails(e.target.value)}
+          onChange={(e) => setPackageDetails(e.target.value)}
           required
           style={{
             width: '100%',
@@ -121,7 +125,7 @@ export default function AddPackages() {
           type="number"
           placeholder="Add Price"
           value={startingPrice}
-          onChange={(e) => setstartingPrice(e.target.value)}
+          onChange={(e) => setStartingPrice(e.target.value)}
           required
           style={{
             width: '100%',
@@ -133,17 +137,22 @@ export default function AddPackages() {
           }}
         />
         <br />
-        <button type="submit" style={{
-          width: 200,
-          height: 40,
-          backgroundColor: '#4CAF50',
-          color: '#fff',
-          border: 'none',
-          borderRadius: 5,
-          cursor: 'pointer',
-          margin: '20px auto',
-          display: 'block'
-        }}>Add Package</button>
+        <button
+          type="submit"
+          style={{
+            width: 200,
+            height: 40,
+            backgroundColor: '#4CAF50',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 5,
+            cursor: 'pointer',
+            margin: '20px auto',
+            display: 'block'
+          }}
+        >
+          Add Package
+        </button>
       </form>
     </div>
   );
