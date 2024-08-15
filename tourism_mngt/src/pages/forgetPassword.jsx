@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import config from '../config';
 import { toast } from 'react-toastify';
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const [email, setEmail] = useState('');
   const [questionId, setQuestionId] = useState('');
   const [securityAnswer, setSecurityAnswer] = useState('');
@@ -187,4 +187,56 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+// Inline styles for the component
+const styles = {
+  container: {
+    padding: '20px',
+    maxWidth: '600px',
+    margin: '0 auto',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    backgroundColor: '#f9f9f9',
+  },
+  header: {
+    fontSize: '2rem',
+    marginBottom: '20px',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  formGroup: {
+    marginBottom: '15px',
+  },
+  label: {
+    display: 'block',
+    fontSize: '1rem',
+    marginBottom: '5px',
+  },
+  input: {
+    width: '100%',
+    padding: '8px',
+    fontSize: '1rem',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
+  },
+  button: {
+    padding: '10px',
+    backgroundColor: '#007bff',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    fontSize: '1rem',
+    cursor: 'pointer',
+  },
+  message: {
+    color: 'green',
+    marginTop: '10px',
+  },
+  error: {
+    color: 'red',
+    marginTop: '10px',
+  },
+};
+
+export default ResetPassword;
