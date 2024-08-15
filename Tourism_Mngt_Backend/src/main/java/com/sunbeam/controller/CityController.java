@@ -69,8 +69,4 @@ public class CityController {
 		cityService.deleteCity(cityId);
 		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("City has been deleted!!"));
 	}
-	/*
-	 * @PostMapping("/traveller/add") public ResponseEntity<?>
-	 * addTraveller(@RequestBody Tra)
-	 */
 }
