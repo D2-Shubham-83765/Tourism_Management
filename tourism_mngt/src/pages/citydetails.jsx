@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 
+
+
 const CityDetails = () => {
   const { cityId } = useParams();
   const [cityInfo, setCityInfo] = useState(null);
@@ -16,6 +18,7 @@ const CityDetails = () => {
   const [totalPrice, setTotalPrice] = useState(null); // State to hold the total price
 
 
+  
   const navigate = useNavigate();
 
   const renderStarRating = (rating) => {
@@ -32,8 +35,6 @@ const CityDetails = () => {
     return stars;
   };
   
-
-
   useEffect(() => {
     const fetchCityData = async () => {
       try {
@@ -102,17 +103,19 @@ const CityDetails = () => {
     <div style={styles.container}>
       <div style={styles.cityHeader}>
         <h1 style={styles.cityName}>{cityInfo.name || 'City Name Not Available'}</h1>
-        <p style={styles.cityDescription}>{cityInfo.cityDetails || 'Details not available'}</p>
+        
         <span style={styles.cityInfoLabel}>Duration: </span>
         <span style={styles.cityInfoValue}>{cityInfo.duration || 'Not available'}</span> &nbsp; &nbsp;
         <span style={styles.cityInfoLabel}>Location: </span>
-        <span style={styles.cityInfoValue}>{cityInfo.location || 'Not available'}</span>
-        <br /> <br />
+        <span style={styles.cityInfoValue}>{cityInfo.location || 'Not available'}</span> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+     
         <span style={styles.cityInfoLabel}>Starting Date: </span>
-        <span style={styles.cityInfoValue}>{cityInfo.startingDate || 'Not available'}</span> &nbsp;
+        <span style={styles.cityInfoValue}>{cityInfo.startingDate || 'Not available'}</span>  &nbsp; &nbsp;
         <span style={styles.cityInfoLabel}>Ending Date:  </span>
         <span style={styles.cityInfoValue}>{cityInfo.endingDate || 'Not available'}</span>
         <br /> <br />
+        <p style={styles.cityDescription}>{cityInfo.cityDetails || 'Details not available'}</p>
+        <br /> 
         <div style={styles.images}>
           {cityInfo.images && cityInfo.images.length > 0 ? (
             cityInfo.images.map((imagePath, index) => (
@@ -221,6 +224,7 @@ const styles = {
   cityName: {
     fontSize: '3em',
     marginBottom: '10px',
+    marginRight : '1200px',
     fontWeight : 'bold'
   },
   cityDescription: {
@@ -283,6 +287,8 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
   },
+
+  
   hotelCard: {
     width: '80%',
     padding: '15px',
