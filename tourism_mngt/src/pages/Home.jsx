@@ -40,7 +40,7 @@ const Home = () => {
         }}>
            
         {/* Anim Text */}
-        <div className="container22" >
+        <div className="container22"  >
           <span className="mytext1">Welcome to Shubhyatra </span>
           <div className="hidden visible">
             <span className="mytext2"> Enjoy Hassle Free Holiday </span>

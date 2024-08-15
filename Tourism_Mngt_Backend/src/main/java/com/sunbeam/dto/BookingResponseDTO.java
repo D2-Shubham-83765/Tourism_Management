@@ -18,6 +18,8 @@ public class BookingResponseDTO {
 	
 	private String cityName;
 	
+	private String hotelName;
+	
 	private Long noOfPassengers;
 	
 	private Double totalCost;

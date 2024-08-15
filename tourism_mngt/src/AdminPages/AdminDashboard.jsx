@@ -5,6 +5,7 @@ import '../pages/home.css';
 import Navbar from "../components/Navbar";
 import CityCardsAdmin from "../components/CityCardsAdmin";
 import { Link } from "react-router-dom";
+import BookingTable from "../components/BookingTable";
 
 const AdminDashboard = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);

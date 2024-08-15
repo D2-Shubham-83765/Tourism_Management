@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 			if(dto.getPassword().equals(dto.getConfirmPassword()) && dto.getSecurityAnswer().
 					equals(user.getSecurityAnswer())) {
 				User userEntity = mapper.map(dto, User.class);
-				String pwd = passwordEncoder.encode(userEntity.getPassword());
+				String pwd = passwordEncoder.encode(userEntity.getPassword());				
 				user.setPassword(pwd);
 				userDao.save(user);
 				return "Password reset successfully";

@@ -95,7 +95,11 @@ const Navbar = () => {
                                     About Us
                                 </Link>
                             </li>
-                            
+                            <li className="nav-item">
+                                <Link to="/bookings" className="nav-link" style={{ textDecoration: 'none' }}>
+                                    Bookings
+                                </Link>
+                            </li>
                             &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
                             &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
                             &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
