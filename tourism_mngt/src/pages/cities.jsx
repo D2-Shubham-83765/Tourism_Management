@@ -53,7 +53,7 @@ const CityPage = () => {
     const handleUpdateClick = (id) => {
         navigate(`/update-city/${id}`); // Navigate to the update city form
     };
-
+  
     const handleDeleteClick = async (cityId) => {
         if (window.confirm("Are you sure you want to delete this city?")) {
             try {

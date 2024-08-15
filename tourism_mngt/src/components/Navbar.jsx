@@ -53,6 +53,7 @@ const Navbar = () => {
             localStorage.setItem('userEmail', email);
           
             toast.success('Login successful!');
+            
 
             setUserEmail(email);
             setIsLoggedIn(true);

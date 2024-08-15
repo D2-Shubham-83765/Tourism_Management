@@ -18,10 +18,12 @@ import org.springframework.security.config.BeanIds;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunbeam.dto.ApiResponse;
@@ -48,7 +50,7 @@ public class UserController {
 	@Autowired
 	private JwtUtils utils;
 	
-	
+
 	@PostMapping("/register")
 	public ResponseEntity<?> addUser(@RequestBody @Valid UserDTO dto){
 		String message = userService.addNewUser(dto);
@@ -85,4 +87,10 @@ public class UserController {
 	public ResponseEntity<?> forgetPassword(@RequestBody @Valid ForgetPasswordDTO dto){
 		return ResponseEntity.status(HttpStatus.OK).body(userService.setPassword(dto));
 	} 
+	
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> deleteUser(@RequestParam String email){
+		String message = userService.deleteUser(email);
+		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("success", message));
+	}
 }

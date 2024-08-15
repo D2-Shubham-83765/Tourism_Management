@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sunbeam.custom_exception.ApiException;
+import com.sunbeam.custom_exception.ResourceNotFoundException;
 import com.sunbeam.dao.UserDao;
 import com.sunbeam.dto.ForgetPasswordDTO;
 import com.sunbeam.dto.UserDTO;
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String setPassword(ForgetPasswordDTO dto) {
 		User user = userDao.findByEmail(dto.getEmail()).orElseThrow(()-> new ApiException("Invalid Email!!"));
-			if(dto.getPassword().equals(dto.getNewPassword()) && dto.getSecurityAnswer().
+			if(dto.getNewPassword().equals(dto.getConfirmPassword()) && dto.getSecurityAnswer().
 					equals(user.getSecurityAnswer())) {
 				User userEntity = mapper.map(dto, User.class);
 				user.setPassword(userEntity.getPassword());
@@ -62,6 +63,16 @@ public class UserServiceImpl implements UserService {
 			}
 		throw new ApiException("Password or Security answer doesn't match!!");
 	}
+	
+	public String deleteUser(String email) {
+		User user = userDao.findByEmail(email).orElseThrow(()-> new ResourceNotFoundException("Email doesn't exist!!"));
+		if(user!=null) {
+			userDao.delete(user);
+		}else
+			throw new ApiException("User doesn't exist!!");
+		return "User has been deleted successfully!!";
+	}
+	
 	
 	
 }

@@ -1,7 +1,11 @@
 package com.sunbeam.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -22,6 +26,9 @@ public class Package extends BaseEntity{
 	private String imagePath;
 	
 	private double startingPrice;
+	
+	 @OneToMany(mappedBy = "packageEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+	    private List<City> cities;
 
 	public Package(String packageName, String packageDetails, String imagePath, double startingPrice) {
 		super();
