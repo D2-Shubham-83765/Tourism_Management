@@ -45,8 +45,9 @@ const CityPage = () => {
         fetchCityData();
     }, [id]);
 
-    const handleCardClick = (iden) => {
-        navigate(`/cities/${iden}`);
+    const handleCardClick = (city) => {
+        localStorage.setItem('selectedCityName', city.name);
+        navigate(`/cities/${city.id}`);
     };
 
     const handleUpdateClick = (cityId) => {
@@ -94,7 +95,7 @@ const CityPage = () => {
                             <div
                                 key={city.id} 
                                 className="col-md-3" 
-                                onClick={() => handleCardClick(city.id)} // Handle click event
+                                onClick={() => handleCardClick(city)} // Handle click event
                                 style={{ cursor: 'pointer' }} // Change cursor to pointer
                             >
                                 <div className="card">

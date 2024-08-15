@@ -43,7 +43,7 @@ public class BookingServiceImpl implements BookingService{
 		System.out.println(dto.getUser_id());
 		book.setUserEntity(userDao.findByEmail(dto.getUser_id()).orElseThrow(()-> new ResourceNotFoundException("User doesn't exist")));
 		bookingDao.save(book);
-		return "Booking has been generated";
+		return book.getBookingNo();
 	}
 	
 	public UserBookingDTO getUserAllBookingDetails(String email){

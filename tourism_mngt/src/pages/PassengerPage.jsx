@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import './PassengerPage.css';  // Assuming you'll add some basic styling
+import './PassengerPage.css'; 
 import { useNavigate } from 'react-router-dom';
+import config from '../config';
+import axios from 'axios';
 
 const PassengerPage = () => {
     const [passengers, setPassengers] = useState([]);
@@ -9,8 +11,10 @@ const PassengerPage = () => {
         age: '',
         gender: '',
         email: '',
-        adhar: '',
+        aadhaar: '',
     });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const navigate = useNavigate(); 
 
@@ -19,28 +23,42 @@ const PassengerPage = () => {
         const { name, value } = e.target; 
 
         // Ensure that the adhar number only accepts up to 12 digits
-        if (name === 'adhar' && (value.length > 12 || isNaN(value))) {
+        if (name === 'aadhaar' && (value.length > 12 || isNaN(value))) {
             return;
         }
 
         setPassenger({ ...passenger, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Check if the adhar number is exactly 12 digits
-        if (passenger.adhar.length !== 12) {
-            alert('Aadhar number must be exactly 12 digits.');
+        if (passenger.aadhaar.length !== 12) {
+            alert('Aadhaar number must be exactly 12 digits.');
             return;
         }
 
-        setPassengers([...passengers, passenger]);
-        setPassenger({ name: '', age: '', gender: '', email: '', adhar: '' });  // Reset form
+        const bookingNo = localStorage.getItem('bookingNo');
+
+        const passengerWithBooking = { ...passenger, bookingNo };
+
+        setLoading(true);
+        setError(null)
+
+        try {
+            const response = await axios.post(`${config.url}/traveller`, passengerWithBooking);
+            setPassengers([...passengers, response.data]);
+            setPassenger({ name: '', age: '', gender: '', email: '', aadhaar: '' });  // Reset form
+        } catch (error) {
+            setError(error.response?.data?.message || 'Failed to add passenger');
+        } finally {
+            setLoading(false);
+        }
     };
    
-    const goToPaymentsPage = () => {
-        navigate('/payments'); // Adjust the path to your payments page route
+    const viewBookingSummary = () => {
+        navigate('/booking-summary'); // Adjust the path to your payments page route
     };
 
     const goBack = () => {
@@ -104,8 +122,8 @@ const PassengerPage = () => {
                     <label>Adhar:</label>
                     <input 
                         type="number" 
-                        name="adhar" 
-                        value={passenger.adhar} 
+                        name="aadhaar" 
+                        value={passenger.aadhaar} 
                         onChange={handleChange} 
                         required 
                     />
@@ -138,8 +156,8 @@ const PassengerPage = () => {
             </table>
 
       
-                <button onClick={goToPaymentsPage} className="go-to-payments-button">
-                    Go to Payments Page
+                <button onClick={viewBookingSummary} className="go-to-booking-button">
+                    View Booking Summary
                 </button>
         </div>
 

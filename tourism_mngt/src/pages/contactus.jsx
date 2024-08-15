@@ -53,7 +53,7 @@ function ContactUs() {
                                     </li>
                                     <li>
                                         Phone:   
-                                        <a href="tel:+123987456" className="text-decoration-none"> 123987456</a>
+                                        <a href="tel:+123987456" className="text-decoration-none"> + 91 907 857 556</a>
                                     </li>
                                     <li>
                                         Address: 

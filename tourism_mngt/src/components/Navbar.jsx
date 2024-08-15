@@ -59,7 +59,7 @@ const Navbar = () => {
             setIsLoggedIn(true);
 
             if (roles.includes('ADMIN')) {
-                navigate('/admin');
+                navigate('/admin-dashboard');
             } else if (roles.includes('USER')) {
                 navigate('/');
             } else {
