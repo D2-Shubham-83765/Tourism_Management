@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import config from '../config';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+
 
 const CityDetails = () => {
   const { cityId } = useParams();
@@ -12,7 +15,24 @@ const CityDetails = () => {
   const [loading, setLoading] = useState(true);
   const [totalPrice, setTotalPrice] = useState(null); // State to hold the total price
 
+
   const navigate = useNavigate();
+
+  const renderStarRating = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <FontAwesomeIcon
+          key={i}
+          icon={faStar}
+          style={{ color: i <= rating ? '#ffc107' : '#e4e5e9', marginRight: '2px' }}
+        />
+      );
+    }
+    return stars;
+  };
+  
+
 
   useEffect(() => {
     const fetchCityData = async () => {
@@ -22,6 +42,8 @@ const CityDetails = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
+
+        
         console.log('API Response:', response.data); // Log full response for debugging
         setCityInfo(response.data);
         setTotalPrice(response.data.price); // Initialize totalPrice with the original package price
@@ -81,20 +103,24 @@ const CityDetails = () => {
       <div style={styles.cityHeader}>
         <h1 style={styles.cityName}>{cityInfo.name || 'City Name Not Available'}</h1>
         <p style={styles.cityDescription}>{cityInfo.cityDetails || 'Details not available'}</p>
-        <span style={styles.cityInfoLabel}>Duration:</span>
+        <span style={styles.cityInfoLabel}>Duration: </span>
         <span style={styles.cityInfoValue}>{cityInfo.duration || 'Not available'}</span> &nbsp; &nbsp;
-        <span style={styles.cityInfoLabel}>Location:</span>
+        <span style={styles.cityInfoLabel}>Location: </span>
         <span style={styles.cityInfoValue}>{cityInfo.location || 'Not available'}</span>
+        <br /> <br />
+        <span style={styles.cityInfoLabel}>Starting Date: </span>
+        <span style={styles.cityInfoValue}>{cityInfo.startingDate || 'Not available'}</span> &nbsp;
+        <span style={styles.cityInfoLabel}>Ending Date:  </span>
+        <span style={styles.cityInfoValue}>{cityInfo.endingDate || 'Not available'}</span>
         <br /> <br />
         <div style={styles.images}>
           {cityInfo.images && cityInfo.images.length > 0 ? (
             cityInfo.images.map((imagePath, index) => (
               <img
                 key={index}
-                
-                src={`data : jpeg;base64,${index.images}`}  // src={`data:image/jpeg;base64,${city.cityImage}`}
+                src={imageUrl(imagePath.imagePath)}
                 alt={`City Image ${index + 1}`}
-                style={styles.cityImage}
+                style={index < 2 ? styles.largeCityImage : styles.smallCityImage}
                 onError={(e) => {
                   e.target.src = 'https://via.placeholder.com/150'; // Fallback image
                   console.error('Image failed to load:', e.target.src);
@@ -105,38 +131,31 @@ const CityDetails = () => {
             <p>No images available</p>
           )}
         </div>
-      </div>
+      </div> <br />
       <div style={styles.cityInfoBox}>
         <h2 style={styles.cityInfoHeader}>Trip Details</h2>
-        <div style={styles.cityInfoBoxItem}>
-          <span style={styles.cityInfoLabel}>Day 1 Plan:</span>
-          <span style={styles.cityInfoValue}>{cityInfo.day1Description || 'Not available'}</span>
+        <div style={styles.dayPlanBox}>
+          <h3 style={styles.dayPlanHeader}>Day 1 Plan</h3>
+          <p>{cityInfo.day1Description || 'Not available'}</p>
         </div>
-        <div style={styles.cityInfoBoxItem}>
-          <span style={styles.cityInfoLabel}>Day 2 Plan:</span>
-          <span style={styles.cityInfoValue}>{cityInfo.day2Description || 'Not available'}</span>
+        <div style={styles.dayPlanBox}>
+          <h3 style={styles.dayPlanHeader}>Day 2 Plan</h3>
+          <p>{cityInfo.day2Description || 'Not available'}</p>
         </div>
-        <div style={styles.cityInfoBoxItem}>
-          <span style={styles.cityInfoLabel}>Day 3 Plan:</span>
-          <span style={styles.cityInfoValue}>{cityInfo.day3Description || 'Not available'}</span>
+        <div style={styles.dayPlanBox}>
+          <h3 style={styles.dayPlanHeader}>Day 3 Plan</h3>
+          <p>{cityInfo.day3Description || 'Not available'}</p>
         </div>
-        <div style={styles.cityInfoBoxItem}>
-          <span style={styles.cityInfoLabel}>Day 4 Plan:</span>
-          <span style={styles.cityInfoValue}>{cityInfo.day4Description || 'Not available'}</span>
-        </div>
-        <div style={styles.cityInfoBoxItem}>
-          <span style={styles.cityInfoLabel}>Starting Date:</span>
-          <span style={styles.cityInfoValue}>{cityInfo.startingDate ? new Date(cityInfo.startingDate).toLocaleDateString() : 'Not available'}</span>
-        </div>
-        <div style={styles.cityInfoBoxItem}>
-          <span style={styles.cityInfoLabel}>Ending Date:</span>
-          <span style={styles.cityInfoValue}>{cityInfo.endingDate ? new Date(cityInfo.endingDate).toLocaleDateString() : 'Not available'}</span>
+        <div style={styles.dayPlanBox}>
+          <h3 style={styles.dayPlanHeader}>Day 4 Plan</h3>
+          <p>{cityInfo.day4Description || 'Not available'}</p>
         </div>
       </div>
       <div style={styles.hotels}>
         <br />
         <h3 style={styles.hotelsTitle}>Hotels</h3>
         <h6>Select the hotel that suits you</h6>
+        <br />
         <div style={styles.hotelsList}>
           {cityInfo.hotels && cityInfo.hotels.length > 0 ? (
             cityInfo.hotels.map((hotel, index) => (
@@ -149,7 +168,8 @@ const CityDetails = () => {
                 <br />
                 <p style={styles.hotelInfo}>Address: {hotel.address || 'Address not available'}</p>
                 <p style={styles.hotelInfo}>Rate per Person: &#8377; {hotel.ratePerPerson ? hotel.ratePerPerson.toFixed(2) : 'Rate not available'}</p>
-                <p style={styles.hotelInfo}>Rating: {hotel.starRating || 'Star rating not available'}</p>
+                <p style={styles.hotelInfo}>Rating: {renderStarRating(hotel.starRating) || 'Star rating not available'}</p>
+
               </div>
             ))
           ) : (
@@ -163,14 +183,15 @@ const CityDetails = () => {
             <p style={styles.hotelInfo}>Name: {selectedHotel.name || 'Hotel Name Not Available'}</p>
             <p style={styles.hotelInfo}>Address: {selectedHotel.address || 'Address not available'}</p>
             <p style={styles.hotelInfo}>Rate per Person: &#8377; {selectedHotel.ratePerPerson ? selectedHotel.ratePerPerson.toFixed(2) : 'Rate not available'}</p>
-            <p style={styles.hotelInfo}>Rating: {selectedHotel.starRating || 'Star rating not available'}</p>
+            <p style={styles.hotelInfo}>Rating: {renderStarRating(selectedHotel.starRating) || 'Star rating not available'}</p>
+            <br />
             <p style={styles.hotelFacilities}>Facilities:</p>
             {renderFacilities(selectedHotel)}
           </div>
         )}
         <br />
         <div style={styles.cityInfoBoxItem}>
-          <p style={styles.cityInfo}>Total Price: <span style={styles.cityPrice}>&#8377; {totalPrice ? totalPrice.toFixed(2) : 'Not available'}</span></p>
+          <p style={styles.cityInfo}>Total Price : <span style={styles.cityPrice}>&#8377; {totalPrice ? totalPrice.toFixed(2) : 'Not available'}</span> per person</p>
         </div>
         
         <a href="#"
@@ -191,133 +212,145 @@ const styles = {
   container: {
     padding: '20px',
     maxWidth: '1200px',
-    margin: '0 auto',
+    margin: 'auto',
+    fontFamily: 'Arial, sans-serif',
   },
   cityHeader: {
-    marginBottom: '20px',
+    textAlign: 'center',
   },
   cityName: {
-    fontSize: '2rem',
-    margin: '0',
+    fontSize: '3em',
+    marginBottom: '10px',
     fontWeight : 'bold'
   },
   cityDescription: {
-    fontSize: '1.2rem',
+    fontSize: '1.2em',
     color: '#555',
   },
   cityInfoLabel: {
     fontWeight: 'bold',
   },
   cityInfoValue: {
-    marginLeft: '5px',
+    fontStyle: 'italic',
   },
   images: {
     display: 'flex',
-    gap: '10px',
-    overflowX: 'scroll',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
   },
-  cityImage: {
-    width: '200px',
-    height: '150px',
-    objectFit: 'cover',
-    borderRadius: '8px',
+  largeCityImage: {
+    width: '100%',
+    maxWidth: '700px',
+    height: 'auto',
+    margin: '10px',
+    borderRadius : '10px'
+  },
+  smallCityImage: {
+    width: '100%',
+    maxWidth: '400px',
+    height: 'auto',
+    borderRadius : '10px',
+    margin: '10px',
   },
   cityInfoBox: {
-    border: '1px solid #ddd',
+    marginTop: '20px',
     padding: '10px',
+    border: '1px solid #ddd',
     borderRadius: '8px',
-    marginBottom: '20px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   },
-  cityInfoHeader: {
-    fontSize: '1.5rem',
-    marginBottom: '10px',
+  dayPlanBox: {
+    marginBottom: '15px',
+    padding: '10px',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
-  cityInfoBoxItem: {
+  dayPlanHeader: {
     marginBottom: '10px',
+    fontSize: '1.5em',
+    color: '#333',
   },
   hotels: {
     marginTop: '20px',
   },
   hotelsTitle: {
-    fontSize: '1.5rem', 
-    fontWeight: 'bold'
+    fontSize: '2em',
+    marginBottom: '10px',
   },
   hotelsList: {
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
   },
   hotelCard: {
+    width: '80%',
+    padding: '15px',
     border: '1px solid #ddd',
     borderRadius: '8px',
-    padding: '10px',
-    marginBottom: '10px',
+    marginBottom: '15px',
     cursor: 'pointer',
   },
   selectedHotelCard: {
+    width: '80%',
+    padding: '15px',
     border: '2px solid #007bff',
     borderRadius: '8px',
-    padding: '10px',
-    marginBottom: '10px',
+    marginBottom: '15px',
     cursor: 'pointer',
-    backgroundColor: '#f0f8ff',
   },
   hotelName: {
-    fontSize: '1.2rem',
-    margin: '0',
+    fontSize: '1.5em',
+    marginBottom: '10px',
+    fontWeight : 'bold'
   },
   hotelInfo: {
+    fontSize: '1.2em',
     marginBottom: '5px',
-  },
-  hotelDetails: {
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    padding: '10px',
-  },
-  hotelDetailsHeader: {
-    fontSize: '1.2rem',
-    marginBottom: '10px',
   },
   hotelFacilities: {
     fontWeight: 'bold',
+    marginBottom: '10px',
   },
-  facilitiesList: {
-    listStyleType: 'none',
-    padding: '0',
+  hotelDetails: {
+    marginTop: '20px',
+    padding: '15px',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
-  facilitiesListItem: {
-    background: '#f5f5f5',
-    borderRadius: '4px',
-    padding: '5px',
-    marginBottom: '5px',
+  hotelDetailsHeader: {
+    fontSize: '1.5em',
+    marginBottom: '10px',
+    fontWeight : 'bold'
   },
   cityPrice: {
-    fontSize: '1.2rem',
     fontWeight: 'bold',
+    color: '#007bff',
   },
   bookNowButton: {
     display: 'inline-block',
     padding: '10px 20px',
-    backgroundColor: '#007bff',
+    fontSize: '1.2em',
     color: '#fff',
-    textDecoration: 'none',
-    borderRadius: '4px',
+    backgroundColor: '#007bff',
+    border: 'none',
+    borderRadius: '5px',
     textAlign: 'center',
-    fontSize: '1rem',
-    fontWeight: 'bold',
+    cursor: 'pointer',
+    textDecoration: 'none',
   },
   bookNowButtonHover: {
     backgroundColor: '#0056b3',
   },
   loaderContainer: {
     textAlign: 'center',
-    marginTop: '20px',
-    fontSize: '1.5rem',
+    padding: '20px',
   },
   errorMessage: {
     color: 'red',
     textAlign: 'center',
-    marginTop: '20px',
-    fontSize: '1.2rem',
+    padding: '20px',
   },
 };
 

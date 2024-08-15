@@ -1,173 +1,138 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
+import config from '../config'; // Assuming you have a config file for API URLs
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const [email, setEmail] = useState('');
-  const [securityAnswer, setSecurityAnswer] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [storedQuestion, setStoredQuestion] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [securityAnswer, setSecurityAnswer] = useState('');
+  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (email) {
-      setLoading(true);
-      axios.get(`http://localhost:8080/user/security-question?email=${email}`)
-        .then(response => {
-          setStoredQuestion(response.data.question);
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error('Error fetching security question:', error);
-          setStoredQuestion('');
-          setLoading(false);
-        });
-    } else {
-      setStoredQuestion('');
-    }
-  }, [email]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setError('');
-    const data = {
-      email,
-      securityAnswer,
-      newPassword
-    };
-
-    axios.post('http://localhost:8080/user/forget-password', data)
-      .then(response => {
-        if (response.data.success) {
-          alert('Password changed successfully.');
-          navigate('/'); // Redirect to homepage after successful password change
-        } else {
-          setError('Invalid email, security question, or answer.');
-        }
-      })
-      .catch(error => {
-        setError('Error processing request.');
-        console.error('Error changing password:', error);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${config.url}/user/forget-password`, {
+        email,
+        password: currentPassword,
+        newPassword,
+        securityAnswer,
       });
+      setMessage(response.data);
+      setError('');
+    } catch (err) {
+      setError(err.response ? err.response.data : 'An error occurred');
+      setMessage('');
+    }
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6 col-lg-4">
-          <div className="card shadow-lg">
-            <div className="card-body">
-              <h2 className="text-center font-weight-bold">Forgot Password</h2>
-             
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="email">Email address</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <br />
-                {loading && <p className="text-center">Loading security question...</p>}
-                {storedQuestion && (
-                  <div className="form-group">
-                    <br />
-                    <label htmlFor="securityQuestion">Security Question</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="securityQuestion"
-                      value={storedQuestion}
-                      readOnly
-                    />
-                  </div>
-                )}
-                {!storedQuestion && !loading && email && (
-                  <p className="text-danger text-center">No security question found for this email.</p>
-                )}
-                <div className="form-group">
-                  <label htmlFor="securityAnswer">Answer</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="securityAnswer"
-                    placeholder="Enter your answer"
-                    value={securityAnswer}
-                    onChange={(e) => setSecurityAnswer(e.target.value)}
-                    required
-                  />
-                </div>
-                <br />
-                <div className="form-group">
-                  <label htmlFor="newPassword">New Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="newPassword"
-                    placeholder="Enter new password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                {error && <p className="text-danger text-center">{error}</p>}
-                <div className="d-flex justify-content-between mt-4">
-                  <button type="submit" className="btn btn-primary">Submit</button>
-                  <button type="button" className="btn btn-secondary" onClick={() => navigate(-1)}>Back</button>
-                </div>
-              </form>
-            </div>
-          </div>
+    <div style={styles.container}>
+      <h2 style={styles.header}>Reset Password</h2>
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <div style={styles.formGroup}>
+          <label htmlFor="email" style={styles.label}>Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={styles.input}
+          />
         </div>
-      </div>
-
-      <style jsx>{`
-        .card {
-          border-radius: 15px;
-        }
-
-        .card-body {
-          padding: 2rem;
-        }
-
-        h2 {
-          margin-bottom: 1.5rem;
-          font-size: 1.5rem;
-        }
-
-        .btn-primary {
-          background-color: #007bff;
-          border: none;
-        }
-
-        .btn-primary:hover {
-          background-color: #0056b3;
-        }
-
-        .btn-secondary {
-          background-color: #6c757d;
-          border: none;
-        }
-
-        .btn-secondary:hover {
-          background-color: #5a6268;
-        }
-
-        .text-danger {
-          margin-top: 1rem;
-        }
-      `}</style>
+        <div style={styles.formGroup}>
+          <label htmlFor="currentPassword" style={styles.label}>New Password:</label>
+          <input
+            type="password"
+            id="currentPassword"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            required
+            style={styles.input}
+          />
+        </div>
+        <div style={styles.formGroup}>
+          <label htmlFor="newPassword" style={styles.label}>Confrim new Password :</label>
+          <input
+            type="password"
+            id="newPassword"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+            style={styles.input}
+          />
+        </div>
+        <div style={styles.formGroup}>
+          <label htmlFor="securityAnswer" style={styles.label}>Security Answer:</label>
+          <input
+            type="text"
+            id="securityAnswer"
+            value={securityAnswer}
+            onChange={(e) => setSecurityAnswer(e.target.value)}
+            required
+            style={styles.input}
+          />
+        </div>
+        <button type="submit" style={styles.button}>Reset Password</button>
+      </form>
+      {message && <p style={styles.message}>{message}</p>}
+      {error && <p style={styles.error}>{error}</p>}
     </div>
   );
 };
 
-export default ForgotPassword;
+// Inline styles for the component
+const styles = {
+  container: {
+    padding: '20px',
+    maxWidth: '600px',
+    margin: '0 auto',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    backgroundColor: '#f9f9f9',
+  },
+  header: {
+    fontSize: '2rem',
+    marginBottom: '20px',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  formGroup: {
+    marginBottom: '15px',
+  },
+  label: {
+    display: 'block',
+    fontSize: '1rem',
+    marginBottom: '5px',
+  },
+  input: {
+    width: '100%',
+    padding: '8px',
+    fontSize: '1rem',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
+  },
+  button: {
+    padding: '10px',
+    backgroundColor: '#007bff',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    fontSize: '1rem',
+    cursor: 'pointer',
+  },
+  message: {
+    color: 'green',
+    marginTop: '10px',
+  },
+  error: {
+    color: 'red',
+    marginTop: '10px',
+  },
+};
+
+export default ResetPassword;
