@@ -15,6 +15,7 @@ import AddCity from './AdminPages/AddCity';
 import CityDetails from './pages/citydetails';
 import UpdateCity from './AdminPages/UpdateCity';
 import PassengerPage from './pages/PassengerPage';
+import ForgotPassword from './pages/forgetPassword';
 
 
 
@@ -38,6 +39,7 @@ function App() {
         <Route path='/cities/:cityId' element={<CityDetails/>}/>
         <Route path='/update-city/:cityId' element={<UpdateCity/>} />
         <Route path='/PassengerPage' element={<PassengerPage/>} />
+        <Route path='/forgot-password' element={<ForgotPassword/>} />
 
       </Routes>
        <ToastContainer/> 
