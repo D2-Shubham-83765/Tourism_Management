@@ -50,7 +50,7 @@ public class UserController {
 	@Autowired
 	private JwtUtils utils;
 	
-	
+
 	@PostMapping("/register")
 	public ResponseEntity<?> addUser(@RequestBody @Valid UserDTO dto){
 		String message = userService.addNewUser(dto);
