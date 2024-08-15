@@ -13,7 +13,12 @@ public class ForgetPasswordDTO {
 	@Email
 	private String email;
 	private String confirmPassword;
-	private String newPassword;
+	private String Password;
 	private SecurityQuestionDTO securityQuestion;
 	private String securityAnswer;
+	
+//	private String securityAnswer;
+//	private String newPassword;
+//	private String confirmPassword;
+	
 }

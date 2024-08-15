@@ -55,10 +55,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String setPassword(ForgetPasswordDTO dto) {
 		User user = userDao.findByEmail(dto.getEmail()).orElseThrow(()-> new ApiException("Invalid Email!!"));
-			if(dto.getNewPassword().equals(dto.getConfirmPassword()) && dto.getSecurityAnswer().
+			if(dto.getPassword().equals(dto.getConfirmPassword()) && dto.getSecurityAnswer().
 					equals(user.getSecurityAnswer())) {
 				User userEntity = mapper.map(dto, User.class);
-				user.setPassword(userEntity.getPassword());
+				String pwd = passwordEncoder.encode(userEntity.getPassword());
+				user.setPassword(pwd);
+				userDao.save(user);
 				return "Password reset successfully";
 			}
 		throw new ApiException("Password or Security answer doesn't match!!");
@@ -72,7 +74,6 @@ public class UserServiceImpl implements UserService {
 			throw new ApiException("User doesn't exist!!");
 		return "User has been deleted successfully!!";
 	}
-	
 	
 	
 }
