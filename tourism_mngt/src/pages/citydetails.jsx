@@ -16,7 +16,7 @@ const CityDetails = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [totalPrice, setTotalPrice] = useState(null); // State to hold the total price
-
+  const [bookingNo, setBookingNo] = useState('');
 
   
   const navigate = useNavigate();
@@ -61,6 +61,7 @@ const CityDetails = () => {
 
   const handleHotelClick = (hotel) => {
     setSelectedHotel(hotel);
+    localStorage.setItem('hotelName', hotel.name);
     // Update the total price when a hotel is selected
     setTotalPrice((cityInfo.price || 0) + (hotel.ratePerPerson || 0));
   };
@@ -83,9 +84,23 @@ const CityDetails = () => {
     </ul>
   );
 
-  const Addpass = () => {
-    navigate('/PassengerPage');
-  };
+  const generateBookingNo = () => {
+    const base = 'BN';
+    const randomPart = Math.random().toString(36).substring(2, 10).toUpperCase(); // Generate a random string
+    const timestampPart = Date.now().toString().slice(-4); // Last 4 digits of the current timestamp
+    
+    const newBookingNo = `${base}-${randomPart}-${timestampPart}`;
+    return newBookingNo;
+};
+
+const Addpass = () => {
+  const newBookingNo = generateBookingNo();  // Generate booking number
+  console.log('Booking No in Addpass:', newBookingNo); // Debugging statement
+
+  localStorage.setItem('bookingNo', newBookingNo);
+  localStorage.setItem('totalPrice', totalPrice);
+  navigate('/PassengerPage');
+};
 
   if (loading) {
     return <div style={styles.loaderContainer}>Loading...</div>;
@@ -113,7 +128,7 @@ const CityDetails = () => {
         <span style={styles.cityInfoValue}>{cityInfo.startingDate || 'Not available'}</span>  &nbsp; &nbsp;
         <span style={styles.cityInfoLabel}>Ending Date:  </span>
         <span style={styles.cityInfoValue}>{cityInfo.endingDate || 'Not available'}</span>
-        <br /> <br />
+        <br /> <br /> <br />
         <p style={styles.cityDescription}>{cityInfo.cityDetails || 'Details not available'}</p>
         <br /> 
         <div style={styles.images}>
@@ -157,7 +172,7 @@ const CityDetails = () => {
       <div style={styles.hotels}>
         <br />
         <h3 style={styles.hotelsTitle}>Hotels</h3>
-        <h6>Select the hotel that suits you</h6>
+        <h5>Select the hotel that suits you</h5>
         <br />
         <div style={styles.hotelsList}>
           {cityInfo.hotels && cityInfo.hotels.length > 0 ? (
@@ -205,11 +220,11 @@ const CityDetails = () => {
         >
           Book Now
         </a>
+        <br />
       </div>
     </div>
   );
 };
-
 // Inline styles for the component
 const styles = {
   container: {
@@ -224,8 +239,8 @@ const styles = {
   cityName: {
     fontSize: '3em',
     marginBottom: '10px',
-    marginRight : '1200px',
-    fontWeight : 'bold'
+    marginRight :'1100px',
+    fontWeight: 'bold',
   },
   cityDescription: {
     fontSize: '1.2em',
@@ -241,74 +256,85 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     flexWrap: 'wrap',
+    gap: '20px',
+    marginTop: '30px',
+    padding: '10px',
   },
   largeCityImage: {
-    width: '100%',
-    maxWidth: '700px',
-    height: 'auto',
-    margin: '10px',
-    borderRadius : '10px'
+    width: '350px',
+    height: '200px',
+    borderRadius: '10px',
+    objectFit: 'cover',
+    transition: 'transform 0.3s ease',
   },
   smallCityImage: {
-    width: '100%',
-    maxWidth: '400px',
-    height: 'auto',
-    borderRadius : '10px',
-    margin: '10px',
+    width: '400px',
+    height: '175px',
+    borderRadius: '10px',
+    objectFit: 'cover',
+    transition: 'transform 0.3s ease',
   },
   cityInfoBox: {
     marginTop: '20px',
-    padding: '10px',
+    padding: '20px',
     border: '1px solid #ddd',
     borderRadius: '8px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    backgroundColor: '#f9f9f9',
   },
   dayPlanBox: {
-    marginBottom: '15px',
-    padding: '10px',
+    marginBottom: '20px',
+    padding: '15px',
     border: '1px solid #ddd',
     borderRadius: '8px',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    backgroundColor: '#ffffff',
   },
   dayPlanHeader: {
     marginBottom: '10px',
-    fontSize: '1.5em',
+    fontSize: '1.6em',
     color: '#333',
+    borderBottom: '2px solid #007bff',
+    paddingBottom: '5px',
   },
   hotels: {
     marginTop: '20px',
-  },
-  hotelsTitle: {
-    fontSize: '2em',
-    marginBottom: '10px',
-  },
-  hotelsList: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
-
-  
+  hotelsTitle: {
+    fontSize: '2.5em',
+    marginBottom: '15px',
+    color: '#333',
+  },
+  hotelsList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '15px',
+    justifyContent: 'center',
+    marginTop: '20px',
+  },
   hotelCard: {
-    width: '80%',
+    width: '300px',
     padding: '15px',
     border: '1px solid #ddd',
     borderRadius: '8px',
-    marginBottom: '15px',
     cursor: 'pointer',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
   selectedHotelCard: {
-    width: '80%',
+    width: '300px',
     padding: '15px',
     border: '2px solid #007bff',
     borderRadius: '8px',
-    marginBottom: '15px',
     cursor: 'pointer',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
   hotelName: {
     fontSize: '1.5em',
     marginBottom: '10px',
-    fontWeight : 'bold'
+    fontWeight: 'bold',
   },
   hotelInfo: {
     fontSize: '1.2em',
@@ -324,11 +350,12 @@ const styles = {
     border: '1px solid #ddd',
     borderRadius: '8px',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    backgroundColor: '#ffffff',
   },
   hotelDetailsHeader: {
-    fontSize: '1.5em',
+    fontSize: '1.6em',
     marginBottom: '10px',
-    fontWeight : 'bold'
+    fontWeight: 'bold',
   },
   cityPrice: {
     fontWeight: 'bold',
@@ -345,6 +372,7 @@ const styles = {
     textAlign: 'center',
     cursor: 'pointer',
     textDecoration: 'none',
+    transition: 'background-color 0.3s ease',
   },
   bookNowButtonHover: {
     backgroundColor: '#0056b3',
@@ -359,5 +387,7 @@ const styles = {
     padding: '20px',
   },
 };
+
+
 
 export default CityDetails;

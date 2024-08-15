@@ -4,15 +4,15 @@ const CityCards = ({Cities}) =>{
     
     const navigate = useNavigate();
 
-    const handleOnCardCLick=(id)=>{
-        // check session exist before routing
-        navigate(`/packages/${id}`)
+    const handleOnCardCLick=(city)=>{
+        localStorage.setItem('selectedPackageName', city.packageName);
+        navigate(`/packages/${city.id}`)
     }
     
     return (
         <div className="card-group card-group-scroll">
             {Cities.map((city, id) => (
-                <div key={id} className="col-md-3 mb-3" onClick={()=> handleOnCardCLick(city.id)}>
+                <div key={id} className="col-md-3 mb-3" onClick={()=> handleOnCardCLick(city)}>
                         <div className="card">
                             <img
                                 src={`data:image/jpeg;base64,${city.image}`}

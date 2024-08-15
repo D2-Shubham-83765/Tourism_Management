@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 600px; /* Full viewport height */
     max-width: 600px;
     margin-top: 50px;
     margin-left: 500px;
@@ -31,7 +30,7 @@
 
 /* PassengerPage.css */
 
-.go-to-payments-button {
+.go-to-booking-button {
     padding: 10px 20px;
     background-color: rgb(228, 25, 120);
     color: #fff;

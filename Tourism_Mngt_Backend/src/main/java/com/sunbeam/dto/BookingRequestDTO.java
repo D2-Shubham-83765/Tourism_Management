@@ -10,12 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingRequestDTO {
+	private String bookingNo;
 
-	private String user_id;
+	private String email;
 	
 	private String packageName;
 	
 	private String cityName;
+	
+	private String hotelName;
 	
 	private Long noOfPassengers;
 	

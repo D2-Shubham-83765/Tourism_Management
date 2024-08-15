@@ -30,14 +30,14 @@ public class TravellerServiceImpl implements TravellerService {
 	
 	
 	public String addTravellers(List<TravellerDTO> travellers, String bookingNo) {
+		Booking booking = bookingDao.findByBookingNo(bookingNo);
+		if(booking==null)
+			throw new ResourceNotFoundException("Invalid Booking No!!");
+			
 		for (TravellerDTO traveller : travellers) {
 			Traveller travellerEntity = mapper.map(traveller, Traveller.class);
-			Booking booking = bookingDao.findByBookingNo(bookingNo);
-			if(booking!=null) {
-				travellerEntity.setBookingNo(booking);
-				travellerDao.save(travellerEntity);
-			}else
-				throw new ResourceNotFoundException("Invalid Booking No!!");
+			travellerEntity.setBookingNo(booking);
+			travellerDao.save(travellerEntity);
 		}
 
 		return "Traveller details added successfully";
