@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String setPassword(ForgetPasswordDTO dto) {
 		User user = userDao.findByEmail(dto.getEmail()).orElseThrow(()-> new ApiException("Invalid Email!!"));
-			if(dto.getPassword().equals(dto.getNewPassword()) && dto.getSecurityAnswer().
+			if(dto.getNewPassword().equals(dto.getConfirmPassword()) && dto.getSecurityAnswer().
 					equals(user.getSecurityAnswer())) {
 				User userEntity = mapper.map(dto, User.class);
 				user.setPassword(userEntity.getPassword());

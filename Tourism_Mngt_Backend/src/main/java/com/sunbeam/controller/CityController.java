@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.CityDTO;
 import com.sunbeam.dto.CityImageDTO;
 import com.sunbeam.dto.CityRequestDTO;
+import com.sunbeam.dto.CityUpdateDTO;
 import com.sunbeam.dto.HotelDTO;
 import com.sunbeam.entities.City;
 import com.sunbeam.service.CityServiceImpl;
@@ -32,45 +34,47 @@ import com.sunbeam.service.CityServiceImpl;
 public class CityController {
 	@Autowired
 	private CityServiceImpl cityService;
-	
-	
+
 	@PostMapping("/add")
-	public ResponseEntity<?> addCityDetails(@ModelAttribute CityRequestDTO dto){
-		 try {
+	public ResponseEntity<?> addCityDetails(@ModelAttribute CityRequestDTO dto) {
+		try {
 			City city = cityService.addCityDetails(dto);
 			return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("City details added successfully"));
 		} catch (IOException e) {
 			throw new ApiException("Something went wrong!!");
 		}
 	}
-	
+
 	@PostMapping("/add/images")
-	public ResponseEntity<?> addCityImagesById(@ModelAttribute CityImageDTO dto){
+	public ResponseEntity<?> addCityImagesById(@ModelAttribute CityImageDTO dto) {
 		try {
 			cityService.addCityImagesById(dto);
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponse("Images for the city has been uploaded"));
+			return ResponseEntity.status(HttpStatus.ACCEPTED)
+					.body(new ApiResponse("Images for the city has been uploaded"));
 		} catch (IOException e) {
 			throw new ApiException("Something went wrong");
 		}
 	}
-	  
+
 	@GetMapping("/{cityId}")
-	public ResponseEntity<?> getCityDetails(@PathVariable String cityId){
+	public ResponseEntity<?> getCityDetails(@PathVariable String cityId) {
 		return ResponseEntity.status(HttpStatus.OK).body(cityService.getCityDetails(cityId));
 	}
-      
+
 	@PostMapping("/hotel/{cityId}")
-	public ResponseEntity<?> addHotelByCityId(@RequestBody HotelDTO dto){
+	public ResponseEntity<?> addHotelByCityId(@RequestBody HotelDTO dto) {
 		return ResponseEntity.ok(cityService.addHotel(dto));
 	}
-	
+
 	@DeleteMapping("/{cityId}")
 	public ResponseEntity<?> deleteCity(@PathVariable Long cityId) {
 		cityService.deleteCity(cityId);
 		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("City has been deleted!!"));
 	}
-	/*
-	 * @PostMapping("/traveller/add") public ResponseEntity<?>
-	 * addTraveller(@RequestBody Tra)
-	 */
+
+
+	@PutMapping("/update/{cityId}")
+		public ResponseEntity<?> updateCityDetails(@PathVariable Long cityId, @RequestBody CityUpdateDTO cityDTO){
+			return ResponseEntity.status(HttpStatus.OK).body(cityService.updateCity(cityId, cityDTO));	
+		}
 }
