@@ -23,6 +23,7 @@ public class TravellerController {
 	public ResponseEntity<?> addTravellers(@RequestBody TravellerRequestDTO dto){
 		List<TravellerDTO> travellers = dto.getTravellers();
         String bookingNo = dto.getBookingNo();
+        System.out.println(bookingNo);
 		return ResponseEntity.ok(travellerService.addTravellers(travellers, bookingNo));
 	}
 }

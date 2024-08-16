@@ -45,8 +45,19 @@ const Navbar = () => {
         
         // Remove the user's email from localStorage
         localStorage.removeItem('userEmail');
+<<<<<<< HEAD
 
         // Update the state to reflect that the user is no longer logged in
+=======
+        localStorage.removeItem('totalCost');	
+        localStorage.removeItem('bookingNo')
+        localStorage.removeItem('selectedPackageName')
+        localStorage.removeItem('hotelName')
+        localStorage.removeItem('selectedCityName')
+        localStorage.removeItem('noOfPassengers')	
+        localStorage.removeItem('totalPrice')
+    
+>>>>>>> 2fa1b315ec7cc5fe5590c2803d99413733af7ad7
         setIsLoggedIn(false);
 
         // Clear the user email state
@@ -79,8 +90,13 @@ const Navbar = () => {
             
             // Display a success message to the user
             toast.success('Login successful!');
+<<<<<<< HEAD
     
             // Update the state with the user's email
+=======
+            
+
+>>>>>>> 2fa1b315ec7cc5fe5590c2803d99413733af7ad7
             setUserEmail(email);
             
             // Update the state to reflect that the user is logged in
@@ -88,10 +104,15 @@ const Navbar = () => {
     
             // Navigate to the admin dashboard if the user has an ADMIN role
             if (roles.includes('ADMIN')) {
+<<<<<<< HEAD
                 navigate('/admin');
             } 
             // Navigate to the home page if the user has a USER role
             else if (roles.includes('USER')) {
+=======
+                navigate('/admin-dashboard');
+            } else if (roles.includes('USER')) {
+>>>>>>> 2fa1b315ec7cc5fe5590c2803d99413733af7ad7
                 navigate('/');
             } 
             // Log an error message if the role is unknown
@@ -111,13 +132,17 @@ const Navbar = () => {
             <header>
                 <nav className="navbar navbar-expand-lg navbar-dark" style={{ height: '70px', backgroundColor: 'black', boxShadow: '2px 1px 5px 5px rgba(0, 0, 0, 0.521)' }}>
                     <a className="navbar-brand d-flex align-items-center">
-                        <img src={logo} height="100" className="mr-2" alt="Website Logo" style={{ marginLeft: '20px' }} />
+                    <Link to="/">
+      <img src={logo} alt="Company Logo" style={{ width: '150px', height: 'auto' }} />
+    </Link>
                     </a>
 
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <a className="nav-link">Home</a>
+                            <Link to="/" className="nav-link" style={{ textDecoration: 'none' }}>
+                                    Home
+                                </Link>
                             </li>
 
                             <li className="nav-item">
@@ -130,7 +155,11 @@ const Navbar = () => {
                                     About Us
                                 </Link>
                             </li>
-                            
+                            <li className="nav-item">
+                                <Link to="/bookings" className="nav-link" style={{ textDecoration: 'none' }}>
+                                    Bookings
+                                </Link>
+                            </li>
                             &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
                             &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
                             &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import config from '../config';
+import { toast } from "react-toastify";
 import { useParams, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import './cities.css'; // Import the CSS file for styling
@@ -45,14 +46,15 @@ const CityPage = () => {
         fetchCityData();
     }, [id]);
 
-    const handleCardClick = (iden) => {
-        navigate(`/cities/${iden}`);
+    const handleCardClick = (city) => {
+        localStorage.setItem('selectedCityName', city.name);
+        navigate(`/cities/${city.id}`);
     };
 
-    const handleUpdateClick = (cityId) => {
-        navigate(`/update-city/${cityId}`); // Navigate to the update city form
+    const handleUpdateClick = (id) => {
+        navigate(`/update-city/${id}`); // Navigate to the update city form
     };
-
+  
     const handleDeleteClick = async (cityId) => {
         if (window.confirm("Are you sure you want to delete this city?")) {
             try {
@@ -60,9 +62,12 @@ const CityPage = () => {
                 await axios.delete(`${config.url}/cities/${cityId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                    },
-                });
+                    },                    
+                }
+                // toast.success("City deleted successfully");
+                );
                 // Re-fetch city data after deletion
+                toast.success("City deleted successfully");
                 fetchCityData();
             } catch (error) {
                 console.error("Error deleting city:", error.response ? error.response.data : error.message);
@@ -94,7 +99,7 @@ const CityPage = () => {
                             <div
                                 key={city.id} 
                                 className="col-md-3" 
-                                onClick={() => handleCardClick(city.id)} // Handle click event
+                                onClick={() => handleCardClick(city)} // Handle click event
                                 style={{ cursor: 'pointer' }} // Change cursor to pointer
                             >
                                 <div className="card">
@@ -102,6 +107,7 @@ const CityPage = () => {
                                         src={`data:image/jpeg;base64,${city.cityImage}`}
                                         className="card-img-top"
                                         alt={city.packageName}
+                                        onClick={() => handleCardClick(city.id)}   // Handle click event
                                     />
                                     <div className="card-body">
                                         <div className="city-header">

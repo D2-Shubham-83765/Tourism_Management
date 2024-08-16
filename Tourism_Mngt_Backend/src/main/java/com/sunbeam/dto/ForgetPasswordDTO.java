@@ -12,8 +12,13 @@ public class ForgetPasswordDTO {
 	@NotBlank
 	@Email
 	private String email;
-	private String password;
-	private String newPassword;
+	private String confirmPassword;
+	private String Password;
 	private SecurityQuestionDTO securityQuestion;
 	private String securityAnswer;
+	
+//	private String securityAnswer;
+//	private String newPassword;
+//	private String confirmPassword;
+	
 }

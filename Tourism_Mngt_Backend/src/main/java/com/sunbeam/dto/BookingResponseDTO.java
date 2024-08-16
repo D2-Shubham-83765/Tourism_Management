@@ -14,9 +14,13 @@ public class BookingResponseDTO {
 
 	private String bookingNo;
 	
+	private String email;
+	
 	private String packageName;
 	
 	private String cityName;
+	
+	private String hotelName;
 	
 	private Long noOfPassengers;
 	
