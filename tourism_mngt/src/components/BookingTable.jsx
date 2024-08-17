@@ -68,7 +68,6 @@ const BookingTable = () => {
                         <th style={thStyles}>Payment Status</th>
                         <th style={thStyles}>No. of Passengers</th>
                         <th style={thStyles}>Package Name</th>
-                        <th style={thStyles}>Hotel Name</th>
                         <th style={thStyles}>Total Cost</th>                       
                     </tr>
                 </thead>
@@ -86,7 +85,6 @@ const BookingTable = () => {
                 <td style={tdStyles}>{bkg.bookingStatus ? "Paid" : "Unpaid"}</td>
                 <td style={tdStyles}>{bkg.noOfPassengers}</td>
                 <td style={tdStyles}>{bkg.packageName}</td>
-                <td style={tdStyles}>{bkg.hotelName}</td>
                 <td style={tdStyles}>&#8377; {bkg.totalCost.toFixed(2)}</td>
             </tr>
         ))
