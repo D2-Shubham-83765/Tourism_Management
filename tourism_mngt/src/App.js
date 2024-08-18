@@ -25,6 +25,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Bookings from './pages/Bookings';
 import UserListComponent from './AdminPages/UserList';
+import AddImages from './AdminPages/AddImages';
 
 library.add(faStar);
 
@@ -51,6 +52,7 @@ function App() {
         <Route path= '/booking-summary' element={<BookingSummary/>} />
         <Route path='/payment-confirmation' element={<PaymentConfirmation/>} />
         <Route path='/users' element={<UserListComponent/>} />
+        <Route path='/add-images' element={<AddImages/>} />
       </Routes>
       <Footer/>
        <ToastContainer/> 
