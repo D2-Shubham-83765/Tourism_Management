@@ -306,6 +306,10 @@ const UpdateCity = () => {
     const addImages = () => {
         navigate(`/add-images?cityId=${cityId}`);
     };
+
+    const addHotels = () => {
+        navigate(`/add-hotels?cityId=${cityId}`);
+    }
     
 
 
@@ -388,6 +392,12 @@ const UpdateCity = () => {
                         onClick={() => addImages()}
                     >
                         Add Images
+                    </button>
+                    <button
+                        style={styles.bookNowButton}
+                        onClick={() => addHotels()}
+                    >
+                        Add Hotels
                     </button>
                 </div>
                 
