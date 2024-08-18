@@ -78,6 +78,11 @@ const Navbar = () => {
         }
     };
 
+    const handleForgotPassword = () => {
+        setShowLoginModal(false);
+        navigate('/forgot-password');
+    };
+
     return (
         <div>
             <header>
@@ -279,7 +284,7 @@ const Navbar = () => {
                                                 textDecoration: 'none',
                                                 fontSize: '14px',
                                                 color: '#337ab7'
-                                            }}>Forgot Password?</Link>
+                                            }} onClick={handleForgotPassword}>Forgot Password?</Link>
                                         </div>
                                     </div>
                                 </form>

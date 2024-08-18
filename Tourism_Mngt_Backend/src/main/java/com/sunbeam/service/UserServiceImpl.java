@@ -43,26 +43,13 @@ public class UserServiceImpl implements UserService {
 		throw new ApiException("Password doesn't match!! Try again");
 	}
 
-	@Override
-	public String login(String email, String password) {
-		User user = userDao.findByEmailAndPassword(email, password);
-		if (user == null) {
-			return "Invalid Credentials!!";
-		}else if(user.getRole()==Role.ADMIN) {
-			return "Admin logged in successfully";
-		}else {
-			return "User logged in successfully";
-		}
-	}
-
 
 	@Override
 	public String setPassword(ForgetPasswordDTO dto) {
 		User user = userDao.findByEmail(dto.getEmail()).orElseThrow(()-> new ApiException("Invalid Email!!"));
 			if(dto.getPassword().equals(dto.getConfirmPassword()) && dto.getSecurityAnswer().
 					equals(user.getSecurityAnswer())) {
-				User userEntity = mapper.map(dto, User.class);
-				String pwd = passwordEncoder.encode(userEntity.getPassword());				
+				String pwd = passwordEncoder.encode(dto.getPassword());				
 				user.setPassword(pwd);
 				userDao.save(user);
 				return "Password reset successfully";
