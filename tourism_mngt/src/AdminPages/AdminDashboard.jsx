@@ -4,9 +4,16 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import '../pages/home.css';
 import Navbar from "../components/Navbar";
 import CityCardsAdmin from "../components/CityCardsAdmin";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import BookingTable from "../components/BookingTable";
+<<<<<<< HEAD
 import axios from 'axios'; 
+=======
+
+import axios from 'axios'; 
+
+>>>>>>> prajwalthakur
 import config from '../config';
 import './AdminDashboard.css';
 
