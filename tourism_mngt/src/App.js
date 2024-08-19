@@ -25,6 +25,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Bookings from './pages/Bookings';
 import UserListComponent from './AdminPages/UserList';
+import BookingTable from './components/BookingTable';
 
 library.add(faStar);
 
@@ -47,6 +48,7 @@ function App() {
         <Route path='/PassengerPage' element={<PassengerPage/>} />
         <Route path='/forgot-password' element={<ForgotPassword/>} />
         <Route path='/bookings' element={<Bookings/>} />
+        <Route path='/booking-table' element={<BookingTable/>} />
 
         <Route path= '/booking-summary' element={<BookingSummary/>} />
         <Route path='/payment-confirmation' element={<PaymentConfirmation/>} />
