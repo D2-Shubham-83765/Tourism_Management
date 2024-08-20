@@ -47,10 +47,6 @@ const BookingForm = () => {
   return (
     // Form element with submission handler
     <form onSubmit={handleSubmit}>
-<<<<<<< HEAD
-      <div>
-        {/* Package name input field */}
-=======
       {/* <div> */}
         {/* <label>Booking No:</label>
         <input
@@ -63,7 +59,6 @@ const BookingForm = () => {
       </div> */}
 
       <div>
->>>>>>> 2fa1b315ec7cc5fe5590c2803d99413733af7ad7
         <label>Package Name:</label>
         <input
           type="text"

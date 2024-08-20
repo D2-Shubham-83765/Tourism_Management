@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import '../pages/home.css';
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import BookingTable from "../components/BookingTable";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import config from '../config';
 import './AdminDashboard.css';
 
