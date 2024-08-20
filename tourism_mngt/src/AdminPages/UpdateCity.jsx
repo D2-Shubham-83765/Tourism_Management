@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import config from '../config';
+import CityImages from '../components/CityImages';
+import { useNavigate } from 'react-router-dom';
+
+
 
 // Define styles first without any dependencies on itself
 const inputFieldStyle = {
@@ -295,6 +299,20 @@ const UpdateCity = () => {
         </div>
     );
 
+    const navigate = useNavigate();
+    // const addImages = () => {
+    //     navigate(`/add-images/${cityId}`);
+    // }
+    const addImages = () => {
+        navigate(`/add-images?cityId=${cityId}`);
+    };
+
+    const addHotels = () => {
+        navigate(`/add-hotels?cityId=${cityId}`);
+    }
+    
+
+
     if (loading) return <div className="loader-container">Loading...</div>;
     if (error) return <div className="error-message">{error}</div>;
     if (!cityInfo) return <div>No data available</div>;
@@ -317,6 +335,8 @@ const UpdateCity = () => {
                     {renderEditableField('Location', 'location')}
                 </div>
             </div>
+
+            {/* <CityImages/> */}
 
             <div style={styles.images}>
                 {cityInfo.images && cityInfo.images.length > 0 ? (
@@ -367,7 +387,20 @@ const UpdateCity = () => {
                     >
                         Update
                     </button>
+                    <button
+                        style={styles.bookNowButton}
+                        onClick={() => addImages()}
+                    >
+                        Add Images
+                    </button>
+                    <button
+                        style={styles.bookNowButton}
+                        onClick={() => addHotels()}
+                    >
+                        Add Hotels
+                    </button>
                 </div>
+                
             )}
         </div>
     );

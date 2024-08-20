@@ -120,12 +120,12 @@ const Addpass = () => {
         <h1 style={styles.cityName}>{cityInfo.name || 'City Name Not Available'}</h1>
         
         <span style={styles.cityInfoLabel}>Duration: </span>
-        <span style={styles.cityInfoValue}>{cityInfo.duration || 'Not available'}</span> &nbsp; &nbsp;
+        <span style={styles.cityInfoValue}>{cityInfo.duration || 'Not available'}</span> &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; 
         <span style={styles.cityInfoLabel}>Location: </span>
-        <span style={styles.cityInfoValue}>{cityInfo.location || 'Not available'}</span> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-     
+        <span style={styles.cityInfoValue}>{cityInfo.location || 'Not available'}</span> &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
+      <br/>
         <span style={styles.cityInfoLabel}>Starting Date: </span>
-        <span style={styles.cityInfoValue}>{cityInfo.startingDate || 'Not available'}</span>  &nbsp; &nbsp;
+        <span style={styles.cityInfoValue}>{cityInfo.startingDate || 'Not available'}</span>  &nbsp; &nbsp; &nbsp;
         <span style={styles.cityInfoLabel}>Ending Date:  </span>
         <span style={styles.cityInfoValue}>{cityInfo.endingDate || 'Not available'}</span>
         <br /> <br /> <br />
@@ -239,7 +239,7 @@ const styles = {
   cityName: {
     fontSize: '3em',
     marginBottom: '10px',
-    marginRight :'1100px',
+    // marginRight :'1100px',
     fontWeight: 'bold',
   },
   cityDescription: {

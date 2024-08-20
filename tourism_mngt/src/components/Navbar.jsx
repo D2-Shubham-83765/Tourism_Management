@@ -110,6 +110,11 @@ const Navbar = () => {
     };
     
 
+    const handleForgotPassword = () => {
+        setShowLoginModal(false);
+        navigate('/forgot-password');
+    };
+
     return (
         <div>
             <header>
@@ -154,7 +159,7 @@ const Navbar = () => {
                             &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
                             &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
                             
-                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                    
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             {isLoggedIn ? (
@@ -311,7 +316,7 @@ const Navbar = () => {
                                                 textDecoration: 'none',
                                                 fontSize: '14px',
                                                 color: '#337ab7'
-                                            }}>Forgot Password?</Link>
+                                            }} onClick={handleForgotPassword}>Forgot Password?</Link>
                                         </div>
                                     </div>
                                 </form>

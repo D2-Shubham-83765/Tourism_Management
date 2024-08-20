@@ -1,14 +1,27 @@
+<<<<<<< HEAD
 // import React, { useState } from "react";
+=======
+import React, { useState, useEffect } from "react";
+>>>>>>> 1fdf78268e09cd4e8e00a78b232a9ec90263114e
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import '../pages/home.css';
 import Navbar from "../components/Navbar";
 import CityCardsAdmin from "../components/CityCardsAdmin";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import BookingTable from "../components/BookingTable";
-import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
 import axios from 'axios'; 
+<<<<<<< HEAD
 // import { Link } from 'react-router-dom';
+=======
+=======
+
+import axios from 'axios'; 
+
+>>>>>>> prajwalthakur
+>>>>>>> 1fdf78268e09cd4e8e00a78b232a9ec90263114e
 import config from '../config';
 import './AdminDashboard.css';
 
