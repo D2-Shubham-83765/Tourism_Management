@@ -19,18 +19,31 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Check if there's a token in localStorage
+        // Check if there's a token stored in localStorage
         const token = localStorage.getItem('token');
+        
+        // Retrieve the stored email from localStorage
         const storedEmail = localStorage.getItem('userEmail');
+    
+        // If both token and storedEmail exist, consider the user as logged in
         if (token && storedEmail) {
+            // Update the state to reflect that the user is logged in
             setIsLoggedIn(true);
+    
+            // Update the state with the stored email
             setUserEmail(storedEmail);
         }
-    }, []);
+    }, []);  // Empty dependency array ensures this effect runs only once, on component mount
+    
 
     const handleLogout = () => {
+        // Remove the authentication token from localStorage
         localStorage.removeItem('token');
+        
+        // Remove the user's roles from localStorage
         localStorage.removeItem('roles');
+        
+        // Remove the user's email from localStorage
         localStorage.removeItem('userEmail');
         localStorage.removeItem('totalCost');	
         localStorage.removeItem('bookingNo')
@@ -41,41 +54,65 @@ const Navbar = () => {
         localStorage.removeItem('totalPrice')
     
         setIsLoggedIn(false);
+
+        // Clear the user email state
         setUserEmail("");
 
+        // Navigate the user back to the home page (or landing page)
         navigate('/');
     };
 
+
     const handleLogin = async () => {
         try {
+            // Send a POST request to the login endpoint with the user's email and password
             const response = await axios.post(`${config.url}/user/login`, {
                 email,
                 password
             });
-
+    
+            // Destructure the token and roles from the response data
             const { token, roles } = response.data;
-
+    
+            // Store the token in localStorage for authentication purposes
             localStorage.setItem('token', token);
+            
+            // Store the user's roles in localStorage, converting the roles array to a JSON string
             localStorage.setItem('roles', JSON.stringify(roles));
+            
+            // Store the user's email in localStorage
             localStorage.setItem('userEmail', email);
-          
+            
+            // Display a success message to the user
             toast.success('Login successful!');
             
 
             setUserEmail(email);
+            
+            // Update the state to reflect that the user is logged in
             setIsLoggedIn(true);
-
+    
+            // Navigate to the admin dashboard if the user has an ADMIN role
             if (roles.includes('ADMIN')) {
                 navigate('/admin-dashboard');
             } else if (roles.includes('USER')) {
                 navigate('/');
-            } else {
+            } 
+            // Log an error message if the role is unknown
+            else {
                 console.log('Unknown role:', roles);
             }
-      
+    
         } catch (error) {
+            // Display an error message if the login fails
             toast.error('Login failed. Please check your email and password.');
         }
+    };
+    
+
+    const handleForgotPassword = () => {
+        setShowLoginModal(false);
+        navigate('/forgot-password');
     };
 
     return (
@@ -122,7 +159,7 @@ const Navbar = () => {
                             &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
                             &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
                             
-                            &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+                    
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             {isLoggedIn ? (
@@ -279,7 +316,7 @@ const Navbar = () => {
                                                 textDecoration: 'none',
                                                 fontSize: '14px',
                                                 color: '#337ab7'
-                                            }}>Forgot Password?</Link>
+                                            }} onClick={handleForgotPassword}>Forgot Password?</Link>
                                         </div>
                                     </div>
                                 </form>

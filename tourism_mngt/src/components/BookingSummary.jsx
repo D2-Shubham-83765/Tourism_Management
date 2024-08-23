@@ -5,6 +5,7 @@ import axios from 'axios';
 import config from '../config';
 import {toast} from 'react-toastify';
 
+// BookingSummary component definition
 const BookingSummary = () => {
     const navigate = useNavigate();
 
@@ -61,5 +62,6 @@ const BookingSummary = () => {
     );
 };
 
+// Exporting the BookingSummary component as the default export
 export default BookingSummary;
 
