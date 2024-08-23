@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public List<UserResponseDTO> getAllUsers(){
-		List<UserResponseDTO> list = userDao.findAll().stream().map(user->{
+		List<UserResponseDTO> list = userDao.findAll().stream().filter(user -> user.getRole() == Role.USER).map(user->{
 			UserResponseDTO dto = new UserResponseDTO();
 			dto.setEmail(user.getEmail());
 			dto.setFirstName(user.getFirstName());
